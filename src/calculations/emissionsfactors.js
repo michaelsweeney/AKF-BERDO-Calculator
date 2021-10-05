@@ -3,7 +3,7 @@
 // Emission factor
 // (kg CO2e/MMBtu)
 
-const NonElectricEmissionFactors = {
+const non_electric_emissions_factors = {
   gas: 53.11,
   fuel_1: 73.5,
   fuel_2: 74.21,
@@ -17,7 +17,7 @@ const NonElectricEmissionFactors = {
 };
 
 // kg CO2e/ MMBtu
-const ElectricEmissionsFactorsByYear = {
+const electric_emissions_factors_by_year = {
   2018: 87,
   2019: 85,
   2020: 83,
@@ -53,4 +53,4 @@ const ElectricEmissionsFactorsByYear = {
   2050: 21,
 };
 
-export { ElectricEmissionsFactorsByYear, NonElectricEmissionFactors };
+export { electric_emissions_factors_by_year, non_electric_emissions_factors };
