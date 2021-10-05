@@ -1,9 +1,9 @@
 import React from "react";
 import "./App.css";
-
+import { conn } from "./store/connect";
 import { EmissionsStandards } from "./calcs/emissionsstandards";
 
-function App() {
+const App = (props) => {
   return (
     <div className="App">
       {Object.keys(EmissionsStandards).map((k) => (
@@ -13,6 +13,12 @@ function App() {
       ))}
     </div>
   );
-}
+};
 
-export default App;
+const mapStateToProps = (store) => {
+  return {
+    stateprops: { ...store },
+  };
+};
+
+export default conn(mapStateToProps)(App);

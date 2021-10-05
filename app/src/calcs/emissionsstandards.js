@@ -8,7 +8,7 @@
  * 2050-
  */
 
-const EmissionsStandards: any = {
+const EmissionsStandards = {
   assembly: [7.8, 4.6, 3.3, 2.1, 1.1, 0],
   college_university: [10.2, 5.3, 3.8, 2.5, 1.2, 0],
   education: [3.9, 2.4, 1.8, 1.2, 0.6, 0],
