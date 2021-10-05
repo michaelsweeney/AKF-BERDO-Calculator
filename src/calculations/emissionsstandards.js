@@ -6,6 +6,8 @@
  * 2040-2044
  * 2045-2049
  * 2050-
+ *
+ * units are kgCO2e/SF
  */
 
 const EmissionsStandards = {

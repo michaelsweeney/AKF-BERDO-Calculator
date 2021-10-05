@@ -1,16 +1,11 @@
 import React from "react";
 import "./App.css";
 import { conn } from "./store/connect";
-import { EmissionsStandards } from "./calcs/emissionsstandards";
-
+import { DemoBuilding } from "./components/demobuilding";
 const App = (props) => {
   return (
     <div className="App">
-      {Object.keys(EmissionsStandards).map((k) => (
-        <div>
-          {k}:{EmissionsStandards[k]}
-        </div>
-      ))}
+      <DemoBuilding />
     </div>
   );
 };
