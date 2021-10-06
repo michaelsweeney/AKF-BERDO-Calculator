@@ -14,7 +14,6 @@ const getEmissionsFactorsByYear = (year) => {
 
 const getEmissionsFromConsumption = (consumption, factors, buildingarea) => {
   const absolute = { total: 0 };
-
   const normalized = { total: 0 };
 
   Object.keys(consumption).forEach((k) => {
@@ -66,7 +65,7 @@ const compileBuildingProfile = (buildinginputs) => {
 
   const compiled_building = { areas, consumption };
 
-  const totalarea = sum(Object.values(areas));
+  const totalarea = sum(areas.map(e => e.area));
 
   const years = Object.keys(electric_emissions_factors_by_year);
 
@@ -97,14 +96,14 @@ const compileBuildingProfile = (buildinginputs) => {
       "2050-": 0,
     };
 
-    let total_area = sum(Object.values(areas));
+    let total_area = sum(areas.map(e => e.area))
 
-    Object.keys(areas).forEach((type) => {
-      let area_absolute = areas[type];
+    areas.forEach((e) => {
+
+      let area_absolute = e.area;
       let area_fraction = area_absolute / total_area;
-      console.log(area_fraction);
 
-      let thresholds = emissions_standards[type];
+      let thresholds = emissions_standards[e.type];
 
       thresholds_absolute["2025-2029"] += area_absolute * thresholds[0];
       thresholds_absolute["2030-2034"] += area_absolute * thresholds[1];
@@ -124,7 +123,8 @@ const compileBuildingProfile = (buildinginputs) => {
   };
 
   compiled_building.emissions_thresholds = getEmissionsThresholds(areas);
-  console.log(compiled_building);
+
+
   return compiled_building;
 };
 

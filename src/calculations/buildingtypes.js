@@ -1,4 +1,4 @@
-const BuildingTypes = {
+const building_types = {
   assembly: "Assembly",
   college_university: "College/University",
   education: "Education",
@@ -14,4 +14,4 @@ const BuildingTypes = {
   technology_science: "Technology/Science",
 };
 
-export { BuildingTypes };
+export { building_types };
