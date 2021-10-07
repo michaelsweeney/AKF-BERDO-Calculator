@@ -1,9 +1,7 @@
 
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
 
-
 const initialState = {
-
   areas: [{
     type: 'office',
     area: '',
@@ -23,7 +21,7 @@ const initialState = {
   },
   annual_emissions: [],
   emissions_thresholds: {
-    thresholds_absolute: {
+    absolute: {
       "2025-2029": 0,
       "2030-2034": 0,
       "2035-2039": 0,
@@ -31,7 +29,7 @@ const initialState = {
       "2045-2049": 0,
       "2050-": 0
     },
-    thresholds_normalized: {
+    normalized: {
       "2025-2029": 0,
       "2030-2034": 0,
       "2035-2039": 0,

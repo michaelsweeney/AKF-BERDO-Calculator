@@ -1,20 +1,28 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./App.css";
 import { conn } from "./store/connect";
 
 
 import BldgInputsContainer from "./components/bldginputscontainer";
-import { DemoBuilding } from "./components/demobuilding";
+import CompiledResults from "./components/compiledresults";
 
 const App = (props) => {
+
+  useEffect(() => {
+    props.actions.compileBuildingOutputs()
+  }, [props.actions])
+
   return (
     <div className="App">
 
       <BldgInputsContainer />
-      <DemoBuilding />
+      <CompiledResults />
+
     </div>
   );
 };
+
+
 
 const mapStateToProps = (store) => {
   return {
