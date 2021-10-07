@@ -1,9 +1,21 @@
-
-import TextField from '@mui/material/TextField';
+import TextField from "@mui/material/TextField";
+import { InputLabel } from "@mui/material";
 
 const NumberInput = (props) => {
-    const { label, changeCallback, value } = props;
-    return <TextField onChange={changeCallback} type='number' label={label} value={value} variant='standard' />
-}
+  const { label, changeCallback, value } = props;
 
-export { NumberInput }
+  return (
+    <div>
+      <InputLabel value={label} />
+      <TextField
+        onChange={changeCallback}
+        type="number"
+        // label={label}
+        value={value}
+        variant="standard"
+      />
+    </div>
+  );
+};
+
+export { NumberInput };
