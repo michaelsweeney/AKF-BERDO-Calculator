@@ -2,15 +2,20 @@ import { BldgTypeSelect } from "./bldgtypeselect";
 import { NumberInput } from "./numberinput";
 
 import Button from "@mui/material/Button";
-import Box from "@mui/material/Button";
 
 import { conn } from "../../store/connect";
 
 import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
-  rmButton: {},
-  select: {},
-  input: {},
+  rmButton: {
+    display: "inline-block",
+  },
+  select: {
+    display: "inline-block",
+  },
+  input: {
+    display: "inline-block",
+  },
 });
 
 const BldgTypeInfoBox = (props) => {
@@ -34,7 +39,7 @@ const BldgTypeInfoBox = (props) => {
   };
 
   return (
-    <Box disableRipple={true}>
+    <div>
       <Button className={classes.rmButton} onClick={handleRemoveSelf}>
         x
       </Button>
@@ -49,7 +54,7 @@ const BldgTypeInfoBox = (props) => {
         changeCallback={handleTypeChange}
         type={type}
       />
-    </Box>
+    </div>
   );
 };
 

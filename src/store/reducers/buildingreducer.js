@@ -1,12 +1,14 @@
-
+import { PinDropSharp } from "@material-ui/icons";
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
 
 const initialState = {
-  areas: [{
-    type: 'office',
-    area: '',
-    index: 0,
-  }],
+  areas: [
+    {
+      type: "office",
+      area: "",
+      index: 0,
+    },
+  ],
   consumption: {
     gas: 0,
     fuel_1: 0,
@@ -17,7 +19,8 @@ const initialState = {
     district_hot_water: 0,
     elec_driven_chiller: 0,
     absorption_chiller_gas: 0,
-    engine_driven_chiller_gas: 0
+    engine_driven_chiller_gas: 0,
+    grid_elec: 0,
   },
   annual_emissions: [],
   emissions_thresholds: {
@@ -27,7 +30,7 @@ const initialState = {
       "2035-2039": 0,
       "2040-2044": 0,
       "2045-2049": 0,
-      "2050-": 0
+      "2050-": 0,
     },
     normalized: {
       "2025-2029": 0,
@@ -35,42 +38,58 @@ const initialState = {
       "2035-2039": 0,
       "2040-2044": 0,
       "2045-2049": 0,
-      "2050-": 0
-    }
-  }
+      "2050-": 0,
+    },
+  },
 };
 
 export default function buildingReducer(state = initialState, action) {
-
   switch (action.type) {
+    case "SET_ALL_BUILDING_INPUTS": {
+      return {
+        ...state,
+        areas: action.payload.areas,
+        consumption: action.payload.consumption,
+      };
+    }
+
     case "ADD_BUILDING_TYPE": {
       return {
         ...state,
-        areas: [...state.areas, {
-          type: 'office',
-          area: '',
-          index: action.payload,
-        }]
+        areas: [
+          ...state.areas,
+          {
+            type: "office",
+            area: "",
+            index: action.payload,
+          },
+        ],
       };
     }
     case "REMOVE_BUILDING_TYPE": {
       return {
         ...state,
-        areas: [...state.areas].filter((e) => e.index !== action.payload)
+        areas: [...state.areas].filter((e) => e.index !== action.payload),
       };
     }
     case "SET_BUILDING_TYPE_AREA": {
       return {
         ...state,
-        areas: state.areas.map(e => e.index == action.payload.idx ? { type: e.type, area: action.payload.val, index: e.index } : e)
-
+        areas: state.areas.map((e) =>
+          e.index == action.payload.idx
+            ? { type: e.type, area: action.payload.val, index: e.index }
+            : e
+        ),
       };
     }
     case "SET_BUILDING_TYPE": {
       return {
         ...state,
-        areas: state.areas.map(e => e.index == action.payload.idx ? { type: action.payload.val, area: e.area, index: e.index } : e)
-
+        areas: state.areas.map((e) =>
+          e.index == action.payload.idx
+            ? { type: action.payload.val, area: e.area, index: e.index }
+            : e
+        ),
       };
     }
     case "SET_UTILITY_CONSUMPTION": {
@@ -78,17 +97,23 @@ export default function buildingReducer(state = initialState, action) {
         ...state,
         consumption: {
           ...state.consumption,
-          [action.payload.fuel]: action.payload.val
-        }
+          [action.payload.fuel]: action.payload.val,
+        },
       };
     }
 
     case "COMPILE_BUILDING_OUTPUTS": {
       return {
         ...state,
-        annual_emissions: compileBuildingProfile({ areas: state.areas, consumption: state.consumption }).annual_emissions,
-        emissions_thresholds: compileBuildingProfile({ areas: state.areas, consumption: state.consumption }).emissions_thresholds
-      }
+        annual_emissions: compileBuildingProfile({
+          areas: state.areas,
+          consumption: state.consumption,
+        }).annual_emissions,
+        emissions_thresholds: compileBuildingProfile({
+          areas: state.areas,
+          consumption: state.consumption,
+        }).emissions_thresholds,
+      };
     }
 
     default:
