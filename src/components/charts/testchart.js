@@ -37,8 +37,6 @@ const TestChart = (props) => {
       };
     });
 
-    console.log(emissions, thresholds);
-
     let node = container.current;
 
     let containerdims = {

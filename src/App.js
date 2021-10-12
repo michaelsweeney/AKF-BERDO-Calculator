@@ -3,15 +3,15 @@ import "./App.css";
 import { conn } from "./store/connect";
 
 import { makeStyles } from "@material-ui/styles";
+import { Button } from "@mui/material";
 import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
 import CompiledResults from "./components/compiledresults";
 import TestChart from "./components/charts/testchart";
 import LoadBldgModal from "./components/loadbldgmodal";
 import BerdoApiComponent from "./components/berdoapi/berdoapi";
+
 const useStyles = makeStyles({
-  app: {
-    boxSizing: "border-box",
-  },
+  app: {},
   side: {
     padding: 20,
     width: "400px",
@@ -62,16 +62,26 @@ const App = (props) => {
 
   return (
     <div className={classes.app}>
-      <BerdoApiComponent />
-      {/* <LoadBldgModal /> */}
-      {/* <div className={classes.side}> */}
-      {/* <BldgInputsContainer /> */}
-      {/* </div> */}
-      {/* <div className={classes.main}> */}
-      {/* <TestChart /> */}
+      <div className={classes.side}>
+        <Button
+          size="small"
+          color="primary"
+          variant="contained"
+          onClick={() => props.actions.setIsLoadModalOpen(true)}
+        >
+          FIND YOUR BUILDING
+        </Button>
 
-      {/* <CompiledResults /> */}
-      {/* </div> */}
+        <BldgInputsContainer />
+      </div>
+      <div className={classes.main}>
+        <TestChart />
+
+        {/* <CompiledResults /> */}
+      </div>
+      <LoadBldgModal>
+        <BerdoApiComponent />
+      </LoadBldgModal>
     </div>
   );
 };

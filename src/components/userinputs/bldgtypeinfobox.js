@@ -38,7 +38,11 @@ const BldgTypeInfoBox = (props) => {
 
   return (
     <div>
-      <Button className={classes.rmButton} onClick={handleRemoveSelf}>
+      <Button
+        size="small"
+        className={classes.rmButton}
+        onClick={handleRemoveSelf}
+      >
         x
       </Button>
       <NumberInput

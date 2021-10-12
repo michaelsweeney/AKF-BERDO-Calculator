@@ -9,23 +9,15 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { queryBuildingData } from "./queries";
 
-const useStyles = makeStyles({
-  td: {
-    // whiteSpace: "nowrap",
-  },
-  row: {
-    // whiteSpace: "nowrap",
-  },
-  table: {
-    // whiteSpace: "nowrap",
-  },
-});
 const BerdoApiResultsTable = (props) => {
-  const classes = useStyles();
-
   const handleSelectBuilding = (e) => {
     let callbackFunction = props.actions.setLoadedBuildingQueryInfo;
+
+    // send to async query function
+
     queryBuildingData(e, callbackFunction);
+    props.actions.setIsLoadModalOpen(false);
+    // handle synchronous & ui updates
   };
 
   let { inputQueryResults } = props.berdoapi;
@@ -40,17 +32,10 @@ const BerdoApiResultsTable = (props) => {
         <TableBody>
           {inputQueryResults.map((e, i) => {
             return (
-              <TableRow
-                hover
-                onClick={() => handleSelectBuilding(e)}
-                key={i}
-                className={classes.row}
-              >
-                <TableCell className={classes.td}>
-                  {e["Property Name"]}
-                </TableCell>
-                <TableCell className={classes.td}>{e["Address"]}</TableCell>
-                <TableCell className={classes.td}>{e["Tax Parcel"]}</TableCell>
+              <TableRow hover onClick={() => handleSelectBuilding(e)} key={i}>
+                <TableCell>{e["Property Name"]}</TableCell>
+                <TableCell>{e["Address"]}</TableCell>
+                <TableCell>{e["Tax Parcel"]}</TableCell>
               </TableRow>
             );
           })}

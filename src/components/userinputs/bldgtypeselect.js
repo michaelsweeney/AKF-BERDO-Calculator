@@ -10,7 +10,13 @@ const BldgTypeSelect = (props) => {
   const { type, changeCallback } = props;
 
   return (
-    <Select id="someid" value={type} label={type} onChange={changeCallback}>
+    <Select
+      size="small"
+      id="someid"
+      value={type}
+      label={type}
+      onChange={changeCallback}
+    >
       {Object.keys(building_types).map((e, i) => (
         <MenuItem key={i} value={e}>
           {building_types[e]}

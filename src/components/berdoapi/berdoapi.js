@@ -7,7 +7,7 @@ import BerdoApiResultsTable from "./berdoapiresultstable";
 const BerdoApiComponent = (props) => {
   return (
     <div>
-      <BerdoApiInput />;
+      <BerdoApiInput />
       <BerdoApiResultsTable />
     </div>
   );

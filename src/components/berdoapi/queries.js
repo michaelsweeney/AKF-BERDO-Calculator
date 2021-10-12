@@ -41,8 +41,6 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
 
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
 
-  console.log(URL_COMPILED);
-
   URL_COMPILED = encodeURI(URL_COMPILED);
 
   let xmlhttp = new XMLHttpRequest();
@@ -86,14 +84,13 @@ const queryBuildingData = (o, callbackFunction) => {
   xmlhttp.open("GET", URL_COMPILED, true);
   xmlhttp.onreadystatechange = (d) => {
     let res = xmlhttp.response;
-    console.log(JSON.parse(res));
+
+    let records = JSON.parse(res).result.records;
+    callbackFunction(records);
     try {
-      let result = JSON.parse(res);
-
-      console.log(result.error.query[0]);
-
-      callbackFunction(result);
-    } catch {}
+    } catch {
+      console.warn("error: ", res);
+    }
   };
   xmlhttp.send();
 };

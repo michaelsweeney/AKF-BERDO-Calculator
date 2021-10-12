@@ -2,39 +2,34 @@ import { conn } from "../store/connect";
 
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@mui/material";
-const useStyles = makeStyles((d) => {
-  console.log(d);
-  return {
-    outer: {
-      display: d.isLoadModalOpen ? "inline-block" : "none",
-      position: "absolute",
-      boxSizing: "border-box",
-      width: "100vw",
-      height: "100vh",
-      backgroundColor: "rgba(0,0,0,0.9)",
-    },
-    inner: {
-      width: "100%",
-      height: "100%",
-      backgroundColor: "red",
-      margin: "100px",
-      //   margin: "100px",
-    },
-  };
-});
+import { Modal } from "@mui/material";
+import { Box } from "@mui/system";
+
+const style = {
+  position: "absolute",
+  top: "50%",
+  left: "50%",
+  transform: "translate(-50%, -50%)",
+  width: "80%",
+  height: "80%",
+  bgcolor: "white",
+  border: "2px solid #000",
+  boxShadow: 24,
+  p: 4,
+};
 
 const LoadBldgModal = (props) => {
-  console.log(props.state.ui);
-  const classes = useStyles(props.state.ui);
+  const isLoadModalOpen = props.state.ui.isLoadModalOpen;
 
   return (
-    <div className={classes.outer}>
-      <div className={classes.inner}>
+    <Modal open={isLoadModalOpen}>
+      <Box sx={style}>
         <Button onClick={() => props.actions.setIsLoadModalOpen(false)}>
           x
         </Button>
-      </div>
-    </div>
+        <div>{props.children}</div>
+      </Box>
+    </Modal>
   );
 };
 

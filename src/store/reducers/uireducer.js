@@ -3,7 +3,7 @@ const initialState = {
     height: window.innerHeight,
     width: window.innerWidth,
   },
-  isLoadModalOpen: false,
+  isLoadModalOpen: true,
 };
 
 export default function uiReducer(state = initialState, action) {

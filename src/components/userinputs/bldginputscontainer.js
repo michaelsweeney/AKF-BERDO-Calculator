@@ -41,7 +41,9 @@ const BldgInputsContainer = (props) => {
             area={e.area}
           />
         ))}
-        <Button onClick={handleAddBuildingType}>+</Button>
+        <Button size="small" onClick={handleAddBuildingType}>
+          +
+        </Button>
       </div>
 
       <div>

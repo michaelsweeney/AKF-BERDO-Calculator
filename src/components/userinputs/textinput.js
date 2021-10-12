@@ -7,7 +7,12 @@ const TextInput = (props) => {
   return (
     <div>
       <InputLabel value={label} />
-      <TextField onChange={changeCallback} value={value} variant="standard" />
+      <TextField
+        size="small"
+        onChange={changeCallback}
+        value={value}
+        variant="standard"
+      />
     </div>
   );
 };
