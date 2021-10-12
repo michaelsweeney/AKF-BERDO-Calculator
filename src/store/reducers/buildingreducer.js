@@ -1,6 +1,12 @@
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
+import berdoapi from "../../components/berdoapi/berdoapi";
 
 const initialState = {
+  berdoapi: {
+    inputQuery: "",
+    inputQueryResults: [],
+    loadedBuildingInfo: [],
+  },
   areas: [
     {
       type: "office",
@@ -112,6 +118,35 @@ export default function buildingReducer(state = initialState, action) {
           areas: state.areas,
           consumption: state.consumption,
         }).emissions_thresholds,
+      };
+    }
+
+    case "SET_BERDO_API_INPUT_QUERY": {
+      return {
+        ...state,
+        berdoapi: {
+          ...state.berdoapi,
+          inputQuery: action.payload,
+        },
+      };
+    }
+    case "SET_BERDO_API_QUERY_RESULTS": {
+      return {
+        ...state,
+        berdoapi: {
+          ...state.berdoapi,
+          inputQueryResults: action.payload,
+        },
+      };
+    }
+
+    case "SET_LOADED_BUILDING_QUERY_INFO": {
+      return {
+        ...state,
+        berdoapi: {
+          ...state.berdoapi,
+          loadedBuildingInfo: action.payload,
+        },
       };
     }
 

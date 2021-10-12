@@ -54,3 +54,25 @@ export function setIsLoadModalOpen(bool) {
     payload: bool,
   };
 }
+
+/* berdo api actions */
+export function setBerdoApiInputQuery(query) {
+  return {
+    type: "SET_BERDO_API_INPUT_QUERY",
+    payload: query,
+  };
+}
+
+export function setBerdoApiQueryResults(query_array) {
+  return {
+    type: "SET_BERDO_API_QUERY_RESULTS",
+    payload: query_array,
+  };
+}
+
+export function setLoadedBuildingQueryInfo(result) {
+  return {
+    type: "SET_LOADED_BUILDING_QUERY_INFO",
+    payload: result,
+  };
+}

@@ -7,7 +7,7 @@ import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
 import CompiledResults from "./components/compiledresults";
 import TestChart from "./components/charts/testchart";
 import LoadBldgModal from "./components/loadbldgmodal";
-import ApiComponent from "./components/api/apicomponent";
+import BerdoApiComponent from "./components/berdoapi/berdoapi";
 const useStyles = makeStyles({
   app: {
     boxSizing: "border-box",
@@ -62,7 +62,7 @@ const App = (props) => {
 
   return (
     <div className={classes.app}>
-      <ApiComponent />
+      <BerdoApiComponent />
       {/* <LoadBldgModal /> */}
       {/* <div className={classes.side}> */}
       {/* <BldgInputsContainer /> */}
