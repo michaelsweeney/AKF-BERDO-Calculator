@@ -1,27 +1,38 @@
-const INPUT_QUERY_FIELDS = ['"Property Name"', '"Tax Parcel"', '"Address"'];
+const escapify = (str) => {
+  let escaped_str = "";
+  for (let i = 0; i < str.length; i++) {
+    escaped_str += `!${str.charAt(i)}`;
+  }
+  return escaped_str;
+};
+
+const INPUT_QUERY_FIELDS = [`"Property Name"`, `"Tax Parcel"`, `"Address"`];
 
 const GET_BUILDING_FIELDS = [
-  '"Property Name"',
-  '"Tax Parcel"',
-  '"Address"',
-  '"Property Uses"',
-  '"Total Site Energy (kBTU)"',
-  '"Gross Area (sq ft)"',
-  '"% Electricity"',
-  '"% Gas"',
-  '"% Steam"',
-  '"% Fuel Oil"',
-  '"% District Hot Water"',
-  '"% District Chilled Water"',
-  //   '"% Other (Diesel #2, Kerosene, Propane or Other Fuel)"',
+  "'Property Name'",
+  "'Tax Parcel'",
+  "'Address'",
+  "'Property Uses'",
+  "'Total Site Energy (kBTU)'",
+  "'Gross Area (sq ft)'",
+  "'% Electricity'",
+  "'% Gas'",
+  "'% Steam'",
+  "'% Fuel Oil'",
+  "'% District Hot Water'",
+  "'% District Chilled Water'",
+  "'% Other (Diesel #2, Kerosene, Propane or Other Fuel)'",
 ];
 
+// https://nattaylor.com/labs/analyzeboston/#
 const queryBuildingsByTextInput = (input, callbackFunction) => {
+  let processed_input = escapify(input);
+
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
   let URL_QUERY_MID = `SELECT ${INPUT_QUERY_FIELDS.join(
     ", "
   )} FROM "a7b155de-10ee-48fc-bd89-fc8e31134913" WHERE `;
-  let URL_QUERY_END = `UPPER("Property Name") LIKE UPPER('%${input}%')`;
+  let URL_QUERY_END = `UPPER("Property Name") LIKE UPPER('%${processed_input}%') ESCAPE '!'`;
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
 
   let xmlhttp = new XMLHttpRequest();
@@ -29,6 +40,7 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
   xmlhttp.onreadystatechange = (d) => {
     try {
       let res = xmlhttp.response;
+      console.log(JSON.parse(res));
       let result = JSON.parse(res).result.records;
 
       callbackFunction(result);
@@ -38,19 +50,20 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
 };
 
 const queryBuildingData = (o, callbackFunction) => {
-  let tax_parcel = o["Tax Parcel"];
-  let property_name = o["Property Name"];
-  let address = o["Address"];
+  let tax_parcel = escapify(o["Tax Parcel"]);
+  let property_name = escapify(o["Property Name"]);
+  let address = escapify(o["Address"]);
 
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
   let URL_QUERY_MID = `SELECT ${GET_BUILDING_FIELDS.join(
-    ", "
+    `, `
   )} FROM "a7b155de-10ee-48fc-bd89-fc8e31134913" WHERE `;
 
-  let URL_QUERY_END = `UPPER("Tax Parcel") LIKE UPPER('%${tax_parcel}%') AND UPPER("Property Name") LIKE UPPER('%${property_name}%') AND UPPER("Address") LIKE UPPER('%${address}%')`;
+  let URL_QUERY_END = `UPPER("Tax Parcel") LIKE UPPER('%${tax_parcel}%') ESCAPE '!'`; // AND UPPER("Property Name") LIKE UPPER('%${property_name}%') AND UPPER("Address") LIKE UPPER('%${address}%') ESCAPE '!'`;
 
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
 
+  console.log(URL_COMPILED);
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
   xmlhttp.onreadystatechange = (d) => {
@@ -59,7 +72,7 @@ const queryBuildingData = (o, callbackFunction) => {
     try {
       let result = JSON.parse(res);
 
-      console.log(res);
+      console.log(result.error.query[0]);
 
       callbackFunction(result);
     } catch {}
