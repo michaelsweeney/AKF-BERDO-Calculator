@@ -3,14 +3,15 @@ const initialState = {
     height: window.innerHeight,
     width: window.innerWidth,
   },
+  isLoadModalOpen: false,
 };
 
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
-    case "SET_IS_LOADED_ERROR": {
+    case "SET_IS_LOAD_MODAL_OPEN": {
       return {
         ...state,
-        isLoadedError: action.payload,
+        isLoadModalOpen: action.payload,
       };
     }
     default:

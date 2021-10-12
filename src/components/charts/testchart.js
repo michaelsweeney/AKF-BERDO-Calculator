@@ -99,12 +99,14 @@ const TestChart = (props) => {
       .attr("cy", (d) => yScale(d.val))
       .style("fill", "red");
 
+    // instantiate path (need to use 'data' rather than 'datum' to execute join)
     chart_g
       .selectAll(".emissions-line")
       .data([0])
       .join("path")
       .attr("class", "emissions-line");
 
+    // select path once instantiated
     let emissions_line = chart_g
       .selectAll(".emissions-line")
       .datum(emissions)

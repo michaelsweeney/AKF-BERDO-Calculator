@@ -6,7 +6,8 @@ import { makeStyles } from "@material-ui/styles";
 import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
 import CompiledResults from "./components/compiledresults";
 import TestChart from "./components/charts/testchart";
-
+import LoadBldgModal from "./components/loadbldgmodal";
+import ApiComponent from "./components/api/apicomponent";
 const useStyles = makeStyles({
   app: {
     boxSizing: "border-box",
@@ -61,21 +62,23 @@ const App = (props) => {
 
   return (
     <div className={classes.app}>
-      <div className={classes.side}>
-        <BldgInputsContainer />
-      </div>
-      <div className={classes.main}>
-        <TestChart />
+      <ApiComponent />
+      {/* <LoadBldgModal /> */}
+      {/* <div className={classes.side}> */}
+      {/* <BldgInputsContainer /> */}
+      {/* </div> */}
+      {/* <div className={classes.main}> */}
+      {/* <TestChart /> */}
 
-        <CompiledResults />
-      </div>
+      {/* <CompiledResults /> */}
+      {/* </div> */}
     </div>
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    stateprops: { ...store },
+    state: { ...store },
   };
 };
 

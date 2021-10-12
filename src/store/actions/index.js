@@ -1,4 +1,4 @@
-// building actions
+/* building actions */
 export function addBuildingType(idx) {
   return {
     type: "ADD_BUILDING_TYPE",
@@ -44,5 +44,13 @@ export function setAllBuildingInputs(obj) {
   return {
     type: "SET_ALL_BUILDING_INPUTS",
     payload: obj,
+  };
+}
+
+/* ui actions */
+export function setIsLoadModalOpen(bool) {
+  return {
+    type: "SET_IS_LOAD_MODAL_OPEN",
+    payload: bool,
   };
 }

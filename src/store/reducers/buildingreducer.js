@@ -1,4 +1,3 @@
-import { PinDropSharp } from "@material-ui/icons";
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
 
 const initialState = {

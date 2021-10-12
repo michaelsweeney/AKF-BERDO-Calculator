@@ -1,10 +1,9 @@
 import BldgTypeInfoBox from "./bldgtypeinfobox";
 
-import Button from "@mui/material/Button";
 import { NumberInput } from "./numberinput";
 import { conn } from "../../store/connect";
 import { max } from "d3";
-
+import { Button } from "@mui/material";
 const BldgInputsContainer = (props) => {
   const handleUtilityChange = (val, fuel) => {
     props.actions.setUtilityConsumption(val, fuel);

@@ -1,10 +1,8 @@
 import { BldgTypeSelect } from "./bldgtypeselect";
 import { NumberInput } from "./numberinput";
 
-import Button from "@mui/material/Button";
-
 import { conn } from "../../store/connect";
-
+import { Button } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
   rmButton: {
