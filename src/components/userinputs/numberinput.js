@@ -10,7 +10,7 @@ const NumberInput = (props) => {
       <TextField
         onChange={changeCallback}
         type="number"
-        // label={label}
+        label={label}
         value={value}
         variant="standard"
       />

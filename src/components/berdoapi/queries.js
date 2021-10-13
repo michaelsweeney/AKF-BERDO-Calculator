@@ -79,7 +79,6 @@ const queryBuildingData = (o, callbackFunction) => {
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
   URL_COMPILED = encodeURI(URL_COMPILED);
 
-  console.log(URL_COMPILED);
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
   xmlhttp.onreadystatechange = (d) => {

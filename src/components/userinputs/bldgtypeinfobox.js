@@ -5,6 +5,13 @@ import { conn } from "../../store/connect";
 import { Button } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
+  root: {
+    // display: 'inline-block'
+
+  },
+  inner: {
+    display: 'inline-block',
+  },
   rmButton: {
     display: "inline-block",
   },
@@ -37,25 +44,30 @@ const BldgTypeInfoBox = (props) => {
   };
 
   return (
-    <div>
-      <Button
-        size="small"
-        className={classes.rmButton}
-        onClick={handleRemoveSelf}
-      >
-        x
-      </Button>
-      <NumberInput
-        className={classes.input}
-        changeCallback={handleAreaChange}
-        label="AREA"
-        value={area}
-      />
-      <BldgTypeSelect
-        className={classes.select}
-        changeCallback={handleTypeChange}
-        type={type}
-      />
+    <div className={classes.root}>
+      <div className={classes.inner}>
+        <Button
+          className={classes.rmButton}
+          size="small"
+          className={classes.rmButton}
+          onClick={handleRemoveSelf}
+        >
+          x
+        </Button>
+        <NumberInput
+          className={classes.input}
+          className={classes.input}
+          changeCallback={handleAreaChange}
+          label="AREA"
+          value={area}
+        />
+        <BldgTypeSelect
+          className={classes.select}
+          changeCallback={handleTypeChange}
+          type={type}
+        />
+      </div>
+
     </div>
   );
 };

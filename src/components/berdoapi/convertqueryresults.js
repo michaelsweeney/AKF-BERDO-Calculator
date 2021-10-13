@@ -5,29 +5,29 @@ import convertBuildingType from "./convertbuildingtype"
 
 /* 
 ASSUMPTIONS IN DATASET CONVERSION:
-// no input for multiple fuel oils... assume BERDO Input Number Two
-// no 'district chw' input in BERDO calcs. assuming elec driven.
-// no '% Other (Diesel #2, Kerosene, Propane or Other Fuel)' input in BERDO calcs. Assume diesel.
-// other conversion lookups to be found in convertBuildingType
+- no input for multiple fuel oils... assume BERDO Input Number Two
+- no 'district chw' input in BERDO calcs. assuming elec driven.
+- no '% Other (Diesel #2, Kerosene, Propane or Other Fuel)' input in BERDO calcs. Assume diesel.
+- other conversion lookups to be found in convertBuildingType
 */
 
 const convertQueryResults = (results) => {
-    console.log(results)
-    let area = results['Gross Area (sq ft)']
+    let area = +results['Gross Area (sq ft)']
     let type = convertBuildingType(results['Property Type'])
 
     let name = results['Property Name'] + ' - ' + results['Address']
 
-    let total_mmbtu = results['Total Site Energy (kBtu)'] / 1e3
+    let total_mmbtu = +results['Total Site Energy (kBTU)'] / 1e3
 
-    let elec_mmbtu = total_mmbtu * results['% Electricity']
-    let gas_mmbtu = total_mmbtu * results['% Gas']
-    let district_chw_mmbtu = total_mmbtu * results['% District Chilled Water']
-    let district_hw_mmbtu = total_mmbtu * results['% District Hot Water']
-    let steam_mmbtu = total_mmbtu * results['% Steam']
-    let fuel_oil_two_mmbtu = total_mmbtu * results['% Fuel Oil']
-    let other_mmbtu = total_mmbtu * results['% Other (Diesel #2, Kerosene, Propane or Other Fuel)']
-    console.log(name)
+    let elec_mmbtu = total_mmbtu * +results['% Electricity']
+    let gas_mmbtu = total_mmbtu * +results['% Gas']
+    let district_chw_mmbtu = total_mmbtu * +results['% District Chilled Water']
+    let district_hw_mmbtu = total_mmbtu * +results['% District Hot Water']
+    let steam_mmbtu = total_mmbtu * +results['% Steam']
+    let fuel_oil_two_mmbtu = total_mmbtu * +results['% Fuel Oil']
+    let other_mmbtu = total_mmbtu * +results['% Other (Diesel #2, Kerosene, Propane or Other Fuel)']
+
+
     let areas = [
         {
             type: type,
@@ -48,6 +48,8 @@ const convertQueryResults = (results) => {
         engine_driven_chiller_gas: 0,
         grid_elec: elec_mmbtu || 0,
     }
+
+
 
     return {
         areas: areas,

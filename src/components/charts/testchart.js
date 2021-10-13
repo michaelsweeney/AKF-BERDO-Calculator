@@ -6,7 +6,7 @@ import { useRef, useEffect } from "react";
 
 const TestChart = (props) => {
   const container = useRef(null);
-
+  const transition_duration = 500
   useEffect(() => {
     createChart();
   });
@@ -92,6 +92,7 @@ const TestChart = (props) => {
       .data(thresholds)
       .join("circle")
       .attr("class", "thresh-point")
+      .transition().duration(transition_duration)
       .attr("r", 5)
       .attr("cx", (d) => xScale(d.starting_year))
       .attr("cy", (d) => yScale(d.val))
@@ -109,6 +110,8 @@ const TestChart = (props) => {
       .selectAll(".emissions-line")
       .datum(emissions)
       .join("path")
+      .transition().duration(transition_duration)
+
       .attr("class", "emissions-line")
       .attr("stroke", "steelblue")
       .attr("stroke-width", 1.5)

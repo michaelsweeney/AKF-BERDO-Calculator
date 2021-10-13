@@ -14,7 +14,7 @@ const useStyles = makeStyles({
   app: {},
   side: {
     padding: 20,
-    width: "400px",
+    width: "500px",
     display: "inline-block",
     verticalAlign: "top",
   },

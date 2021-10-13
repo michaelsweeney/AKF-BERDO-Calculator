@@ -53,6 +53,7 @@ const BldgInputsContainer = (props) => {
               <NumberInput
                 changeCallback={(v) => handleUtilityChange(v.target.value, e)}
                 label={fueltypes[e]}
+                value={props.building.consumption[e]}
               />
             </div>
           );
