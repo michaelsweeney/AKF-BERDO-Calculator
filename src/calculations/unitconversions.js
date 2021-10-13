@@ -28,7 +28,8 @@ const diesel_mmbtu_to_gallons = (mmbtu) => mmbtu / 0.137381
 
 
 const convertNativeToMMBtu = (val, fuel) => {
-    return {
+
+    let functionobj = {
         grid_elec: elec_kwh_to_mmbtu,
         gas: gas_therms_to_mmbtu,
         fuel_1: fuel_one_gallons_to_mmbtu,
@@ -42,7 +43,9 @@ const convertNativeToMMBtu = (val, fuel) => {
         elec_driven_chiller: (v) => v,
         absorption_chiller_gas: (v) => v,
         engine_driven_chiller_gas: (v) => v,
-    }[fuel](val)
+        district_chilled_water: (v) => v,
+    }
+    return functionobj[fuel](val)
 }
 
 const convertMMBtuToNative = (val, fuel) => {
@@ -57,6 +60,7 @@ const convertMMBtuToNative = (val, fuel) => {
         // units already in mmbtu: placeholder function
         district_steam: (v) => v,
         district_hot_water: (v) => v,
+        district_chilled_water: (v) => v,
         elec_driven_chiller: (v) => v,
         absorption_chiller_gas: (v) => v,
         engine_driven_chiller_gas: (v) => v,

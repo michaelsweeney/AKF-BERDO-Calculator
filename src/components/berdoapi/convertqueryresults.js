@@ -1,7 +1,7 @@
 
 
 import convertBuildingType from "./convertbuildingtype"
-
+import { convertMMBtuToNative } from '../../calculations/unitconversions'
 
 /* 
 ASSUMPTIONS IN DATASET CONVERSION:
@@ -28,6 +28,15 @@ const convertQueryResults = (results) => {
     let other_mmbtu = total_mmbtu * +results['% Other (Diesel #2, Kerosene, Propane or Other Fuel)']
 
 
+    let elec_native = convertMMBtuToNative(elec_mmbtu, 'grid_elec')
+    let gas_native = convertMMBtuToNative(gas_mmbtu, 'gas')
+    let district_chw_native = convertMMBtuToNative(district_chw_mmbtu, 'district_chilled_water')
+    let district_hw_native = convertMMBtuToNative(district_hw_mmbtu, 'district_hot_water')
+    let steam_native = convertMMBtuToNative(steam_mmbtu, 'district_steam')
+    let fuel_oil_two_native = convertMMBtuToNative(fuel_oil_two_mmbtu, 'fuel_2')
+    let other_native = convertMMBtuToNative(other_mmbtu, 'diesel')
+
+
     let areas = [
         {
             type: type,
@@ -37,19 +46,18 @@ const convertQueryResults = (results) => {
     ]
 
     let consumption = {
-        gas: gas_mmbtu || 0,
+        grid_elec: elec_native || 0,
+        gas: gas_native || 0,
         fuel_1: 0,
-        fuel_2: fuel_oil_two_mmbtu || 0,
-        fuel_4: fuel_oil_two_mmbtu || 0,
-        diesel: other_mmbtu || 0,
-        district_steam: steam_mmbtu || 0,
-        district_hot_water: district_hw_mmbtu || 0,
-        elec_driven_chiller: district_chw_mmbtu || 0,
+        fuel_2: fuel_oil_two_native || 0,
+        fuel_4: fuel_oil_two_native || 0,
+        diesel: other_native || 0,
+        district_steam: steam_native || 0,
+        district_hot_water: district_hw_native || 0,
+        elec_driven_chiller: district_chw_native || 0,
         absorption_chiller_gas: 0,
         engine_driven_chiller_gas: 0,
-        grid_elec: elec_mmbtu || 0,
     }
-
 
 
     return {

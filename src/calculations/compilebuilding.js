@@ -5,6 +5,9 @@ import {
   non_electric_emissions_factors,
 } from "./emissionsfactors";
 
+import { convertMMBtuToNative, convertNativeToMMBtu } from '../calculations/unitconversions'
+
+
 const getEmissionsFactorsByYear = (year) => {
   return {
     ...non_electric_emissions_factors,
@@ -48,23 +51,18 @@ const getAnnualEmissions = (years, consumption, buildingarea) => {
 };
 
 const compileBuildingProfile = (buildinginputs) => {
-  /*
-   *
-   * need to calculsate blended co2e/sf for each year of
-   * elec grid rates
-   *
-   * get emissions standard for each year range
-   *
-   * return array of objects with keys:
-   * - year
-   * - co2e/sf/yr
-   * - blended standard for year
-   *
-   */
 
   const { areas, consumption_native } = buildinginputs;
 
-  const compiled_building = { areas, consumption_native };
+
+  const consumption_mmbtu = {}
+
+  Object.keys(consumption_native).map(fuel => {
+    let val = consumption_native[fuel]
+    consumption_mmbtu[fuel] = convertNativeToMMBtu(val, fuel)
+  })
+
+  const compiled_building = { areas, consumption_native, consumption_mmbtu };
 
   const totalarea = sum(areas.map(e => e.area));
 
@@ -72,7 +70,7 @@ const compileBuildingProfile = (buildinginputs) => {
 
   const annual_emissions_array = getAnnualEmissions(
     years,
-    consumption_native,
+    consumption_mmbtu,
     totalarea
   );
 

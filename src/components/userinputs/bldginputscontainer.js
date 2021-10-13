@@ -6,7 +6,6 @@ import { max } from "d3";
 import { Button } from "@mui/material";
 
 
-
 const BldgInputsContainer = (props) => {
   const handleUtilityChange = (val, fuel) => {
     props.actions.setNativeUtilityConsumption(val, fuel);
