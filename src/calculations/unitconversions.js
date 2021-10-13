@@ -1,13 +1,3 @@
-
-
-
-
-
-
-
-
-
-
 // native to mmbtu
 const elec_kwh_to_mmbtu = (kwh) => kwh * 0.003412
 const gas_therms_to_mmbtu = (therms) => therms * 0.10

@@ -147,8 +147,11 @@ const TestChart = (props) => {
       .data([0])
       .join('g')
       .attr('class', 'yaxis-g')
-      .call(yaxis)
       .attr('transform', () => `translate(${margins.l},${margins.t})`)
+      .transition().duration(transition_duration)
+      .call(yaxis)
+
+
 
 
 

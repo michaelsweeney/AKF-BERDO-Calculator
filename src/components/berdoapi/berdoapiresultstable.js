@@ -23,9 +23,11 @@ const BerdoApiResultsTable = (props) => {
     <div>
       <Table>
         <TableHead>
-          <TableCell>Property Name</TableCell>
-          <TableCell>Address</TableCell>
-          <TableCell>Tax Parcel</TableCell>
+          <TableRow>
+            <TableCell>Property Name</TableCell>
+            <TableCell>Address</TableCell>
+            <TableCell>Tax Parcel</TableCell>
+          </TableRow>
         </TableHead>
         <TableBody>
           {inputQueryResults.map((e, i) => {

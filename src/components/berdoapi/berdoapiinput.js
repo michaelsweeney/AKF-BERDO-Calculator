@@ -8,12 +8,12 @@ const BerdoApiInput = (props) => {
     let actionCallback = props.actions.setBerdoApiQueryResults;
     let inputval = e.target.value;
 
-    // send to async query function
-    queryBuildingsByTextInput(inputval, actionCallback);
-
     // handle synchronous & ui updates
     props.actions.setBerdoApiInputQuery(inputval);
+    // send to async query function
+    queryBuildingsByTextInput(inputval, actionCallback);
   };
+
   return (
     <div>
       <div>
