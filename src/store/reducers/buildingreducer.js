@@ -17,7 +17,8 @@ const initialState = {
       index: 0,
     },
   ],
-  consumption: {
+  consumption_native: {
+    grid_elec: 0,
     gas: 0,
     fuel_1: 0,
     fuel_2: 0,
@@ -28,7 +29,19 @@ const initialState = {
     elec_driven_chiller: 0,
     absorption_chiller_gas: 0,
     engine_driven_chiller_gas: 0,
+  },
+  consumption_mmbtu: {
     grid_elec: 0,
+    gas: 0,
+    fuel_1: 0,
+    fuel_2: 0,
+    fuel_4: 0,
+    diesel: 0,
+    district_steam: 0,
+    district_hot_water: 0,
+    elec_driven_chiller: 0,
+    absorption_chiller_gas: 0,
+    engine_driven_chiller_gas: 0,
   },
   annual_emissions: [],
   emissions_thresholds: {
@@ -49,7 +62,7 @@ const initialState = {
       "2050-": 0,
     },
   },
-  buildingName: 'manual input'
+  building_name: 'manual input'
 };
 
 export default function buildingReducer(state = initialState, action) {
@@ -58,7 +71,7 @@ export default function buildingReducer(state = initialState, action) {
       return {
         ...state,
         areas: action.payload.areas,
-        consumption: action.payload.consumption,
+        consumption_native: action.payload.consumption_native,
       };
     }
 
@@ -101,11 +114,11 @@ export default function buildingReducer(state = initialState, action) {
         ),
       };
     }
-    case "SET_UTILITY_CONSUMPTION": {
+    case "SET_NATIVE_UTILITY_CONSUMPTION": {
       return {
         ...state,
-        consumption: {
-          ...state.consumption,
+        consumption_native: {
+          ...state.consumption_native,
           [action.payload.fuel]: action.payload.val,
         },
       };
@@ -116,11 +129,11 @@ export default function buildingReducer(state = initialState, action) {
         ...state,
         annual_emissions: compileBuildingProfile({
           areas: state.areas,
-          consumption: state.consumption,
+          consumption_native: state.consumption_native,
         }).annual_emissions,
         emissions_thresholds: compileBuildingProfile({
           areas: state.areas,
-          consumption: state.consumption,
+          consumption_native: state.consumption_native,
         }).emissions_thresholds,
       };
     }
@@ -159,16 +172,16 @@ export default function buildingReducer(state = initialState, action) {
           loadedBuildingInfo: action.payload,
         },
         areas: areas,
-        consumption: consumption,
+        consumption_native: consumption,
         annual_emissions: compileBuildingProfile({
           areas: areas,
-          consumption: consumption,
+          consumption_native: consumption,
         }).annual_emissions,
         emissions_thresholds: compileBuildingProfile({
           areas: areas,
-          consumption: consumption,
+          consumption_native: consumption,
         }).emissions_thresholds,
-        buildingName: name
+        building_name: name
       };
     }
 

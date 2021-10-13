@@ -40,6 +40,7 @@ const convertQueryResults = (results) => {
         gas: gas_mmbtu || 0,
         fuel_1: 0,
         fuel_2: fuel_oil_two_mmbtu || 0,
+        fuel_4: fuel_oil_two_mmbtu || 0,
         diesel: other_mmbtu || 0,
         district_steam: steam_mmbtu || 0,
         district_hot_water: district_hw_mmbtu || 0,

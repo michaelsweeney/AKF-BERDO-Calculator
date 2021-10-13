@@ -5,7 +5,6 @@ import { conn } from "./store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@mui/material";
 import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
-import CompiledResults from "./components/compiledresults";
 import TestChart from "./components/charts/testchart";
 import LoadBldgModal from "./components/loadbldgmodal";
 import BerdoApiComponent from "./components/berdoapi/berdoapi";
@@ -14,7 +13,7 @@ const useStyles = makeStyles({
   app: {},
   side: {
     padding: 20,
-    width: "500px",
+    width: "200px",
     display: "inline-block",
     verticalAlign: "top",
   },
@@ -42,7 +41,7 @@ const App = (props) => {
           index: 1,
         },
       ],
-      consumption: {
+      consumption_native: {
         gas: 1000,
         fuel_1: 0,
         fuel_2: 50,
@@ -62,7 +61,7 @@ const App = (props) => {
 
   return (
     <div className={classes.app}>
-      <h2>{props.state.building.buildingName}</h2>
+      <h2>{props.state.building.building_name}</h2>
       <div className={classes.side}>
         <Button
           size="small"
@@ -78,7 +77,7 @@ const App = (props) => {
       <div className={classes.main}>
         <TestChart />
 
-        {/* <CompiledResults /> */}
+
       </div>
       <LoadBldgModal>
         <BerdoApiComponent />

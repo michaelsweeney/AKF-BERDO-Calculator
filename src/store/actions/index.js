@@ -27,9 +27,9 @@ export function setBuildingType(val, idx) {
   };
 }
 
-export function setUtilityConsumption(val, fuel) {
+export function setNativeUtilityConsumption(val, fuel) {
   return {
-    type: "SET_UTILITY_CONSUMPTION",
+    type: "SET_NATIVE_UTILITY_CONSUMPTION",
     payload: { val, fuel },
   };
 }

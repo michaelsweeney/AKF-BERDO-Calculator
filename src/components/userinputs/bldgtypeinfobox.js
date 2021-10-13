@@ -7,7 +7,6 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
   root: {
     // display: 'inline-block'
-
   },
   inner: {
     display: 'inline-block',

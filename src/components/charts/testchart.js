@@ -40,7 +40,7 @@ const TestChart = (props) => {
     let node = container.current;
 
     let containerdims = {
-      width: 500,
+      width: 1000,
       height: 500,
     };
     let margins = {
@@ -63,16 +63,16 @@ const TestChart = (props) => {
       .attr("width", containerdims.width)
       .attr("height", containerdims.height);
 
-    let chart_g = svg
-      .selectAll(".chart-g")
+    let plot_g = svg
+      .selectAll(".plot-g")
       .data([0])
       .join("g")
-      .attr("class", "chart-g")
-      .attr("x", margins.l)
-      .attr("y", margins.t);
+      .attr("class", "plot-g")
+      .attr('transform', `translate(${margins.l}, ${margins.t})`)
+
 
     let xScale = d3
-      .scaleTime()
+      .scaleLinear()
       .domain([2018, 2050])
       .range([0, chartdims.width]);
 
@@ -87,7 +87,7 @@ const TestChart = (props) => {
       ])
       .range([chartdims.height, 0]);
 
-    let threshold_points = chart_g
+    let threshold_points = plot_g
       .selectAll(".thresh-point")
       .data(thresholds)
       .join("circle")
@@ -99,14 +99,14 @@ const TestChart = (props) => {
       .style("fill", "red");
 
     // instantiate path (need to use 'data' rather than 'datum' to execute join)
-    chart_g
+    plot_g
       .selectAll(".emissions-line")
       .data([0])
       .join("path")
       .attr("class", "emissions-line");
 
     // select path once instantiated
-    let emissions_line = chart_g
+    let emissions_line = plot_g
       .selectAll(".emissions-line")
       .datum(emissions)
       .join("path")
@@ -114,14 +114,48 @@ const TestChart = (props) => {
 
       .attr("class", "emissions-line")
       .attr("stroke", "steelblue")
-      .attr("stroke-width", 1.5)
+      .attr("stroke-width", 2.5)
       .attr(
         "d",
         d3
           .line()
           .x((d) => xScale(d.year))
           .y((d) => yScale(d.val))
-      );
+      )
+      .attr('fill', 'none')
+
+
+
+
+    // create axes
+
+    let xaxis = d3.axisBottom().scale(xScale).tickFormat(d3.format('0'))
+
+    let xaxisg = svg
+      .selectAll('.xaxis-g')
+      .data([0])
+      .join('g')
+      .attr('class', 'xaxis-g')
+      .attr('transform', () => `translate(${margins.l},${margins.t + chartdims.height})`)
+      .call(xaxis)
+
+
+    let yaxis = d3.axisLeft().scale(yScale).tickFormat(d3.format('.2f'))
+
+    let yaxisg = svg
+      .selectAll('.yaxis-g')
+      .data([0])
+      .join('g')
+      .attr('class', 'yaxis-g')
+      .call(yaxis)
+      .attr('transform', () => `translate(${margins.l},${margins.t})`)
+
+
+
+
+
+
+
 
     return;
   };

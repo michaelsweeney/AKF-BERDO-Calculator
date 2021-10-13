@@ -62,9 +62,9 @@ const compileBuildingProfile = (buildinginputs) => {
    *
    */
 
-  const { areas, consumption } = buildinginputs;
+  const { areas, consumption_native } = buildinginputs;
 
-  const compiled_building = { areas, consumption };
+  const compiled_building = { areas, consumption_native };
 
   const totalarea = sum(areas.map(e => e.area));
 
@@ -72,7 +72,7 @@ const compileBuildingProfile = (buildinginputs) => {
 
   const annual_emissions_array = getAnnualEmissions(
     years,
-    consumption,
+    consumption_native,
     totalarea
   );
 

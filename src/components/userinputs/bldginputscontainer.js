@@ -4,9 +4,12 @@ import { NumberInput } from "./numberinput";
 import { conn } from "../../store/connect";
 import { max } from "d3";
 import { Button } from "@mui/material";
+
+
+
 const BldgInputsContainer = (props) => {
   const handleUtilityChange = (val, fuel) => {
-    props.actions.setUtilityConsumption(val, fuel);
+    props.actions.setNativeUtilityConsumption(val, fuel);
     props.actions.compileBuildingOutputs();
   };
 
@@ -53,7 +56,7 @@ const BldgInputsContainer = (props) => {
               <NumberInput
                 changeCallback={(v) => handleUtilityChange(v.target.value, e)}
                 label={fueltypes[e]}
-                value={props.building.consumption[e]}
+                value={props.building.consumption_native[e]}
               />
             </div>
           );
