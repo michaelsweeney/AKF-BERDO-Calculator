@@ -51,7 +51,7 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
       let result = JSON.parse(res).result.records;
 
       callbackFunction(result);
-    } catch {}
+    } catch { }
   };
   xmlhttp.send();
 };
@@ -85,8 +85,8 @@ const queryBuildingData = (o, callbackFunction) => {
   xmlhttp.onreadystatechange = (d) => {
     let res = xmlhttp.response;
 
-    let records = JSON.parse(res).result.records;
-    callbackFunction(records);
+    let record = JSON.parse(res).result.records[0];
+    callbackFunction(record);
     try {
     } catch {
       console.warn("error: ", res);

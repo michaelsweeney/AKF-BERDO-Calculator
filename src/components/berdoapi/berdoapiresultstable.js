@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { conn } from "../../store/connect";
 
-import { makeStyles } from "@material-ui/styles";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -14,7 +13,6 @@ const BerdoApiResultsTable = (props) => {
     let callbackFunction = props.actions.setLoadedBuildingQueryInfo;
 
     // send to async query function
-
     queryBuildingData(e, callbackFunction);
     props.actions.setIsLoadModalOpen(false);
     // handle synchronous & ui updates

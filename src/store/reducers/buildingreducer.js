@@ -1,6 +1,9 @@
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
 import berdoapi from "../../components/berdoapi/berdoapi";
 
+import { convertQueryResults } from "../../components/berdoapi/convertqueryresults";
+
+
 const initialState = {
   berdoapi: {
     inputQuery: "",
@@ -46,6 +49,7 @@ const initialState = {
       "2050-": 0,
     },
   },
+  buildingName: 'manual input'
 };
 
 export default function buildingReducer(state = initialState, action) {
@@ -141,12 +145,30 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "SET_LOADED_BUILDING_QUERY_INFO": {
+
+      // get areas, consumption from action.payload 
+      // get compiled building info w/ compileBuildingProfile()
+      // combine everything.
+
+      let { areas, consumption, name } = convertQueryResults(action.payload)
+
       return {
         ...state,
         berdoapi: {
           ...state.berdoapi,
           loadedBuildingInfo: action.payload,
         },
+        areas: areas,
+        consumption: consumption,
+        annual_emissions: compileBuildingProfile({
+          areas: areas,
+          consumption: consumption,
+        }).annual_emissions,
+        emissions_thresholds: compileBuildingProfile({
+          areas: areas,
+          consumption: consumption,
+        }).emissions_thresholds,
+        buildingName: name
       };
     }
 

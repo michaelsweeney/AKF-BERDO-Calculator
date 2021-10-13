@@ -62,6 +62,7 @@ const App = (props) => {
 
   return (
     <div className={classes.app}>
+      <h2>{props.state.building.buildingName}</h2>
       <div className={classes.side}>
         <Button
           size="small"
