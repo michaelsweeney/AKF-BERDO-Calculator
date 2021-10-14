@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { conn } from "../../store/connect";
-
+import { Paper } from "@mui/material";
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -20,7 +20,7 @@ const BerdoApiResultsTable = (props) => {
 
   let { inputQueryResults } = props.berdoapi;
   return (
-    <div>
+    <Paper style={{ maxHeight: "500px", overflow: "auto" }}>
       <Table>
         <TableHead>
           <TableRow>
@@ -41,7 +41,7 @@ const BerdoApiResultsTable = (props) => {
           })}
         </TableBody>
       </Table>
-    </div>
+    </Paper>
   );
 };
 

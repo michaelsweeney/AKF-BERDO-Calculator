@@ -5,7 +5,7 @@ import { conn } from "./store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@mui/material";
 import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
-import TestChart from "./components/charts/testchart";
+import LinePlot from "./components/charts/lineplot";
 import LoadBldgModal from "./components/loadbldgmodal";
 import BerdoApiComponent from "./components/berdoapi/berdoapi";
 
@@ -75,9 +75,7 @@ const App = (props) => {
         <BldgInputsContainer />
       </div>
       <div className={classes.main}>
-        <TestChart />
-
-
+        <LinePlot />
       </div>
       <LoadBldgModal>
         <BerdoApiComponent />
