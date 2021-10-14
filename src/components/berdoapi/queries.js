@@ -29,7 +29,9 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
   let processed_input = escapify(input);
 
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
-  URL_BEGIN = "https://berdo-cors-proxy.herokuapp.com/" + URL_BEGIN;
+  // const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/"
+  // URL_BEGIN =  CORS_ANYWHERE_URL + URL_BEGIN;
+
   let URL_QUERY_MID = `SELECT ${INPUT_QUERY_FIELDS.join(
     ", "
   )} FROM "a7b155de-10ee-48fc-bd89-fc8e31134913" WHERE `;
