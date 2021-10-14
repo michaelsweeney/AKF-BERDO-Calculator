@@ -63,8 +63,9 @@ const queryBuildingData = (o, callbackFunction) => {
   let address = escapify(o["Address"]);
 
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
+  // const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/"
+  // URL_BEGIN =  CORS_ANYWHERE_URL + URL_BEGIN;
 
-  URL_BEGIN = "https://berdo-cors-proxy.herokuapp.com/" + URL_BEGIN;
   // this should work, but...
   let URL_QUERY_MID = `SELECT ${GET_BUILDING_FIELDS.join(
     `, `
