@@ -24,13 +24,14 @@ const GET_BUILDING_FIELDS = [
   '"% Other (Diesel #2, Kerosene, Propane or Other Fuel)"',
 ];
 
+let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
+let PROXY_URL = "https://berdo-cors-proxy.herokuapp.com/";
+// PROXY_URL = "localhost:8080/";
+URL_BEGIN = PROXY_URL + URL_BEGIN;
+
 // https://nattaylor.com/labs/analyzeboston/#
 const queryBuildingsByTextInput = (input, callbackFunction) => {
   let processed_input = escapify(input);
-
-  let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
-  const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/";
-  URL_BEGIN = CORS_ANYWHERE_URL + URL_BEGIN;
 
   let URL_QUERY_MID = `SELECT ${INPUT_QUERY_FIELDS.join(
     ", "
@@ -48,6 +49,7 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
 
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
+  xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xmlhttp.onreadystatechange = (d) => {
     try {
       let res = xmlhttp.response;
@@ -63,10 +65,6 @@ const queryBuildingData = (o, callbackFunction) => {
   let tax_parcel = escapify(o["Tax Parcel"]);
   let property_name = escapify(o["Property Name"]);
   let address = escapify(o["Address"]);
-
-  let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
-  const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/";
-  URL_BEGIN = CORS_ANYWHERE_URL + URL_BEGIN;
 
   // this should work, but...
   let URL_QUERY_MID = `SELECT ${GET_BUILDING_FIELDS.join(
