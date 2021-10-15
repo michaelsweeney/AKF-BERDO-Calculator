@@ -3,7 +3,6 @@ import berdoapi from "../../components/berdoapi/berdoapi";
 
 import { convertQueryResults } from "../../components/berdoapi/convertqueryresults";
 
-
 const initialState = {
   berdoapi: {
     inputQuery: "",
@@ -62,7 +61,7 @@ const initialState = {
       "2050-": 0,
     },
   },
-  building_name: 'manual input'
+  building_name: "",
 };
 
 export default function buildingReducer(state = initialState, action) {
@@ -158,12 +157,11 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "SET_LOADED_BUILDING_QUERY_INFO": {
-
-      // get areas, consumption from action.payload 
+      // get areas, consumption from action.payload
       // get compiled building info w/ compileBuildingProfile()
       // combine everything.
 
-      let { areas, consumption, name } = convertQueryResults(action.payload)
+      let { areas, consumption, name } = convertQueryResults(action.payload);
 
       return {
         ...state,
@@ -181,7 +179,7 @@ export default function buildingReducer(state = initialState, action) {
           areas: areas,
           consumption_native: consumption,
         }).emissions_thresholds,
-        building_name: name
+        building_name: name,
       };
     }
 

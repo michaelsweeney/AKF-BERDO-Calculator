@@ -11,7 +11,9 @@ const TextInput = (props) => {
         size="small"
         onChange={changeCallback}
         value={value}
+        label={label}
         variant="standard"
+        fullWidth
       />
     </div>
   );

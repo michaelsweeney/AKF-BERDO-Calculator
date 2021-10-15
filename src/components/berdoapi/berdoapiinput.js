@@ -17,11 +17,13 @@ const BerdoApiInput = (props) => {
   return (
     <div>
       <div>
-        <TextInput
-          label={"lookup query"}
-          value={props.berdoapi.inputQuery}
-          changeCallback={inputQueryCallback}
-        />
+        <div style={{ width: 500 }}>
+          <TextInput
+            label="search for your building..."
+            value={props.berdoapi.inputQuery}
+            changeCallback={inputQueryCallback}
+          />
+        </div>
       </div>
     </div>
   );

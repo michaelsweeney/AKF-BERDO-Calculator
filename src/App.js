@@ -3,11 +3,22 @@ import "./App.css";
 import { conn } from "./store/connect";
 
 import { makeStyles } from "@material-ui/styles";
-import { Button } from "@mui/material";
-import BldgInputsContainer from "./components/userinputs/bldginputscontainer";
-import LinePlot from "./components/charts/lineplot";
+import { ThemeProvider } from "@material-ui/styles";
+
+import { createTheme } from "@mui/system";
+
+import Header from "./components/header";
+import Footer from "./components/footer";
+import MainContainer from "./components/maincontainer";
 import LoadBldgModal from "./components/loadbldgmodal";
-import BerdoApiComponent from "./components/berdoapi/berdoapi";
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: "#CF202E",
+    },
+  },
+});
 
 const useStyles = makeStyles({
   app: {},
@@ -22,12 +33,17 @@ const useStyles = makeStyles({
     width: "calc(100vw - 500px)",
     display: "inline-block",
   },
+  header: {
+    height: 100,
+  },
 });
 
 const App = (props) => {
+  console.log(theme);
   const classes = useStyles();
+
+  // load test dataset...
   useEffect(() => {
-    // load test dataset...
     const test_building_data = {
       areas: [
         {
@@ -60,27 +76,15 @@ const App = (props) => {
   }, [props.actions]);
 
   return (
-    <div className={classes.app}>
-      <h2>{props.state.building.building_name}</h2>
-      <div className={classes.side}>
-        <Button
-          size="small"
-          color="primary"
-          variant="contained"
-          onClick={() => props.actions.setIsLoadModalOpen(true)}
-        >
-          FIND YOUR BUILDING
-        </Button>
+    <ThemeProvider theme={theme}>
+      <div className={classes.app}>
+        <Header />
+        <MainContainer />
 
-        <BldgInputsContainer />
+        <LoadBldgModal />
+        <Footer />
       </div>
-      <div className={classes.main}>
-        <LinePlot />
-      </div>
-      <LoadBldgModal>
-        <BerdoApiComponent />
-      </LoadBldgModal>
-    </div>
+    </ThemeProvider>
   );
 };
 

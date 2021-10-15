@@ -5,6 +5,8 @@ import { Button } from "@mui/material";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/system";
 
+import BerdoApiComponent from "./berdoapi/berdoapi";
+
 const style = {
   position: "absolute",
   top: "50%",
@@ -27,7 +29,10 @@ const LoadBldgModal = (props) => {
         <Button onClick={() => props.actions.setIsLoadModalOpen(false)}>
           x
         </Button>
-        <div>{props.children}</div>
+
+        <h3>Query the BERDO dataset for your building</h3>
+
+        <BerdoApiComponent />
       </Box>
     </Modal>
   );
