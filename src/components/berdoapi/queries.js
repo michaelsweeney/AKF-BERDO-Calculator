@@ -29,8 +29,8 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
   let processed_input = escapify(input);
 
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
-  // const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/"
-  // URL_BEGIN =  CORS_ANYWHERE_URL + URL_BEGIN;
+  const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/";
+  URL_BEGIN = CORS_ANYWHERE_URL + URL_BEGIN;
 
   let URL_QUERY_MID = `SELECT ${INPUT_QUERY_FIELDS.join(
     ", "
@@ -65,8 +65,8 @@ const queryBuildingData = (o, callbackFunction) => {
   let address = escapify(o["Address"]);
 
   let URL_BEGIN = `https://data.boston.gov/api/3/action/datastore_search_sql?sql=`;
-  // const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/"
-  // URL_BEGIN =  CORS_ANYWHERE_URL + URL_BEGIN;
+  const CORS_ANYWHERE_URL = "https://berdo-cors-proxy.herokuapp.com/";
+  URL_BEGIN = CORS_ANYWHERE_URL + URL_BEGIN;
 
   // this should work, but...
   let URL_QUERY_MID = `SELECT ${GET_BUILDING_FIELDS.join(
@@ -86,6 +86,7 @@ const queryBuildingData = (o, callbackFunction) => {
 
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
+  xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
   xmlhttp.onreadystatechange = (d) => {
     let res = xmlhttp.response;
 
