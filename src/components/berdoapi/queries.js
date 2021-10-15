@@ -99,6 +99,7 @@ const queryBuildingData = (o, callbackFunction) => {
 };
 
 const doCORSRequest = () => {
+  console.log("testing only, delete this reference.");
   var cors_api_url = "https://berdo-cors-proxy.herokuapp.com/";
   var x = new XMLHttpRequest();
 
