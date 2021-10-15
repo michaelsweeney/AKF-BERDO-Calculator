@@ -47,7 +47,6 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
 
   URL_COMPILED = encodeURI(URL_COMPILED);
-  console.log(URL_COMPILED);
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
   xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -55,6 +54,8 @@ const queryBuildingsByTextInput = (input, callbackFunction) => {
     try {
       let res = xmlhttp.response;
       let result = JSON.parse(res).result.records;
+
+      console.log(result);
 
       callbackFunction(result);
     } catch {}
@@ -82,7 +83,6 @@ const queryBuildingData = (o, callbackFunction) => {
 
   let URL_COMPILED = `${URL_BEGIN}${URL_QUERY_MID}${URL_QUERY_END}`;
   URL_COMPILED = encodeURI(URL_COMPILED);
-  console.log(URL_COMPILED);
   let xmlhttp = new XMLHttpRequest();
   xmlhttp.open("GET", URL_COMPILED, true);
   xmlhttp.setRequestHeader("X-Requested-With", "XMLHttpRequest");
@@ -90,6 +90,7 @@ const queryBuildingData = (o, callbackFunction) => {
     let res = xmlhttp.response;
 
     let record = JSON.parse(res).result.records[0];
+    console.log(record);
     callbackFunction(record);
     try {
     } catch {
@@ -99,21 +100,4 @@ const queryBuildingData = (o, callbackFunction) => {
   xmlhttp.send();
 };
 
-const doCORSRequest = () => {
-  d3.csv("dataset.csv").then((d) => {
-    console.log(d);
-  });
-  console.log("testing only, delete this reference.");
-  var cors_api_url = "https://berdo-cors-proxy.herokuapp.com/";
-  var x = new XMLHttpRequest();
-
-  var url =
-    "https://data.boston.gov/api/3/action/datastore_search_sql?sql=select%20*%20from%20%22a7b155de-10ee-48fc-bd89-fc8e31134913%22%20WHERE%20UPPER(%22Tax%20Parcel%22)%20LIKE%20UPPER(%27%25!5!0!1!2!9!5!0!0!0!.!0%25%27)%20ESCAPE%20%27!%27%20%0A%20%20AND%20%0A%20%20UPPER(%22Property%20Name%22)%20LIKE%20UPPER(%27%25!2!3!4!%20!B!e!r!k%25%27)%20ESCAPE%20%27!%27%0A%20%20AND%20%0A%20%20UPPER(%22Address%22)%20LIKE%20UPPER(%27%25!2!3!4!%20!B!e!r!k!e!l!e!y!%20!S!t!r!e!e!t%25%27)%20ESCAPE%20%27!%27";
-  x.open("GET", cors_api_url + url);
-  x.onload = x.onerror = function () {
-    console.log(x);
-  };
-
-  x.send(url);
-};
-export { queryBuildingsByTextInput, queryBuildingData, doCORSRequest };
+export { queryBuildingsByTextInput, queryBuildingData };

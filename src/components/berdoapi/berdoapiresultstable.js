@@ -6,15 +6,16 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { queryBuildingData, doCORSRequest } from "./queries";
+import { queryBuildingDataFromCsv } from "./csvqueries";
 
 const BerdoApiResultsTable = (props) => {
-  doCORSRequest();
   const handleSelectBuilding = (e) => {
     let callbackFunction = props.actions.setLoadedBuildingQueryInfo;
 
     // send to async query function
-    queryBuildingData(e, callbackFunction);
+    // queryBuildingData(e, callbackFunction);
+    queryBuildingDataFromCsv(e, callbackFunction);
+
     props.actions.setIsLoadModalOpen(false);
     // handle synchronous & ui updates
   };

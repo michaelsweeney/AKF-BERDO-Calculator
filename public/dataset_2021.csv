@@ -1,5 +1,4 @@
-﻿Property Name,Tax Parcel,Property Type,Address,"Gross Area (sq ft) 
-",Property Uses,Total Site Energy (kBTU),% Electricity,% Gas,% Steam,% Fuel Oil,% District Hot Water,% District Chilled Water,"% Other (Diesel #2, Kerosene, Propane or Other Fuel)"
+﻿Property Name,Tax Parcel,Property Type,Address,Gross Area (sq ft),Property Uses,Total Site Energy (kBTU),% Electricity,% Gas,% Steam,% Fuel Oil,% District Hot Water,% District Chilled Water,"% Other (Diesel #2, Kerosene, Propane or Other Fuel)"
 Piano Row,500031000,Residence Hall/Dormitory,144/150 Boylston St,199874,Residence Hall/Dormitory,16261444.5,0.3776,0.53,0.6171,,,,
 216 Tremont,304909000,College/University,216 Tremont Street,45388,College/University,2537987.7,0.4827,,0.5173,,,,
 Colonial Theater,500045000,Performing Arts,98-106 Boylston Streeet,172349,Performing Arts,6832776.1,0.6411,,0.3589,,,,

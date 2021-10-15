@@ -39,7 +39,6 @@ const useStyles = makeStyles({
 });
 
 const App = (props) => {
-  console.log(theme);
   const classes = useStyles();
 
   // load test dataset...

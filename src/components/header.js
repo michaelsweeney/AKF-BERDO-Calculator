@@ -14,7 +14,6 @@ const useStyles = makeStyles({
   right: { display: "inline-block" },
 });
 const Header = (props) => {
-  console.log(props);
   const classes = useStyles();
   return (
     <div className={classes.header}>

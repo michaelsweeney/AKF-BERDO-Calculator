@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { conn } from "../../store/connect";
 import { TextInput } from "../userinputs/textinput";
-import { queryBuildingsByTextInput } from "./queries";
+import { queryCsvByTextInput } from "./csvqueries";
 
 const BerdoApiInput = (props) => {
   const inputQueryCallback = (e) => {
@@ -11,7 +11,8 @@ const BerdoApiInput = (props) => {
     // handle synchronous & ui updates
     props.actions.setBerdoApiInputQuery(inputval);
     // send to async query function
-    queryBuildingsByTextInput(inputval, actionCallback);
+    queryCsvByTextInput(inputval, actionCallback);
+    // queryBuildingsByTextInput(inputval, actionCallback);
   };
 
   return (
