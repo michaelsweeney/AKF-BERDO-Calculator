@@ -23,6 +23,7 @@ const BerdoApiInput = (props) => {
             label="search for your building..."
             value={props.berdoapi.inputQuery}
             changeCallback={inputQueryCallback}
+            autoFocus={true}
           />
         </div>
       </div>

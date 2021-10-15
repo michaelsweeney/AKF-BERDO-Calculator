@@ -17,6 +17,11 @@ const LinePlot = (props) => {
       return { year: e.year, val: e.normalized.total };
     });
 
+    let emissions_for_line =
+      emissions.length > 30
+        ? [emissions.slice(0)[0], emissions.slice(-1)[0]]
+        : emissions;
+
     let thresholds = props.building.emissions_thresholds.normalized;
     let domain_padding = 1.2;
 
@@ -218,10 +223,9 @@ const LinePlot = (props) => {
       .data([0])
       .join("path")
       .attr("class", "emissions-line");
-
     let emissions_line = plot_g
       .selectAll(".emissions-line")
-      .datum(emissions)
+      .datum(emissions_for_line)
       .join("path")
       .transition()
       .duration(transition_duration)
