@@ -1,3 +1,4 @@
+import * as d3 from "d3";
 const escapify = (str) => {
   let escaped_str = "";
   for (let i = 0; i < str.length; i++) {
@@ -99,6 +100,9 @@ const queryBuildingData = (o, callbackFunction) => {
 };
 
 const doCORSRequest = () => {
+  d3.csv("dataset.csv").then((d) => {
+    console.log(d);
+  });
   console.log("testing only, delete this reference.");
   var cors_api_url = "https://berdo-cors-proxy.herokuapp.com/";
   var x = new XMLHttpRequest();
