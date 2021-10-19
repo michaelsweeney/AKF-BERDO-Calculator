@@ -42,6 +42,7 @@ const queryBuildingDataFromCsv = (input, callbackFunction) => {
     if (filtered.length > 1) {
       console.error("error: more than one record found for query.");
     }
+    console.log(filtered[0]);
     callbackFunction(filtered[0]);
   });
 

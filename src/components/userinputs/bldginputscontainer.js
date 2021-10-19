@@ -5,7 +5,17 @@ import { conn } from "../../store/connect";
 import { max } from "d3";
 import { Button, Paper } from "@mui/material";
 
+import { makeStyles } from "@material-ui/styles";
+
+const useStyles = makeStyles({
+  root: {
+    // overflowY: "scroll",
+    // height: "calc(100vh - 200px)",
+  },
+});
+
 const BldgInputsContainer = (props) => {
+  const classes = useStyles();
   const handleUtilityChange = (val, fuel) => {
     props.actions.setNativeUtilityConsumption(val, fuel);
     props.actions.compileBuildingOutputs();
@@ -32,7 +42,7 @@ const BldgInputsContainer = (props) => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       <div>
         {props.building.areas.map((e, i) => (
           <BldgTypeInfoBox
@@ -42,8 +52,8 @@ const BldgInputsContainer = (props) => {
             area={e.area}
           />
         ))}
-        <Button size="small" onClick={handleAddBuildingType}>
-          +
+        <Button size="small" onClick={handleAddBuildingType} variant="outlined">
+          ADD BUILDING TYPE
         </Button>
       </div>
 

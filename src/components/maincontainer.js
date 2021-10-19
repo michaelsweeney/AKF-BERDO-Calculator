@@ -10,12 +10,12 @@ const useStyles = makeStyles({
   },
   main: {
     padding: 20,
-    width: "calc(100vw - 400px)",
+    width: "calc(100% - 350px)",
     display: "inline-block",
   },
   side: {
     padding: 20,
-    width: "200px",
+    width: "250px",
     display: "inline-block",
     verticalAlign: "top",
     borderRight: "1px solid black",
