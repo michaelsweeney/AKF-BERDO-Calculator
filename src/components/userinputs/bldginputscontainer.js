@@ -3,8 +3,7 @@ import BldgTypeInfoBox from "./bldgtypeinfobox";
 import { NumberInput } from "./numberinput";
 import { conn } from "../../store/connect";
 import { max } from "d3";
-import { Button } from "@mui/material";
-
+import { Button, Paper } from "@mui/material";
 
 const BldgInputsContainer = (props) => {
   const handleUtilityChange = (val, fuel) => {

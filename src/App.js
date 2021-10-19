@@ -3,10 +3,8 @@ import "./App.css";
 import { conn } from "./store/connect";
 
 import { makeStyles } from "@material-ui/styles";
-import { ThemeProvider } from "@material-ui/styles";
 
-import { createTheme } from "@mui/system";
-
+import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import MainContainer from "./components/maincontainer";
@@ -14,14 +12,22 @@ import LoadBldgModal from "./components/loadbldgmodal";
 
 const theme = createTheme({
   palette: {
+    secondary: {
+      main: "#cf202e",
+    },
     primary: {
-      main: "#CF202E",
+      main: "#283759",
     },
   },
 });
 
 const useStyles = makeStyles({
-  app: {},
+  app: {
+    height: "100vh",
+    width: "100vw",
+    boxSizing: "border-box",
+    overflow: "hidden",
+  },
   side: {
     padding: 20,
     width: "200px",

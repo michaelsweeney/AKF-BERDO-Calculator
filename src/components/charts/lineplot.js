@@ -188,7 +188,7 @@ const LinePlot = (props) => {
       .attr("r", 5)
       .attr("cx", (d) => xScale(d.starting_year))
       .attr("cy", (d) => yScale(d.val))
-      .style("fill", (d) => (d.threshold_met ? "black" : "red"));
+      .style("fill", (d) => (d.threshold_met ? "gray" : "red"));
 
     let threshold_lines = plot_g
       .selectAll(".thresh-line")
@@ -201,8 +201,8 @@ const LinePlot = (props) => {
       .attr("x2", (d) => xScale("2050"))
       .attr("y1", (d) => yScale(d.val))
       .attr("y2", (d) => yScale(d.val))
-      .attr("stroke-dasharray", "4 0 4")
-      .style("stroke", (d) => (d.threshold_met ? "black" : "red"));
+      .attr("stroke-dasharray", "2 0 2")
+      .style("stroke", (d) => (d.threshold_met ? "gray" : "red"));
 
     let threshold_annotations = annotation_g
       .selectAll(".threshold-annotation")

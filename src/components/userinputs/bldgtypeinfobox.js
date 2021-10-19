@@ -9,7 +9,7 @@ const useStyles = makeStyles({
     // display: 'inline-block'
   },
   inner: {
-    display: 'inline-block',
+    display: "inline-block",
   },
   rmButton: {
     display: "inline-block",
@@ -48,13 +48,11 @@ const BldgTypeInfoBox = (props) => {
         <Button
           className={classes.rmButton}
           size="small"
-          className={classes.rmButton}
           onClick={handleRemoveSelf}
         >
           x
         </Button>
         <NumberInput
-          className={classes.input}
           className={classes.input}
           changeCallback={handleAreaChange}
           label="AREA"
@@ -66,14 +64,13 @@ const BldgTypeInfoBox = (props) => {
           type={type}
         />
       </div>
-
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
   return {
-    ...state,
+    actions: state.actions,
   };
 };
 

@@ -4,7 +4,10 @@ import BldgInputsContainer from "./userinputs/bldginputscontainer";
 import LinePlot from "./charts/lineplot";
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    height: "calc(100vh - 200px)",
+    overflow: "hidden",
+  },
   main: {
     padding: 20,
     width: "calc(100vw - 400px)",
