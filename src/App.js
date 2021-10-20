@@ -28,20 +28,7 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     overflow: "hidden",
   },
-  side: {
-    padding: 20,
-    width: "200px",
-    display: "inline-block",
-    verticalAlign: "top",
-  },
-  main: {
-    padding: 20,
-    width: "calc(100vw - 500px)",
-    display: "inline-block",
-  },
-  header: {
-    height: 100,
-  },
+
 });
 
 const App = (props) => {
@@ -53,19 +40,14 @@ const App = (props) => {
       areas: [
         {
           type: "office",
-          area: 30000,
+          area: 0,
           index: 0,
-        },
-        {
-          type: "assembly",
-          area: 10000,
-          index: 1,
         },
       ],
       consumption_native: {
-        gas: 1000,
+        gas: 0,
         fuel_1: 0,
-        fuel_2: 50,
+        fuel_2: 0,
         fuel_4: 0,
         diesel: 0,
         district_steam: 0,
@@ -73,19 +55,35 @@ const App = (props) => {
         elec_driven_chiller: 0,
         absorption_chiller_gas: 0,
         engine_driven_chiller_gas: 0,
-        grid_elec: 2000,
+        grid_elec: 0,
       },
     };
     props.actions.setAllBuildingInputs(test_building_data);
     props.actions.compileBuildingOutputs();
   }, [props.actions]);
 
+
+  // handle resize
+  useEffect(() => {
+
+    const handleResize = () => {
+      props.actions.setWindowDimensions({
+        width: window.innerWidth,
+        height: window.innerHeight
+      })
+    }
+
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+
+
+  }, [])
+
   return (
     <ThemeProvider theme={theme}>
       <div className={classes.app}>
         <Header />
         <MainContainer />
-
         <LoadBldgModal />
         <Footer />
       </div>

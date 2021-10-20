@@ -1,10 +1,10 @@
 import { makeStyles } from "@material-ui/styles";
-
+import { Paper } from "@mui/material";
 const useStyles = makeStyles({
   footer: {
     height: 75,
     padding: 20,
-    borderTop: "solid 2px black",
+    // borderTop: "solid 2px black",
   },
   left: {},
   center: {},
@@ -13,11 +13,14 @@ const useStyles = makeStyles({
 const Footer = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.footer}>
-      <div className={classes.right}>copyright 2021 AKF Engineers</div>
-      {/* <img width="75" src="city_council_logo.png"></img> */}
-      {/* <img width="75" src="akf-logo.png"></img> */}
-    </div>
+    <Paper elevation={2}>
+      <div className={classes.footer}>
+        <div className={classes.right}>copyright 2021 AKF Engineers</div>
+        {/* <img width="75" src="city_council_logo.png"></img> */}
+        {/* <img width="75" src="akf-logo.png"></img> */}
+      </div>
+    </Paper>
+
   );
 };
 

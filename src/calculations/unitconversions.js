@@ -14,6 +14,8 @@ const fuel_two_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.1467);
 const fuel_four_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.51);
 const diesel_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.137381);
 
+const placeholder_conversion = (v) => Math.round(v)
+
 const convertNativeToMMBtu = (val, fuel) => {
   let functionobj = {
     grid_elec: elec_kwh_to_mmbtu,
@@ -24,12 +26,12 @@ const convertNativeToMMBtu = (val, fuel) => {
     diesel: diesel_gallons_to_mmbtu,
 
     // units already in mmbtu: placeholder function
-    district_steam: (v) => v,
-    district_hot_water: (v) => v,
-    elec_driven_chiller: (v) => v,
-    absorption_chiller_gas: (v) => v,
-    engine_driven_chiller_gas: (v) => v,
-    district_chilled_water: (v) => v,
+    district_steam: placeholder_conversion,
+    district_hot_water: placeholder_conversion,
+    elec_driven_chiller: placeholder_conversion,
+    absorption_chiller_gas: placeholder_conversion,
+    engine_driven_chiller_gas: placeholder_conversion,
+    district_chilled_water: placeholder_conversion,
   };
   return functionobj[fuel](val);
 };
@@ -44,12 +46,12 @@ const convertMMBtuToNative = (val, fuel) => {
     diesel: diesel_mmbtu_to_gallons,
 
     // units already in mmbtu: placeholder function
-    district_steam: (v) => v,
-    district_hot_water: (v) => v,
-    district_chilled_water: (v) => v,
-    elec_driven_chiller: (v) => v,
-    absorption_chiller_gas: (v) => v,
-    engine_driven_chiller_gas: (v) => v,
+    district_steam: placeholder_conversion,
+    district_hot_water: placeholder_conversion,
+    district_chilled_water: placeholder_conversion,
+    elec_driven_chiller: placeholder_conversion,
+    absorption_chiller_gas: placeholder_conversion,
+    engine_driven_chiller_gas: placeholder_conversion,
   }[fuel](val);
 };
 

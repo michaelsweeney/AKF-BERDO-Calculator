@@ -2,13 +2,15 @@ import { Button } from "@mui/material";
 
 import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
+import { Paper } from "@mui/material";
+
 
 const useStyles = makeStyles({
   header: {
     height: 100,
     width: "100vw",
     // padding: 20,
-    borderBottom: "2px black solid",
+    // borderBottom: "2px gray solid",
     overflow: "hidden",
     whiteSpace: "nowrap",
     boxSizing: "border-box",
@@ -46,7 +48,7 @@ const useStyles = makeStyles({
     letterSpacing: 1.25,
   },
   akfLogoContainer: {
-    padding: 15,
+    padding: 10,
   },
   findButton: {
     paddingRight: 15,
@@ -55,29 +57,35 @@ const useStyles = makeStyles({
 const Header = (props) => {
   const classes = useStyles();
   return (
-    <div className={classes.header}>
-      <div className={classes.left}>
-        <div className={classes.akfLogoContainer}>
-          <img width="75" src="akf-logo.png"></img>
+    <Paper elevation={2}>
+      <div className={classes.header}>
+        <div className={classes.left}>
+          <div className={classes.akfLogoContainer}>
+            <img width="95" src="akf-logo.png"></img>
+          </div>
+        </div>
+        <div className={classes.center}>
+          <div className={classes.h1}>BERDO ARTICLE 37 CALCULATOR</div>
+          <div className={classes.h2}>{props.building_name}</div>
+        </div>
+        <div className={classes.right}>
+          <div className={classes.findButton}>
+            <Button
+              size="small"
+              color="primary"
+              variant="outlined"
+              onClick={() => props.actions.setIsLoadModalOpen(true)}
+            >
+              FIND YOUR BUILDING
+            </Button>
+          </div>
         </div>
       </div>
-      <div className={classes.center}>
-        <div className={classes.h1}>BERDO ARTICLE 37 CALCULATOR</div>
-        <div className={classes.h2}>{props.building_name}</div>
-      </div>
-      <div className={classes.right}>
-        <div className={classes.findButton}>
-          <Button
-            size="small"
-            color="primary"
-            variant="outlined"
-            onClick={() => props.actions.setIsLoadModalOpen(true)}
-          >
-            FIND YOUR BUILDING
-          </Button>
-        </div>
-      </div>
-    </div>
+
+    </Paper>
+
+
+
   );
 };
 

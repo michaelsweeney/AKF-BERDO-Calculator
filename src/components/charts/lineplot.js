@@ -5,6 +5,8 @@ import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 
 const LinePlot = (props) => {
+
+  const { containerdims } = props;
   const container = useRef(null);
   useEffect(() => {
     createChart();
@@ -58,10 +60,7 @@ const LinePlot = (props) => {
 
     let node = container.current;
 
-    let containerdims = {
-      width: 800,
-      height: 500,
-    };
+
     let margins = {
       t: 20,
       b: 20,

@@ -55,6 +55,20 @@ export function setIsLoadModalOpen(bool) {
   };
 }
 
+export function setWindowDimensions(dims) {
+  return {
+    type: 'SET_WINDOW_DIMENSIONS',
+    payload: dims
+  }
+}
+
+export function toggleAccordion(val) {
+  return {
+    type: 'TOGGLE_ACCORDION',
+    payload: val
+  }
+}
+
 /* berdo api actions */
 export function setBerdoApiInputQuery(query) {
   return {
