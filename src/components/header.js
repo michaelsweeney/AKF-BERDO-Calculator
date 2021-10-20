@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     height: 100,
     width: "100vw",
     // padding: 20,
-    // borderBottom: "2px gray solid",
+    borderBottom: "1px gray solid",
     overflow: "hidden",
     whiteSpace: "nowrap",
     boxSizing: "border-box",
@@ -19,7 +19,6 @@ const useStyles = makeStyles({
   left: {
     display: "inline-block",
     width: "100px",
-
     verticalAlign: "middle",
   },
   center: {
@@ -71,9 +70,9 @@ const Header = (props) => {
         <div className={classes.right}>
           <div className={classes.findButton}>
             <Button
-              size="small"
+              // size="small"
               color="primary"
-              variant="outlined"
+              variant="contained"
               onClick={() => props.actions.setIsLoadModalOpen(true)}
             >
               FIND YOUR BUILDING
@@ -81,7 +80,6 @@ const Header = (props) => {
           </div>
         </div>
       </div>
-
     </Paper>
 
 

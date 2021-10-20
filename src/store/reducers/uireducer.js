@@ -25,6 +25,7 @@ export default function uiReducer(state = initialState, action) {
       };
     }
     case "TOGGLE_ACCORDION": {
+
       return {
         ...state,
         accordion: {

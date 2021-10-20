@@ -15,7 +15,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const useStyles = makeStyles({
   root: {
-
+    height: '100%',
   },
   accordionSummary: {
     fontWeight: 600
@@ -89,12 +89,16 @@ const Sidebar = (props) => {
           </AccordionDetails>
         </Accordion>
 
-        <Accordion expanded={props.ui.accordion.utility_consumption} onChange={() => handleAccordionChange('utility_consumption')}>
-
+        <Accordion
+          expanded={props.ui.accordion.utility_consumption}
+          onChange={() => handleAccordionChange('utility_consumption')}
+        >
           <AccordionSummary
             expandIcon={<ExpandMoreIcon />}
           >
-            <div className={classes.accordionSummary}>Utility Consumption</div>
+            <div className={classes.accordionSummary}>
+              Utility Consumption
+            </div>
           </AccordionSummary>
           <AccordionDetails style={{ maxHeight: "500px", overflow: "auto" }}>
             <div>

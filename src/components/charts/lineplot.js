@@ -62,8 +62,8 @@ const LinePlot = (props) => {
 
 
     let margins = {
-      t: 20,
-      b: 20,
+      t: 50,
+      b: 50,
       r: 250,
       l: 80,
     };
@@ -114,13 +114,18 @@ const LinePlot = (props) => {
       .range([chartdims.height, 0]);
 
     // create axes
-    let xAxisBottom = d3.axisBottom().scale(xScale).tickFormat(d3.format("0"));
+    let xAxisBottom = d3
+      .axisBottom()
+      .scale(xScale)
+      .tickFormat(d3.format("0"))
+      .tickSizeOuter(0)
 
     let xAxisTop = d3
       .axisTop()
       .scale(xScale)
       .ticks(0)
-      .tickFormat(d3.format("0"));
+      .tickFormat(d3.format("0"))
+      .tickSizeOuter(0)
 
     let xaxistop = svg
       .selectAll(".xaxis-g-top")
@@ -145,13 +150,16 @@ const LinePlot = (props) => {
       .axisLeft()
       .scale(yScale)
       .ticks(5)
-      .tickFormat(d3.format(".2f"));
+      .tickSizeOuter(5)
+      .tickFormat(d3.format(".2f"))
+      .tickSizeOuter(0)
 
     let yAxisRight = d3
       .axisLeft()
       .scale(yScale)
       .ticks(0)
-      .tickFormat(d3.format(".2f"));
+      .tickFormat(d3.format(".2f"))
+      .tickSizeOuter(0)
 
     let yaxisgleft = svg
       .selectAll(".yaxis-g-left")
@@ -210,18 +218,18 @@ const LinePlot = (props) => {
       .attr("class", "threshold-annotation")
       .transition()
       .duration(transition_duration)
-      .attr("x", xScale(2050) + 50)
+      .attr("x", xScale(2050) + 25)
       .attr("y", (d) => yScale(d.val))
       .text((d) => `${d.period}: ${d3.format(".2f")(d.val)} kgCO2e/sf/yr`)
-      .style("stroke", (d) => (d.threshold_met ? "black" : "red"))
-      .style("font-weight", "lighter")
-      .style("font-size", "0.75em");
+      .style("fill", (d) => (d.threshold_met ? "black" : "red"))
+      .style('font-size', '1em')
 
     plot_g
       .selectAll(".emissions-line")
       .data([0])
       .join("path")
       .attr("class", "emissions-line");
+
     let emissions_line = plot_g
       .selectAll(".emissions-line")
       .datum(emissions_for_line)
@@ -240,6 +248,42 @@ const LinePlot = (props) => {
           .y((d) => yScale(d.val))
       )
       .attr("fill", "none");
+
+
+
+    let yaxistitle = svg
+      .selectAll('.y-axis-title')
+      .data([0])
+      .join('text')
+      .attr('class', 'y-axis-title')
+      .attr('transform', 'rotate(270)')
+      .attr('x', (-(margins.t + chartdims.height) / 2) - 150)
+      .attr('y', (margins.l / 2) - 15)
+      .text('Carbon Emission Intensity (kgCO2e/sf/yr)')
+      .style('font-size', '1em')
+
+    let xaxistitle = svg
+      .selectAll('.x-axis-title')
+      .data([0])
+      .join('text')
+      .attr('class', 'x-axis-title')
+      .attr('x', (margins.l + chartdims.width) / 2)
+      .attr('y', margins.t + chartdims.height + 40)
+
+      .text('Year')
+      .style('font-size', '1em')
+
+
+    let charttitle = svg
+      .selectAll('.chart-title')
+      .data([0])
+      .join('text')
+      .attr('class', 'chart-title')
+      .attr('x', ((margins.l + chartdims.width) / 2) - 50)
+      .attr('y', margins.t - 20)
+      .text('CEI Threshold Summary')
+      .style('font-size', '1.25em')
+
 
     return;
   };

@@ -18,7 +18,8 @@ const useStyles = makeStyles({
     width: "300px",
     display: "inline-block",
     verticalAlign: "top",
-    // borderRight: "1px solid black",
+    height: '100%',
+    borderRight: "1px solid black",
   },
 });
 
@@ -27,6 +28,7 @@ const useStyles = makeStyles({
 const MainContainer = (props) => {
   const classes = useStyles();
   return (
+
     <div className={classes.root}>
       <div className={classes.side}>
         <Sidebar />
@@ -38,6 +40,9 @@ const MainContainer = (props) => {
         }} />
       </div>
     </div>
+
+
+
 
   );
 };

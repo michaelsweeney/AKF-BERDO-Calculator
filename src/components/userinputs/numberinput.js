@@ -12,9 +12,10 @@ const NumberInput = (props) => {
   const { label, changeCallback, value } = props;
   const classes = useStyles()
   return (
-    <div>
+    <div >
       <div className={classes.label}>{label}</div>
       <TextField
+        sx={{ width: '100%' }}
         onChange={changeCallback}
         type="number"
         value={value}
