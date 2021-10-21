@@ -28,7 +28,6 @@ const useStyles = makeStyles({
     boxSizing: "border-box",
     overflow: "hidden",
   },
-
 });
 
 const App = (props) => {
@@ -62,22 +61,18 @@ const App = (props) => {
     props.actions.compileBuildingOutputs();
   }, [props.actions]);
 
-
   // handle resize
   useEffect(() => {
-
     const handleResize = () => {
       props.actions.setWindowDimensions({
         width: window.innerWidth,
-        height: window.innerHeight
-      })
-    }
+        height: window.innerHeight,
+      });
+    };
 
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
-
-
-  }, [])
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -93,7 +88,7 @@ const App = (props) => {
 
 const mapStateToProps = (store) => {
   return {
-    state: { ...store },
+    actions: { ...store.actions },
   };
 };
 

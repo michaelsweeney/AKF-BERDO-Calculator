@@ -40,7 +40,8 @@ const UtilityInputContainer = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state,
+    building: { ...state.building },
+    actions: { ...state.actions },
   };
 };
 

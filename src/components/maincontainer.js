@@ -3,6 +3,7 @@ import { makeStyles } from "@material-ui/styles";
 import Sidebar from "./sidebar";
 import LinePlot from "./charts/lineplot";
 import { Paper } from "@mui/material";
+
 const useStyles = makeStyles({
   root: {
     height: "calc(100vh - 200px)",
@@ -18,38 +19,33 @@ const useStyles = makeStyles({
     width: "300px",
     display: "inline-block",
     verticalAlign: "top",
-    height: '100%',
+    height: "100%",
     borderRight: "1px solid black",
   },
 });
 
-
-
 const MainContainer = (props) => {
   const classes = useStyles();
   return (
-
     <div className={classes.root}>
       <div className={classes.side}>
         <Sidebar />
       </div>
       <div className={classes.main}>
-        <LinePlot containerdims={{
-          width: props.state.ui.dims.width - 400,
-          height: props.state.ui.dims.height - 300,
-        }} />
+        <LinePlot
+          containerdims={{
+            width: props.window.dims.width - 400,
+            height: props.window.dims.height - 300,
+          }}
+        />
       </div>
     </div>
-
-
-
-
   );
 };
 
 const mapStateToProps = (store) => {
   return {
-    state: { ...store },
+    window: { ...store.window },
   };
 };
 

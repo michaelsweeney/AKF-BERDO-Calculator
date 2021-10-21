@@ -5,7 +5,6 @@ import * as d3 from "d3";
 import { useRef, useEffect } from "react";
 
 const LinePlot = (props) => {
-
   const { containerdims } = props;
   const container = useRef(null);
   useEffect(() => {
@@ -59,7 +58,6 @@ const LinePlot = (props) => {
     });
 
     let node = container.current;
-
 
     let margins = {
       t: 50,
@@ -118,14 +116,14 @@ const LinePlot = (props) => {
       .axisBottom()
       .scale(xScale)
       .tickFormat(d3.format("0"))
-      .tickSizeOuter(0)
+      .tickSizeOuter(0);
 
     let xAxisTop = d3
       .axisTop()
       .scale(xScale)
       .ticks(0)
       .tickFormat(d3.format("0"))
-      .tickSizeOuter(0)
+      .tickSizeOuter(0);
 
     let xaxistop = svg
       .selectAll(".xaxis-g-top")
@@ -152,14 +150,14 @@ const LinePlot = (props) => {
       .ticks(5)
       .tickSizeOuter(5)
       .tickFormat(d3.format(".2f"))
-      .tickSizeOuter(0)
+      .tickSizeOuter(0);
 
     let yAxisRight = d3
       .axisLeft()
       .scale(yScale)
       .ticks(0)
       .tickFormat(d3.format(".2f"))
-      .tickSizeOuter(0)
+      .tickSizeOuter(0);
 
     let yaxisgleft = svg
       .selectAll(".yaxis-g-left")
@@ -222,7 +220,7 @@ const LinePlot = (props) => {
       .attr("y", (d) => yScale(d.val))
       .text((d) => `${d.period}: ${d3.format(".2f")(d.val)} kgCO2e/sf/yr`)
       .style("fill", (d) => (d.threshold_met ? "black" : "red"))
-      .style('font-size', '1em')
+      .style("font-size", "1em");
 
     plot_g
       .selectAll(".emissions-line")
@@ -249,41 +247,37 @@ const LinePlot = (props) => {
       )
       .attr("fill", "none");
 
-
-
     let yaxistitle = svg
-      .selectAll('.y-axis-title')
+      .selectAll(".y-axis-title")
       .data([0])
-      .join('text')
-      .attr('class', 'y-axis-title')
-      .attr('transform', 'rotate(270)')
-      .attr('x', (-(margins.t + chartdims.height) / 2) - 150)
-      .attr('y', (margins.l / 2) - 15)
-      .text('Carbon Emission Intensity (kgCO2e/sf/yr)')
-      .style('font-size', '1em')
+      .join("text")
+      .attr("class", "y-axis-title")
+      .attr("transform", "rotate(270)")
+      .attr("x", -(margins.t + chartdims.height) / 2 - 150)
+      .attr("y", margins.l / 2 - 15)
+      .text("Carbon Emission Intensity (kgCO2e/sf/yr)")
+      .style("font-size", "1em");
 
     let xaxistitle = svg
-      .selectAll('.x-axis-title')
+      .selectAll(".x-axis-title")
       .data([0])
-      .join('text')
-      .attr('class', 'x-axis-title')
-      .attr('x', (margins.l + chartdims.width) / 2)
-      .attr('y', margins.t + chartdims.height + 40)
+      .join("text")
+      .attr("class", "x-axis-title")
+      .attr("x", (margins.l + chartdims.width) / 2)
+      .attr("y", margins.t + chartdims.height + 40)
 
-      .text('Year')
-      .style('font-size', '1em')
-
+      .text("Year")
+      .style("font-size", "1em");
 
     let charttitle = svg
-      .selectAll('.chart-title')
+      .selectAll(".chart-title")
       .data([0])
-      .join('text')
-      .attr('class', 'chart-title')
-      .attr('x', ((margins.l + chartdims.width) / 2) - 50)
-      .attr('y', margins.t - 20)
-      .text('CEI Threshold Summary')
-      .style('font-size', '1.25em')
-
+      .join("text")
+      .attr("class", "chart-title")
+      .attr("x", (margins.l + chartdims.width) / 2 - 50)
+      .attr("y", margins.t - 20)
+      .text("CEI Threshold Summary")
+      .style("font-size", "1.25em");
 
     return;
   };
@@ -293,7 +287,7 @@ const LinePlot = (props) => {
 
 const mapStateToProps = (state) => {
   return {
-    ...state,
+    building: { ...state.building },
   };
 };
 

@@ -7,14 +7,9 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  root: {
-    height: "100%",
-  },
+  root: {},
   accordionSummary: {
     fontWeight: 600,
-  },
-  addBuildingType: {
-    textAlign: "center",
   },
 });
 
@@ -27,7 +22,7 @@ const AccordionContainer = (props) => {
   const classes = useStyles();
   return (
     <Accordion
-      expanded={props.ui.accordion.utility_consumption}
+      expanded={props.ui.accordion[tag]}
       onChange={() => handleAccordionChange(tag)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
@@ -41,7 +36,8 @@ const AccordionContainer = (props) => {
 };
 const mapStateToProps = (state) => {
   return {
-    ...state,
+    actions: { ...state.actions },
+    ui: { ...state.ui },
   };
 };
 

@@ -12,12 +12,6 @@ const useStyles = makeStyles({
   root: {
     height: "100%",
   },
-  accordionSummary: {
-    fontWeight: 600,
-  },
-  addBuildingType: {
-    textAlign: "center",
-  },
 });
 
 const Sidebar = (props) => {
@@ -39,9 +33,7 @@ const Sidebar = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {
-    ...state,
-  };
+  return {};
 };
 
 export default conn(mapStateToProps)(Sidebar);

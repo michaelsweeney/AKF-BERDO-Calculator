@@ -21,7 +21,7 @@ const style = {
 };
 
 const LoadBldgModal = (props) => {
-  const isLoadModalOpen = props.state.ui.isLoadModalOpen;
+  const isLoadModalOpen = props.ui.isLoadModalOpen;
 
   return (
     <Modal open={isLoadModalOpen}>
@@ -40,7 +40,8 @@ const LoadBldgModal = (props) => {
 
 const mapStateToProps = (store) => {
   return {
-    state: { ...store },
+    actions: { ...store.actions },
+    ui: { ...store.ui },
   };
 };
 

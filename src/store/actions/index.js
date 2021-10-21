@@ -55,18 +55,11 @@ export function setIsLoadModalOpen(bool) {
   };
 }
 
-export function setWindowDimensions(dims) {
-  return {
-    type: 'SET_WINDOW_DIMENSIONS',
-    payload: dims
-  }
-}
-
 export function toggleAccordion(val) {
   return {
-    type: 'TOGGLE_ACCORDION',
-    payload: val
-  }
+    type: "TOGGLE_ACCORDION",
+    payload: val,
+  };
 }
 
 /* berdo api actions */
@@ -88,5 +81,13 @@ export function setLoadedBuildingQueryInfo(result) {
   return {
     type: "SET_LOADED_BUILDING_QUERY_INFO",
     payload: result,
+  };
+}
+
+// resize actions
+export function setWindowDimensions(dims) {
+  return {
+    type: "SET_WINDOW_DIMENSIONS",
+    payload: dims,
   };
 }

@@ -14,9 +14,7 @@ const BerdoApiComponent = (props) => {
 };
 
 const mapStateToProps = (store) => {
-  return {
-    berdoapi: { ...store.building.berdoapi },
-  };
+  return {};
 };
 
 export default conn(mapStateToProps)(BerdoApiComponent);
