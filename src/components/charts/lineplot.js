@@ -10,7 +10,7 @@ const LinePlot = (props) => {
   useEffect(() => {
     createChart();
   });
-
+  console.log("new feature");
   const createChart = () => {
     const transition_duration = 500;
 
