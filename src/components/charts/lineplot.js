@@ -10,7 +10,7 @@ const LinePlot = (props) => {
   useEffect(() => {
     createChart();
   });
-  console.log("new feature");
+
   const createChart = () => {
     const transition_duration = 500;
 
@@ -278,6 +278,91 @@ const LinePlot = (props) => {
       .attr("y", margins.t - 20)
       .text("CEI Threshold Summary")
       .style("font-size", "1.25em");
+
+    // area plot
+
+    let threshold_steps = [
+      {
+        year: thresholds[0].starting_year,
+        val: thresholds[0].val,
+      },
+      {
+        year: thresholds[1].starting_year,
+        val: thresholds[0].val,
+      },
+      {
+        year: thresholds[1].starting_year,
+        val: thresholds[1].val,
+      },
+      {
+        year: thresholds[2].starting_year,
+        val: thresholds[1].val,
+      },
+      {
+        year: thresholds[2].starting_year,
+        val: thresholds[2].val,
+      },
+      {
+        year: thresholds[3].starting_year,
+        val: thresholds[2].val,
+      },
+      {
+        year: thresholds[3].starting_year,
+        val: thresholds[3].val,
+      },
+      {
+        year: thresholds[4].starting_year,
+        val: thresholds[3].val,
+      },
+      {
+        year: thresholds[4].starting_year,
+        val: thresholds[4].val,
+      },
+      {
+        year: thresholds[5].starting_year,
+        val: thresholds[4].val,
+      },
+      {
+        year: thresholds[5].starting_year,
+        val: thresholds[5].val,
+      },
+    ];
+
+    let threshAreaGen = d3
+      .area()
+      .x((d) => {
+        return xScale(d.year);
+      })
+
+      .y0((d) => 0)
+      .y1((d) => {
+        return yScale(d.val);
+      });
+    plot_g
+      .selectAll(".thresh-area")
+      .data([threshold_steps])
+      .join("path")
+      .attr("class", "thresh-area")
+      .attr("d", threshAreaGen)
+      .attr("fill", "red")
+      .attr("stroke", "red")
+      .attr("opacity", 0.5);
+
+    let emissionsAreaGen = d3
+      .area()
+      .x((d) => xScale(d.year))
+      .y0((d) => chartdims.height)
+      .y1((d) => yScale(d.val));
+
+    plot_g
+      .selectAll(".emissions-area")
+      .data([emissions])
+      .join("path")
+      .attr("class", "emissions-area")
+      .attr("d", emissionsAreaGen)
+      .attr("fill", "red")
+      .attr("stroke", "red")
+      .attr("opacity", 0.5);
 
     return;
   };
