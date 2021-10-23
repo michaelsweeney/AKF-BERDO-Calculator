@@ -3,8 +3,14 @@ import { conn } from "../../store/connect";
 import * as d3 from "d3";
 
 import { useRef, useEffect } from "react";
-
 const LinePlot = (props) => {
+  const strokes = {
+    bottomFill: "#5086fb",
+    topFill: "#feb9b9",
+    middleFill: "#fd8787",
+    emissionsLine: "#0449dc",
+  };
+
   const { containerdims } = props;
   const container = useRef(null);
   useEffect(() => {
@@ -13,7 +19,7 @@ const LinePlot = (props) => {
 
   const createChart = () => {
     const transition_duration = 500;
-
+    const area_transition_duration = 1000;
     let emissions = props.building.annual_emissions.map((e) => {
       return { year: e.year, val: e.normalized.total };
     });
@@ -110,6 +116,204 @@ const LinePlot = (props) => {
         ]) * domain_padding,
       ])
       .range([chartdims.height, 0]);
+
+    // area plot
+
+    const compileAreas = (thresholds, emissions) => {
+      let periods = [2018, 2025, 2030, 2035, 2040, 2045, 2050];
+      let combined_array = periods.map((d) => {
+        return {
+          year: d,
+          emission_val: emissions.filter((f) => f.year == d)[0]
+            ? emissions.filter((f) => f.year == d)[0].val
+            : 0,
+          thresh_val: thresholds.filter((f) => f.starting_year == d)[0]
+            ? thresholds.filter((f) => f.starting_year == d)[0].val
+            : 0,
+          thresh_met: thresholds.filter((f) => f.starting_year == d)[0]
+            ? thresholds.filter((f) => f.starting_year == d)[0].threshold_met
+            : false,
+        };
+      });
+
+      let combined_top = [
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+        combined_array[6],
+      ];
+
+      let combined_bottom = [
+        combined_array[0],
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+        combined_array[6],
+      ];
+
+      let top = combined_top.map((d) => {
+        return {
+          val: d.thresh_val, // d3.max([d.thresh_val, d.emission_val]),
+          year: d.year,
+          thresh_met: d.thresh_met,
+        };
+      });
+      let middleFilter = combined_top.filter((d) => d.thresh_met == false);
+
+      let middle = [];
+
+      middle.push({
+        val: middleFilter[0].emission_val,
+        year: middleFilter[0].year,
+      });
+
+      middleFilter.forEach((d, i) => {
+        middle.push({
+          val: d.thresh_val,
+          year: d.year,
+        });
+        if (middleFilter[i + 1]) {
+          middle.push({
+            val: d.thresh_val,
+            year: middleFilter[i + 1].year,
+          });
+        }
+      });
+
+      middle.push({
+        val: middleFilter[middleFilter.length - 1].emission_val,
+        year: middleFilter[middleFilter.length - 1].year,
+      });
+      middle.push({
+        val: middleFilter[0].emission_val,
+        year: middleFilter[0].year,
+      });
+
+      console.log(middle, middleFilter);
+      let bottom = combined_bottom.map((d) => {
+        return {
+          val: d.emission_val, //d3.max([d.thresh_val, d.emission_val]),
+          year: d.year,
+        };
+      });
+      top = [
+        {
+          val: top[0] ? top[0].val : 0,
+          year: top[0] ? top[0].year : 0,
+        },
+
+        {
+          val: top[0] ? top[0].val : 0,
+          year: top[1] ? top[1].year : 0,
+        },
+        {
+          val: top[1] ? top[1].val : 0,
+          year: top[1] ? top[1].year : 0,
+        },
+        {
+          val: top[1] ? top[1].val : 0,
+          year: top[2] ? top[2].year : 0,
+        },
+        {
+          val: top[2] ? top[2].val : 0,
+          year: top[2] ? top[2].year : 0,
+        },
+        {
+          val: top[2] ? top[2].val : 0,
+          year: top[3] ? top[3].year : 0,
+        },
+        {
+          val: top[3] ? top[3].val : 0,
+          year: top[3] ? top[3].year : 0,
+        },
+        {
+          val: top[3] ? top[3].val : 0,
+          year: top[4] ? top[4].year : 0,
+        },
+        {
+          val: top[4] ? top[4].val : 0,
+          year: top[4] ? top[4].year : 0,
+        },
+        {
+          val: top[4] ? top[4].val : 0,
+          year: top[5] ? top[5].year : 0,
+        },
+      ];
+
+      return { top, middle, bottom };
+      // returns {top, middle, bottom}
+    };
+
+    let { top, middle, bottom } = compileAreas(thresholds, emissions);
+
+    let threshAreaGen = d3
+      .area()
+      .x((d) => {
+        return xScale(d.year);
+      })
+
+      .y0((d) => 0)
+      .y1((d) => {
+        return yScale(d.val);
+      });
+    plot_g.selectAll(".thresh-area").attr("opacity", 0);
+
+    plot_g
+      .selectAll(".thresh-area")
+      .data([top])
+      .join("path")
+      .attr("class", "thresh-area")
+      .attr("d", threshAreaGen)
+      .transition()
+      .duration(area_transition_duration)
+      .attr("fill", strokes.topFill)
+
+      .attr("stroke", d3.schemeCategory10[1])
+      .attr("opacity", 1);
+
+    let emissionsAreaGen = d3
+      .area()
+      .x((d) => xScale(d.year))
+      .y0((d) => chartdims.height)
+      .y1((d) => yScale(d.val));
+
+    plot_g.selectAll(".emissions-area").attr("opacity", 0);
+
+    plot_g
+      .selectAll(".emissions-area")
+      .data([bottom])
+      .join("path")
+      .attr("class", "emissions-area")
+      .attr("d", emissionsAreaGen)
+      .transition()
+      .duration(area_transition_duration)
+      .attr("fill", strokes.bottomFill)
+      .attr("opacity", 1);
+
+    plot_g.selectAll(".intersection-area").attr("opacity", 0);
+
+    plot_g
+      .selectAll(".intersection-area")
+      .data([middle])
+      .join("polygon")
+      .attr("class", "intersection-area")
+      .attr("points", (d) => {
+        return d
+          .map((d) => {
+            return [xScale(d.year), yScale(d.val)].join(",");
+          })
+          .join(" ");
+      })
+      .transition()
+      .duration(area_transition_duration)
+
+      .attr("fill", strokes.middleFill)
+      .attr("stroke", "red")
+      .attr("opacity", 1);
 
     // create axes
     let xAxisBottom = d3
@@ -236,8 +440,8 @@ const LinePlot = (props) => {
       .duration(transition_duration)
 
       .attr("class", "emissions-line")
-      .attr("stroke", "steelblue")
-      .attr("stroke-width", 2.5)
+      .attr("stroke", strokes.emissionsLine)
+      .attr("stroke-width", 2)
       .attr(
         "d",
         d3
@@ -278,91 +482,6 @@ const LinePlot = (props) => {
       .attr("y", margins.t - 20)
       .text("CEI Threshold Summary")
       .style("font-size", "1.25em");
-
-    // area plot
-
-    let threshold_steps = [
-      {
-        year: thresholds[0].starting_year,
-        val: thresholds[0].val,
-      },
-      {
-        year: thresholds[1].starting_year,
-        val: thresholds[0].val,
-      },
-      {
-        year: thresholds[1].starting_year,
-        val: thresholds[1].val,
-      },
-      {
-        year: thresholds[2].starting_year,
-        val: thresholds[1].val,
-      },
-      {
-        year: thresholds[2].starting_year,
-        val: thresholds[2].val,
-      },
-      {
-        year: thresholds[3].starting_year,
-        val: thresholds[2].val,
-      },
-      {
-        year: thresholds[3].starting_year,
-        val: thresholds[3].val,
-      },
-      {
-        year: thresholds[4].starting_year,
-        val: thresholds[3].val,
-      },
-      {
-        year: thresholds[4].starting_year,
-        val: thresholds[4].val,
-      },
-      {
-        year: thresholds[5].starting_year,
-        val: thresholds[4].val,
-      },
-      {
-        year: thresholds[5].starting_year,
-        val: thresholds[5].val,
-      },
-    ];
-
-    let threshAreaGen = d3
-      .area()
-      .x((d) => {
-        return xScale(d.year);
-      })
-
-      .y0((d) => 0)
-      .y1((d) => {
-        return yScale(d.val);
-      });
-    plot_g
-      .selectAll(".thresh-area")
-      .data([threshold_steps])
-      .join("path")
-      .attr("class", "thresh-area")
-      .attr("d", threshAreaGen)
-      .attr("fill", "red")
-      .attr("stroke", "red")
-      .attr("opacity", 0.5);
-
-    let emissionsAreaGen = d3
-      .area()
-      .x((d) => xScale(d.year))
-      .y0((d) => chartdims.height)
-      .y1((d) => yScale(d.val));
-
-    plot_g
-      .selectAll(".emissions-area")
-      .data([emissions])
-      .join("path")
-      .attr("class", "emissions-area")
-      .attr("d", emissionsAreaGen)
-      .attr("fill", "red")
-      .attr("stroke", "red")
-      .attr("opacity", 0.5);
 
     return;
   };
