@@ -11,7 +11,11 @@ const LinePlot = (props) => {
     emissionsLine: "#0449dc",
   };
 
-  const { containerdims } = props;
+  const containerdims = {
+    width: props.window.dims.width - 400,
+    height: props.window.dims.height - 225,
+  };
+
   const container = useRef(null);
   useEffect(() => {
     createChart();
@@ -492,6 +496,7 @@ const LinePlot = (props) => {
 const mapStateToProps = (state) => {
   return {
     building: { ...state.building },
+    window: { ...state.window },
   };
 };
 

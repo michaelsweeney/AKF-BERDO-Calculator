@@ -32,21 +32,14 @@ const MainContainer = (props) => {
         <Sidebar />
       </div>
       <div className={classes.main}>
-        <LinePlot
-          containerdims={{
-            width: props.window.dims.width - 400,
-            height: props.window.dims.height - 300,
-          }}
-        />
+        <LinePlot />
       </div>
     </div>
   );
 };
 
 const mapStateToProps = (store) => {
-  return {
-    window: { ...store.window },
-  };
+  return {};
 };
 
 export default conn(mapStateToProps)(MainContainer);
