@@ -1,8 +1,13 @@
-import { conn } from "../../store/connect";
+import { conn } from "../../../store/connect";
 
 import * as d3 from "d3";
 
 import { useRef, useEffect } from "react";
+
+import { makeAxes } from "./axes";
+import { calcAreas } from "./areacalcs";
+import { getThresholdArray } from "./thresholdarray";
+
 const LinePlot = (props) => {
   const strokes = {
     bottomFill: "#5086fb",
@@ -34,38 +39,10 @@ const LinePlot = (props) => {
         : emissions;
 
     let thresholds = props.building.emissions_thresholds.normalized;
+
+    thresholds = getThresholdArray(thresholds, emissions);
+
     let domain_padding = 1.2;
-
-    let domain_map = {
-      "2025-2029": 2025,
-      "2030-2034": 2030,
-      "2035-2039": 2035,
-      "2040-2044": 2040,
-      "2045-2049": 2045,
-      "2050-": 2050,
-    };
-
-    const getThresholdsMet = (e) => {
-      let emission_period = emissions.filter((f) => f.year == domain_map[e])[0];
-      if (emission_period) {
-        if (emission_period.val < thresholds[e]) {
-          return true;
-        } else {
-          return false;
-        }
-      } else {
-        return false;
-      }
-    };
-
-    thresholds = Object.keys(thresholds).map((e) => {
-      return {
-        period: e,
-        val: thresholds[e],
-        starting_year: domain_map[e],
-        threshold_met: getThresholdsMet(e),
-      };
-    });
 
     let node = container.current;
 
@@ -121,138 +98,18 @@ const LinePlot = (props) => {
       ])
       .range([chartdims.height, 0]);
 
+    // create axes
+    makeAxes({
+      svg: svg,
+      xScale: xScale,
+      yScale: yScale,
+      margins: margins,
+      chartdims: chartdims,
+      transition_duration: transition_duration,
+    });
+
     // area plot
-
-    const compileAreas = (thresholds, emissions) => {
-      let periods = [2018, 2025, 2030, 2035, 2040, 2045, 2050];
-      let combined_array = periods.map((d) => {
-        return {
-          year: d,
-          emission_val: emissions.filter((f) => f.year == d)[0]
-            ? emissions.filter((f) => f.year == d)[0].val
-            : 0,
-          thresh_val: thresholds.filter((f) => f.starting_year == d)[0]
-            ? thresholds.filter((f) => f.starting_year == d)[0].val
-            : 0,
-          thresh_met: thresholds.filter((f) => f.starting_year == d)[0]
-            ? thresholds.filter((f) => f.starting_year == d)[0].threshold_met
-            : false,
-        };
-      });
-
-      let combined_top = [
-        combined_array[1],
-        combined_array[2],
-        combined_array[3],
-        combined_array[4],
-        combined_array[5],
-        combined_array[6],
-      ];
-
-      let combined_bottom = [
-        combined_array[0],
-        combined_array[1],
-        combined_array[2],
-        combined_array[3],
-        combined_array[4],
-        combined_array[5],
-        combined_array[6],
-      ];
-
-      let top = combined_top.map((d) => {
-        return {
-          val: d.thresh_val, // d3.max([d.thresh_val, d.emission_val]),
-          year: d.year,
-          thresh_met: d.thresh_met,
-        };
-      });
-      let middleFilter = combined_top.filter((d) => d.thresh_met == false);
-
-      let middle = [];
-
-      middle.push({
-        val: middleFilter[0].emission_val,
-        year: middleFilter[0].year,
-      });
-
-      middleFilter.forEach((d, i) => {
-        middle.push({
-          val: d.thresh_val,
-          year: d.year,
-        });
-        if (middleFilter[i + 1]) {
-          middle.push({
-            val: d.thresh_val,
-            year: middleFilter[i + 1].year,
-          });
-        }
-      });
-
-      middle.push({
-        val: middleFilter[middleFilter.length - 1].emission_val,
-        year: middleFilter[middleFilter.length - 1].year,
-      });
-      middle.push({
-        val: middleFilter[0].emission_val,
-        year: middleFilter[0].year,
-      });
-
-      console.log(middle, middleFilter);
-      let bottom = combined_bottom.map((d) => {
-        return {
-          val: d.emission_val, //d3.max([d.thresh_val, d.emission_val]),
-          year: d.year,
-        };
-      });
-      top = [
-        {
-          val: top[0] ? top[0].val : 0,
-          year: top[0] ? top[0].year : 0,
-        },
-
-        {
-          val: top[0] ? top[0].val : 0,
-          year: top[1] ? top[1].year : 0,
-        },
-        {
-          val: top[1] ? top[1].val : 0,
-          year: top[1] ? top[1].year : 0,
-        },
-        {
-          val: top[1] ? top[1].val : 0,
-          year: top[2] ? top[2].year : 0,
-        },
-        {
-          val: top[2] ? top[2].val : 0,
-          year: top[2] ? top[2].year : 0,
-        },
-        {
-          val: top[2] ? top[2].val : 0,
-          year: top[3] ? top[3].year : 0,
-        },
-        {
-          val: top[3] ? top[3].val : 0,
-          year: top[3] ? top[3].year : 0,
-        },
-        {
-          val: top[3] ? top[3].val : 0,
-          year: top[4] ? top[4].year : 0,
-        },
-        {
-          val: top[4] ? top[4].val : 0,
-          year: top[4] ? top[4].year : 0,
-        },
-        {
-          val: top[4] ? top[4].val : 0,
-          year: top[5] ? top[5].year : 0,
-        },
-      ];
-
-      return { top, middle, bottom };
-      // returns {top, middle, bottom}
-    };
-
-    let { top, middle, bottom } = compileAreas(thresholds, emissions);
+    let { top, middle, bottom } = calcAreas(thresholds, emissions);
 
     let threshAreaGen = d3
       .area()
@@ -344,77 +201,6 @@ const LinePlot = (props) => {
       .duration(transition_duration);
     // .attr("fill", "black")
     // .attr("stroke-width", 2);
-
-    // create axes
-    let xAxisBottom = d3
-      .axisBottom()
-      .scale(xScale)
-      .tickFormat(d3.format("0"))
-      .tickSizeOuter(0);
-
-    let xAxisTop = d3
-      .axisTop()
-      .scale(xScale)
-      .ticks(0)
-      .tickFormat(d3.format("0"))
-      .tickSizeOuter(0);
-
-    svg
-      .selectAll(".xaxis-g-top")
-      .data([0])
-      .join("g")
-      .attr("class", "xaxis-g-top")
-      .attr("transform", () => `translate(${margins.l},${margins.t})`)
-      .call(xAxisTop);
-
-    svg
-      .selectAll(".xaxis-g-bottom")
-      .data([0])
-      .join("g")
-      .attr("class", "xaxis-g-bottom")
-      .attr(
-        "transform",
-        () => `translate(${margins.l},${margins.t + chartdims.height})`
-      )
-      .call(xAxisBottom);
-
-    let yAxisLeft = d3
-      .axisLeft()
-      .scale(yScale)
-      .ticks(5)
-      .tickSizeOuter(5)
-      .tickFormat(d3.format(".2f"))
-      .tickSizeOuter(0);
-
-    let yAxisRight = d3
-      .axisLeft()
-      .scale(yScale)
-      .ticks(0)
-      .tickFormat(d3.format(".2f"))
-      .tickSizeOuter(0);
-
-    svg
-      .selectAll(".yaxis-g-left")
-      .data([0])
-      .join("g")
-      .attr("class", "yaxis-g-left")
-      .attr("transform", () => `translate(${margins.l},${margins.t})`)
-      .transition()
-      .duration(transition_duration)
-      .call(yAxisLeft);
-
-    svg
-      .selectAll(".yaxis-g-right")
-      .data([0])
-      .join("g")
-      .attr("class", "yaxis-g-right")
-      .attr(
-        "transform",
-        () => `translate(${margins.l + chartdims.width},${margins.t})`
-      )
-      .transition()
-      .duration(transition_duration)
-      .call(yAxisRight);
 
     // create data points
     plot_g
