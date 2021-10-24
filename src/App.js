@@ -39,7 +39,7 @@ const App = (props) => {
       areas: [
         {
           type: "office",
-          area: 1000,
+          area: 1200,
           index: 0,
         },
       ],

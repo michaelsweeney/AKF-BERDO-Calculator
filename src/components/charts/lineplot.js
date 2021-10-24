@@ -305,6 +305,7 @@ const LinePlot = (props) => {
       .data([middle])
       .join("polygon")
       .attr("class", "intersection-area")
+      .attr("clip-path", "url(#top-clip)")
       .attr("points", (d) => {
         return d
           .map((d) => {
@@ -318,6 +319,31 @@ const LinePlot = (props) => {
       .attr("fill", strokes.middleFill)
       .attr("stroke", "red")
       .attr("opacity", 1);
+
+    // clip anything above line...
+    let clipAreaGen = d3
+      .area()
+      .x((d) => xScale(d.year))
+      .y0((d) => chartdims.height)
+      .y1((d) => yScale(d.val));
+
+    plot_g
+      .selectAll(".clip-area")
+      .data([0])
+      .join("clipPath")
+      .attr("id", "top-clip")
+      .attr("class", "clip-area");
+    plot_g
+      .selectAll(".clip-area")
+      .datum(emissions_for_line)
+      .join("clipPath")
+      .attr("id", "top-clip")
+      .attr("class", "clip-area")
+      .attr("d", clipAreaGen)
+      .transition()
+      .duration(transition_duration);
+    // .attr("fill", "black")
+    // .attr("stroke-width", 2);
 
     // create axes
     let xAxisBottom = d3
@@ -333,7 +359,7 @@ const LinePlot = (props) => {
       .tickFormat(d3.format("0"))
       .tickSizeOuter(0);
 
-    let xaxistop = svg
+    svg
       .selectAll(".xaxis-g-top")
       .data([0])
       .join("g")
@@ -341,7 +367,7 @@ const LinePlot = (props) => {
       .attr("transform", () => `translate(${margins.l},${margins.t})`)
       .call(xAxisTop);
 
-    let xaxisgbottom = svg
+    svg
       .selectAll(".xaxis-g-bottom")
       .data([0])
       .join("g")
@@ -367,7 +393,7 @@ const LinePlot = (props) => {
       .tickFormat(d3.format(".2f"))
       .tickSizeOuter(0);
 
-    let yaxisgleft = svg
+    svg
       .selectAll(".yaxis-g-left")
       .data([0])
       .join("g")
@@ -377,7 +403,7 @@ const LinePlot = (props) => {
       .duration(transition_duration)
       .call(yAxisLeft);
 
-    let yaxisgright = svg
+    svg
       .selectAll(".yaxis-g-right")
       .data([0])
       .join("g")
@@ -391,7 +417,7 @@ const LinePlot = (props) => {
       .call(yAxisRight);
 
     // create data points
-    let threshold_points = plot_g
+    plot_g
       .selectAll(".thresh-point")
       .data(thresholds)
       .join("circle")
@@ -403,7 +429,7 @@ const LinePlot = (props) => {
       .attr("cy", (d) => yScale(d.val))
       .style("fill", (d) => (d.threshold_met ? "gray" : "red"));
 
-    let threshold_lines = plot_g
+    plot_g
       .selectAll(".thresh-line")
       .data(thresholds)
       .join("line")
@@ -417,7 +443,7 @@ const LinePlot = (props) => {
       .attr("stroke-dasharray", "2 0 2")
       .style("stroke", (d) => (d.threshold_met ? "gray" : "red"));
 
-    let threshold_annotations = annotation_g
+    annotation_g
       .selectAll(".threshold-annotation")
       .data(thresholds)
       .join("text")
@@ -436,7 +462,7 @@ const LinePlot = (props) => {
       .join("path")
       .attr("class", "emissions-line");
 
-    let emissions_line = plot_g
+    plot_g
       .selectAll(".emissions-line")
       .datum(emissions_for_line)
       .join("path")
@@ -455,7 +481,7 @@ const LinePlot = (props) => {
       )
       .attr("fill", "none");
 
-    let yaxistitle = svg
+    svg
       .selectAll(".y-axis-title")
       .data([0])
       .join("text")
@@ -466,7 +492,7 @@ const LinePlot = (props) => {
       .text("Carbon Emission Intensity (kgCO2e/sf/yr)")
       .style("font-size", "1em");
 
-    let xaxistitle = svg
+    svg
       .selectAll(".x-axis-title")
       .data([0])
       .join("text")
@@ -477,7 +503,7 @@ const LinePlot = (props) => {
       .text("Year")
       .style("font-size", "1em");
 
-    let charttitle = svg
+    svg
       .selectAll(".chart-title")
       .data([0])
       .join("text")
