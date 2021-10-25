@@ -179,27 +179,27 @@ const LinePlot = (props) => {
       .attr("opacity", 1);
 
     // clip anything above line...
-    let clipAreaGen = d3
-      .area()
-      .x((d) => xScale(d.year))
-      .y0((d) => chartdims.height)
-      .y1((d) => yScale(d.val));
+    // let clipAreaGen = d3
+    //   .area()
+    //   .x((d) => xScale(d.year))
+    //   .y0((d) => chartdims.height)
+    //   .y1((d) => yScale(d.val));
 
-    plot_g
-      .selectAll(".clip-area")
-      .data([0])
-      .join("clipPath")
-      .attr("id", "top-clip")
-      .attr("class", "clip-area");
-    plot_g
-      .selectAll(".clip-area")
-      .datum(emissions_for_line)
-      .join("clipPath")
-      .attr("id", "top-clip")
-      .attr("class", "clip-area")
-      .attr("d", clipAreaGen)
-      .transition()
-      .duration(transition_duration);
+    // plot_g
+    //   .selectAll(".clip-area")
+    //   .data([0])
+    //   .join("clipPath")
+    //   .attr("id", "top-clip")
+    //   .attr("class", "clip-area");
+    // plot_g
+    //   .selectAll(".clip-area")
+    //   .datum(emissions_for_line)
+    //   .join("clipPath")
+    //   .attr("id", "top-clip")
+    //   .attr("class", "clip-area")
+    //   .attr("d", clipAreaGen)
+    //   .transition()
+    //   .duration(transition_duration);
     // .attr("fill", "black")
     // .attr("stroke-width", 2);
 
