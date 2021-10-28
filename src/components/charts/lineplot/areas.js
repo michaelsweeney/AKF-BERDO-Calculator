@@ -86,4 +86,31 @@ const createMiddleArea = (config) => {
     .attr("opacity", 1);
 };
 
-export { createTopArea, createBottomArea, createMiddleArea };
+const createClipArea = (config) => {
+  const { xScale, yScale, clipId, data, chartdims, element } = config;
+  let clipAreaGen = d3
+    .area()
+    .x((d) => xScale(d.year))
+    .y0((d) => chartdims.height)
+    .y1((d) => yScale(d.val));
+
+  let clip_element = element
+    .selectAll(".clip-area-element")
+    .data([0])
+    .join("clipPath")
+    .attr("class", "clip-area-element")
+    .attr("id", clipId);
+
+  clip_element.selectAll(".clip-area-path").attr("opacity", 0);
+
+  clip_element
+    .selectAll(".clip-area-path")
+    .data([data])
+    .join("path")
+    .attr("class", "clip-area-path")
+    .attr("d", clipAreaGen)
+    .attr("fill", "black")
+    .attr("opacity", 1);
+};
+
+export { createTopArea, createBottomArea, createMiddleArea, createClipArea };

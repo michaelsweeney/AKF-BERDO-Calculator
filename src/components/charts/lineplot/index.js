@@ -8,12 +8,17 @@ import { createAxes } from "./axes";
 import { addTitles } from "./titles";
 import { calcAreas } from "./areacalcs";
 import { getThresholdArray } from "./thresholdarray";
-import { createTopArea, createBottomArea, createMiddleArea } from "./areas";
+import {
+  createTopArea,
+  createBottomArea,
+  createMiddleArea,
+  createClipArea,
+} from "./areas";
 
 const LinePlot = (props) => {
   const strokes = {
-    bottomFill: "#5086fb",
-    topFill: "#feb9b9",
+    bottomFill: "rgba(0,0,0,0)",
+    topFill: "rgba(0,0,0,0)",
     middleFill: "#fd8787",
     emissionsLine: "#0449dc",
   };
@@ -125,7 +130,7 @@ const LinePlot = (props) => {
     createTopArea({
       xScale: xScale,
       yScale: yScale,
-      stroke: d3.schemeCategory10[1],
+      stroke: "rgba(0,0,0,0)",
       duration: area_transition_duration,
       data: top,
       fill: strokes.topFill,
@@ -150,40 +155,17 @@ const LinePlot = (props) => {
       element: plot_g,
       fill: strokes.middleFill,
       stroke: "red",
-      clipPath: "url(#top-clip)",
+      clipPath: "url(#thresh-clip-id)",
     });
 
-    const createClipArea = (config) => {
-      let clipAreaGen = d3
-        .area()
-        .x((d) => {
-          return xScale(d.year);
-        })
-
-        .y0((d) => 0)
-        .y1((d) => {
-          return yScale(d.val);
-        });
-      plot_g
-        .selectAll(".clip-area")
-        .data([0])
-        .join("clipPath")
-        .attr("id", "top-clip")
-        .attr("class", "clip-area");
-      plot_g
-        .selectAll(".clip-area")
-        .datum(emissions_simple)
-        .join("clipPath")
-        .attr("id", "top-clip")
-        .attr("class", "clip-area")
-        .attr("d", clipAreaGen)
-        .transition()
-        .duration(transition_duration)
-        .attr("fill", "black")
-        .attr("stroke-width", 2);
-    };
-
-    createClipArea({});
+    createClipArea({
+      clipId: "thresh-clip-id",
+      xScale: xScale,
+      yScale: yScale,
+      data: emissions_simple,
+      chartdims: chartdims,
+      element: plot_g,
+    });
 
     // create data points
     plot_g
