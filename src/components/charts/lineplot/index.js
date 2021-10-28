@@ -4,10 +4,11 @@ import * as d3 from "d3";
 
 import { useRef, useEffect } from "react";
 
-import { makeAxes } from "./axes";
+import { createAxes } from "./axes";
 import { addTitles } from "./titles";
 import { calcAreas } from "./areacalcs";
 import { getThresholdArray } from "./thresholdarray";
+import { createTopArea, createBottomArea, createMiddleArea } from "./areas";
 
 const LinePlot = (props) => {
   const strokes = {
@@ -17,24 +18,33 @@ const LinePlot = (props) => {
     emissionsLine: "#0449dc",
   };
 
+  const container = useRef(null);
+  const containerPadding = { width: 50, height: 50 };
+
   const containerdims = {
-    width: props.window.dims.width - 400,
-    height: props.window.dims.height - 225,
+    width: container.current
+      ? container.current.getBoundingClientRect()["width"] -
+        containerPadding.width
+      : props.window.dims.width - 400,
+    height: container.current
+      ? container.current.getBoundingClientRect()["height"] -
+        containerPadding.height
+      : props.window.dims.height - 225,
   };
 
-  const container = useRef(null);
   useEffect(() => {
     createChart();
   });
 
   const createChart = () => {
-    const transition_duration = 500;
-    const area_transition_duration = 1000;
+    const transition_duration = 0;
+    const area_transition_duration = 0;
     let emissions = props.building.annual_emissions.map((e) => {
       return { year: e.year, val: e.normalized.total };
     });
 
-    let emissions_for_line =
+    // simplified emission line consisting of first and last points
+    let emissions_simple =
       emissions.length > 30
         ? [emissions.slice(0)[0], emissions.slice(-1)[0]]
         : emissions;
@@ -100,7 +110,7 @@ const LinePlot = (props) => {
       .range([chartdims.height, 0]);
 
     // create axes
-    makeAxes({
+    createAxes({
       svg: svg,
       xScale: xScale,
       yScale: yScale,
@@ -112,96 +122,68 @@ const LinePlot = (props) => {
     // area plot
     let { top, middle, bottom } = calcAreas(thresholds, emissions);
 
-    let threshAreaGen = d3
-      .area()
-      .x((d) => {
-        return xScale(d.year);
-      })
+    createTopArea({
+      xScale: xScale,
+      yScale: yScale,
+      stroke: d3.schemeCategory10[1],
+      duration: area_transition_duration,
+      data: top,
+      fill: strokes.topFill,
+      element: plot_g,
+    });
 
-      .y0((d) => 0)
-      .y1((d) => {
-        return yScale(d.val);
-      });
-    plot_g.selectAll(".thresh-area").attr("opacity", 0);
+    createBottomArea({
+      xScale: xScale,
+      yScale: yScale,
+      fill: strokes.bottomFill,
+      element: plot_g,
+      data: bottom,
+      duration: area_transition_duration,
+      chartdims: chartdims,
+    });
 
-    plot_g
-      .selectAll(".thresh-area")
-      .data([top])
-      .join("path")
-      .attr("class", "thresh-area")
-      .attr("d", threshAreaGen)
-      .transition()
-      .duration(area_transition_duration)
-      .attr("fill", strokes.topFill)
+    createMiddleArea({
+      xScale: xScale,
+      yScale: yScale,
+      transition_duration: area_transition_duration,
+      data: middle,
+      element: plot_g,
+      fill: strokes.middleFill,
+      stroke: "red",
+      clipPath: "url(#top-clip)",
+    });
 
-      .attr("stroke", d3.schemeCategory10[1])
-      .attr("opacity", 1);
+    const createClipArea = (config) => {
+      let clipAreaGen = d3
+        .area()
+        .x((d) => {
+          return xScale(d.year);
+        })
 
-    let emissionsAreaGen = d3
-      .area()
-      .x((d) => xScale(d.year))
-      .y0((d) => chartdims.height)
-      .y1((d) => yScale(d.val));
+        .y0((d) => 0)
+        .y1((d) => {
+          return yScale(d.val);
+        });
+      plot_g
+        .selectAll(".clip-area")
+        .data([0])
+        .join("clipPath")
+        .attr("id", "top-clip")
+        .attr("class", "clip-area");
+      plot_g
+        .selectAll(".clip-area")
+        .datum(emissions_simple)
+        .join("clipPath")
+        .attr("id", "top-clip")
+        .attr("class", "clip-area")
+        .attr("d", clipAreaGen)
+        .transition()
+        .duration(transition_duration)
+        .attr("fill", "black")
+        .attr("stroke-width", 2);
+    };
 
-    plot_g.selectAll(".emissions-area").attr("opacity", 0);
-
-    plot_g
-      .selectAll(".emissions-area")
-      .data([bottom])
-      .join("path")
-      .attr("class", "emissions-area")
-      .attr("d", emissionsAreaGen)
-      .transition()
-      .duration(area_transition_duration)
-      .attr("fill", strokes.bottomFill)
-      .attr("opacity", 1);
-
-    plot_g.selectAll(".intersection-area").attr("opacity", 0);
-
-    plot_g
-      .selectAll(".intersection-area")
-      .data([middle])
-      .join("polygon")
-      .attr("class", "intersection-area")
-      .attr("clip-path", "url(#top-clip)")
-      .attr("points", (d) => {
-        return d
-          .map((d) => {
-            return [xScale(d.year), yScale(d.val)].join(",");
-          })
-          .join(" ");
-      })
-      .transition()
-      .duration(area_transition_duration)
-
-      .attr("fill", strokes.middleFill)
-      .attr("stroke", "red")
-      .attr("opacity", 1);
-
-    // clip anything above line...
-    // let clipAreaGen = d3
-    //   .area()
-    //   .x((d) => xScale(d.year))
-    //   .y0((d) => chartdims.height)
-    //   .y1((d) => yScale(d.val));
-
-    // plot_g
-    //   .selectAll(".clip-area")
-    //   .data([0])
-    //   .join("clipPath")
-    //   .attr("id", "top-clip")
-    //   .attr("class", "clip-area");
-    // plot_g
-    //   .selectAll(".clip-area")
-    //   .datum(emissions_for_line)
-    //   .join("clipPath")
-    //   .attr("id", "top-clip")
-    //   .attr("class", "clip-area")
-    //   .attr("d", clipAreaGen)
-    //   .transition()
-    //   .duration(transition_duration);
-    // .attr("fill", "black")
-    // .attr("stroke-width", 2);
+    createClipArea({});
 
     // create data points
     plot_g
@@ -251,7 +233,7 @@ const LinePlot = (props) => {
 
     plot_g
       .selectAll(".emissions-line")
-      .datum(emissions_for_line)
+      .datum(emissions_simple)
       .join("path")
       .transition()
       .duration(transition_duration)
@@ -278,7 +260,14 @@ const LinePlot = (props) => {
     return;
   };
 
-  return <div ref={container}></div>;
+  return (
+    <div
+      style={{
+        height: "100%",
+      }}
+      ref={container}
+    ></div>
+  );
 };
 
 const mapStateToProps = (state) => {

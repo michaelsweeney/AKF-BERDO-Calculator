@@ -72,7 +72,6 @@ const calcAreas = (thresholds, emissions) => {
     year: middleFilter[0].year,
   });
 
-  console.log(middle, middleFilter);
   let bottom = combined_bottom.map((d) => {
     return {
       val: d.emission_val, //d3.max([d.thresh_val, d.emission_val]),

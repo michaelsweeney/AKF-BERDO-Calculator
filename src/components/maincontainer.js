@@ -12,6 +12,7 @@ const useStyles = makeStyles({
   main: {
     padding: 20,
     width: "calc(100% - 400px)",
+    height: "100%",
     display: "inline-block",
   },
   side: {

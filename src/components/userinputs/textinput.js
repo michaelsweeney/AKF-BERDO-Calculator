@@ -3,7 +3,6 @@ import { InputLabel } from "@mui/material";
 import { useRef, useEffect } from "react";
 const TextInput = (props) => {
   const { label, changeCallback, value, autoFocus } = props;
-  console.log(autoFocus);
   return (
     <div>
       <InputLabel value={label} />

@@ -1,8 +1,8 @@
 import * as d3 from "d3";
 
-const makeAxes = (props) => {
+const createAxes = (config) => {
   const { svg, xScale, yScale, chartdims, margins, transition_duration } =
-    props;
+    config;
   // create axes
   let xAxisBottom = d3
     .axisBottom()
@@ -75,4 +75,4 @@ const makeAxes = (props) => {
     .call(yAxisRight);
 };
 
-export { makeAxes };
+export { createAxes };
