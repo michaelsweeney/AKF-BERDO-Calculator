@@ -17,10 +17,10 @@ import {
 
 const LinePlot = (props) => {
   const strokes = {
-    bottomFill: "rgba(0,0,0,0)",
+    bottomFill: "rgba(0,0,0,0.1)",
     topFill: "rgba(0,0,0,0)",
-    middleFill: "#fd8787",
-    emissionsLine: "#0449dc",
+    middleFill: "rgb(220,50,50)",
+    emissionsLine: "rgba(0,0,0,1)",
   };
 
   const container = useRef(null);
