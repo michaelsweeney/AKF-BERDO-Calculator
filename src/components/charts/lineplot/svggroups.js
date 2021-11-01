@@ -14,7 +14,6 @@ const createSvgGroups = (config) => {
         .attr("height", containerdims.height);
 
 
-
     let axis_g = svg
         .selectAll(".axis-g")
         .data([0])
@@ -27,7 +26,7 @@ const createSvgGroups = (config) => {
         .data([0])
         .join("g")
         .attr("class", "legend-g")
-        .attr("transform", `translate(${0}, ${margins.t + chartdims.height})`);
+        .attr("transform", `translate(${0}, ${margins.t + chartdims.height + 50})`);
 
     let plot_g = svg
         .selectAll(".plot-g")

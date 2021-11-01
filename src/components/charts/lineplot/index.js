@@ -35,18 +35,17 @@ const LinePlot = (props) => {
 
     let margins = {
       t: 50,
-      b: 150,
+      b: 200,
       r: 300,
       l: 100,
     }
-
 
     let { containerdims, chartdims } = createDimensions(node, margins, props.window)
 
     const colors = {
       bottomFill: "rgba(0,0,0,0)",
       topFill: "rgba(0,0,0,0)",
-      middleFill: "rgba(220,0,0,0.75)",
+      middleFill: "rgba(220,0,0,0.5)",
       emissionsLineStroke: "rgba(0,220,220,1)",
       emissionsCircleFill: "rgba(0,220,220,1)",
       emissionsCircleStroke: 'rgba(0,0,0,1)',
