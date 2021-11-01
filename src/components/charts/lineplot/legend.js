@@ -1,15 +1,10 @@
 
-
-
-
 const createLegend = (config) => {
-
-
 
     const { element, colors } = config;
 
     let rowspacing = [25, 50, 75, 100, 125, 150, 250, 300]
-    let paddingleft = 100
+    let paddingLeft = 100
     let textAlignLeft = 50
 
 
@@ -18,7 +13,7 @@ const createLegend = (config) => {
         .data([0])
         .join('g')
         .attr('class', 'today-cei-g')
-        .attr('transform', `translate(${paddingleft},${rowspacing[0]})`)
+        .attr('transform', `translate(${paddingLeft},${rowspacing[0]})`)
     today_cei_g
         .selectAll('.today-cei-circle')
         .data([0])
@@ -29,7 +24,6 @@ const createLegend = (config) => {
         .attr('r', 5)
         .attr('stroke', colors.emissionsCircleStroke)
         .attr('fill', colors.emissionsCircleFill)
-
     today_cei_g
         .selectAll('.today-cei-text')
         .data([0])
@@ -43,8 +37,7 @@ const createLegend = (config) => {
     let threshold_met_g = element
         .selectAll('.threshold-met-g').data([0]).join('g')
         .attr('class', 'threshold-met-g')
-        .attr('transform', `translate(${paddingleft},${rowspacing[1]})`)
-
+        .attr('transform', `translate(${paddingLeft},${rowspacing[1]})`)
     threshold_met_g
         .selectAll('.threshold-met-circle').data([0]).join('circle')
         .attr('class', 'threshold-met-circle')
@@ -53,7 +46,6 @@ const createLegend = (config) => {
         .attr('r', 5)
         .attr('stroke', colors.thresholdCircleStrokeOff)
         .attr('fill', colors.thresholdCircleFillOff)
-
     threshold_met_g
         .selectAll('.threshold-met-text').data([0]).join('text')
         .attr('class', 'threshold-met-text')
@@ -62,14 +54,10 @@ const createLegend = (config) => {
         .attr('y', 5)
 
 
-
-
-
     let threshold_unmet_g = element
         .selectAll('.threshold-unmet-g').data([0]).join('g')
         .attr('class', 'threshold-unmet-g')
-        .attr('transform', `translate(${paddingleft},${rowspacing[2]})`)
-
+        .attr('transform', `translate(${paddingLeft},${rowspacing[2]})`)
     threshold_unmet_g
         .selectAll('.threshold-unmet-circle')
         .data([0])
@@ -80,7 +68,6 @@ const createLegend = (config) => {
         .attr('r', 5)
         .attr('stroke', colors.thresholdCircleStrokeOn)
         .attr('fill', colors.thresholdCircleFillOn)
-
     threshold_unmet_g
         .selectAll('.threshold-unmet-text')
         .data([0])
@@ -96,9 +83,7 @@ const createLegend = (config) => {
         .data([0])
         .join('g')
         .attr('class', 'legend-emissions-g')
-        .attr('transform', `translate(${paddingleft},${rowspacing[3]})`)
-
-
+        .attr('transform', `translate(${paddingLeft},${rowspacing[3]})`)
     legend_emissions_g
         .selectAll('.legend-emissions-line-stroke')
         .data([0])
@@ -110,7 +95,6 @@ const createLegend = (config) => {
         .attr('y1', 1)
         .attr('stroke-width', 2)
         .attr('stroke', colors.emissionsLineStroke)
-
     legend_emissions_g
         .selectAll('.legend-emissions-line-text')
         .data([0])
@@ -126,9 +110,7 @@ const createLegend = (config) => {
         .data([0])
         .join('g')
         .attr('class', 'legend-area-g')
-        .attr('transform', `translate(${paddingleft},${rowspacing[4]})`)
-
-
+        .attr('transform', `translate(${paddingLeft},${rowspacing[4]})`)
     legend_area_g
         .selectAll('.legend-area-rect')
         .data([0])
@@ -140,7 +122,6 @@ const createLegend = (config) => {
         .attr('height', 10)
         .attr('stroke', 'black')
         .attr('fill', colors.middleFill)
-
     legend_area_g
         .selectAll('.legend-area-text')
         .data([0])
