@@ -2,6 +2,7 @@ import * as d3 from "d3";
 
 const createBottomArea = (config) => {
   const { xScale, yScale, fill, element, data, duration, chartdims } = config;
+
   let emissionsAreaGen = d3
     .area()
     .x((d) => xScale(d.year))
@@ -23,7 +24,7 @@ const createBottomArea = (config) => {
 };
 
 const createTopArea = (config) => {
-  const { xScale, yScale, duration, stroke, fill, data, element } = config;
+  const { xScale, yScale, duration, fill, data, element } = config;
 
   let threshAreaGen = d3
     .area()
@@ -47,8 +48,6 @@ const createTopArea = (config) => {
     .transition()
     .duration(duration)
     .attr("fill", fill)
-
-    .attr("stroke", stroke)
     .attr("opacity", 1);
 };
 
@@ -60,7 +59,6 @@ const createMiddleArea = (config) => {
     data,
     element,
     fill,
-    stroke,
     clipPath,
   } = config;
 
@@ -82,7 +80,6 @@ const createMiddleArea = (config) => {
     .transition()
     .duration(transition_duration)
     .attr("fill", fill)
-    .attr("stroke", stroke)
     .attr("opacity", 1);
 };
 

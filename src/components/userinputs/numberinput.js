@@ -11,6 +11,7 @@ const useStyles = makeStyles({
 const NumberInput = (props) => {
   const { label, changeCallback, value } = props;
   const classes = useStyles();
+  const step = 500
   return (
     <div>
       <div className={classes.label}>{label}</div>
@@ -20,7 +21,7 @@ const NumberInput = (props) => {
         type="number"
         value={value}
         variant="standard"
-        step="100"
+        inputProps={{ step: step }}
       />
     </div>
   );

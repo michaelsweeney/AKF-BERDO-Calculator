@@ -1,6 +1,6 @@
-const addTitles = (props) => {
-  const { annotation_g, margins, chartdims } = props;
-  annotation_g
+const createTitles = (props) => {
+  const { element, margins, chartdims } = props;
+  element
     .selectAll(".y-axis-title")
     .data([0])
     .join("text")
@@ -11,7 +11,7 @@ const addTitles = (props) => {
     .text("Carbon Emission Intensity (kgCO2e/sf/yr)")
     .style("font-size", "1em");
 
-  annotation_g
+  element
     .selectAll(".x-axis-title")
     .data([0])
     .join("text")
@@ -22,7 +22,7 @@ const addTitles = (props) => {
     .text("Year")
     .style("font-size", "1em");
 
-  annotation_g
+  element
     .selectAll(".chart-title")
     .data([0])
     .join("text")
@@ -33,4 +33,4 @@ const addTitles = (props) => {
     .style("font-size", "1.25em");
 };
 
-export { addTitles };
+export { createTitles };

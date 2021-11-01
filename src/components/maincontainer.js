@@ -7,21 +7,25 @@ import { Paper } from "@mui/material";
 const useStyles = makeStyles({
   root: {
     height: "calc(100vh - 200px)",
+    boxSizing: 'border-box',
     overflow: "hidden",
   },
   main: {
     padding: 20,
-    width: "calc(100% - 400px)",
+    width: "calc(100% - 325px)",
     height: "100%",
     display: "inline-block",
+    boxSizing: 'border-box',
+
   },
   side: {
     padding: 20,
-    width: "300px",
+    width: "325px",
     display: "inline-block",
     verticalAlign: "top",
     height: "100%",
     borderRight: "1px solid black",
+    boxSizing: 'border-box',
   },
 });
 
