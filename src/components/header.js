@@ -3,7 +3,8 @@ import { Button } from "@mui/material";
 import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { Paper } from "@mui/material";
-
+import SearchIcon from "@mui/icons-material/Search";
+import InfoIcon from "@mui/icons-material/Info";
 const useStyles = makeStyles({
   header: {
     height: 100,
@@ -17,19 +18,20 @@ const useStyles = makeStyles({
   },
   left: {
     display: "inline-block",
-    width: "100px",
+    width: "200px",
     verticalAlign: "middle",
   },
   center: {
-    minWidth: "calc(100% - 400px)",
+    minWidth: "calc(100% - 350px)",
     display: "inline-block",
     textAlign: "center",
     verticalAlign: "middle",
     // padding: 15,
   },
+  centerInner: {},
   right: {
     display: "inline-block",
-    width: "300px",
+    width: "150px",
     textAlign: "right",
 
     // float: "right",
@@ -39,7 +41,7 @@ const useStyles = makeStyles({
     display: "inline-block",
   },
   h1: {
-    fontSize: "1.5em",
+    fontSize: "1.25em",
     fontWeight: 600,
     letterSpacing: 1.5,
     marginBottom: 5,
@@ -81,14 +83,16 @@ const Header = (props) => {
           </div>
         </div>
         <div className={classes.center}>
-          <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
-          <div className={classes.h2}>
-            {is_building_loaded
-              ? props.building_name +
-                " (" +
-                date_labels[props.berdoapi.berdo_dataset_year] +
-                ")"
-              : ""}
+          <div className={classes.centerInner}>
+            <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
+            <div className={classes.h2}>
+              {is_building_loaded
+                ? props.building_name +
+                  " (" +
+                  date_labels[props.berdoapi.berdo_dataset_year] +
+                  ")"
+                : ""}
+            </div>
           </div>
         </div>
         <div className={classes.right}>
@@ -100,7 +104,8 @@ const Header = (props) => {
                 variant="contained"
                 onClick={() => props.actions.setIsLoadModalOpen(true)}
               >
-                FIND YOUR BUILDING
+                <SearchIcon />
+                {/* FIND YOUR BUILDING */}
               </Button>
             </div>
             <div className={classes.aboutButton}>
@@ -110,7 +115,8 @@ const Header = (props) => {
                 variant="contained"
                 onClick={() => props.actions.setIsAboutModalOpen(true)}
               >
-                ABOUT
+                {/* ABOUT */}
+                <InfoIcon />
               </Button>
             </div>
           </div>

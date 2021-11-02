@@ -23,7 +23,12 @@ const createSvgGroups = (config) => {
     .data([0])
     .join("g")
     .attr("class", "legend-g")
-    .attr("transform", `translate(${0}, ${margins.t + chartdims.height + 50})`);
+    .attr(
+      "transform",
+      `translate(${chartdims.width / 2 - 225}, ${
+        margins.t + chartdims.height + 50
+      })`
+    );
 
   let plot_g = svg
     .selectAll(".plot-g")
@@ -31,6 +36,7 @@ const createSvgGroups = (config) => {
     .join("g")
     .attr("class", "plot-g")
     .attr("transform", `translate(${margins.l}, ${margins.t})`);
+
   let annotation_g = svg
     .selectAll(".annotation-g")
     .data([0])
