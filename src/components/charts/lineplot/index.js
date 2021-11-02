@@ -7,12 +7,12 @@ import { useRef, useEffect } from "react";
 import { createAxes } from "./axes";
 import { createTitles } from "./titles";
 
-import { createDimensions } from './dimensions'
-import { createScales } from './scales'
+import { createDimensions } from "./dimensions";
+import { createScales } from "./scales";
 import { createEmissionAnnotations } from "./annotations";
-import { createSvgGroups } from './svggroups';
+import { createSvgGroups } from "./svggroups";
 import { createEmissionsLine, createThresholdPoints } from "./dataplot";
-import { createLegend } from './legend'
+import { createLegend } from "./legend";
 import { createDataArrays } from "./datacalcs";
 import {
   createTopArea,
@@ -20,8 +20,6 @@ import {
   createMiddleArea,
   createClipArea,
 } from "./areas";
-
-
 
 const LinePlot = (props) => {
   const container = useRef(null);
@@ -38,44 +36,53 @@ const LinePlot = (props) => {
       b: 200,
       r: 300,
       l: 100,
-    }
+    };
 
-    let { containerdims, chartdims } = createDimensions(node, margins, props.window)
+    let { containerdims, chartdims } = createDimensions(
+      node,
+      margins,
+      props.window
+    );
+
+    let colorCat10 = d3.schemeCategory10;
+    let colorTableau = d3.schemeTableau10;
 
     const colors = {
-      bottomFill: "rgba(0,0,0,0)",
-      topFill: "rgba(0,0,0,0)",
-      middleFill: "rgba(220,0,0,0.5)",
-      emissionsLineStroke: "rgba(0,220,220,1)",
-      emissionsCircleFill: "rgba(0,220,220,1)",
-      emissionsCircleStroke: 'rgba(0,0,0,1)',
-      thresholdCircleFillOn: 'rgba(220,0,0,1)',
-      thresholdCircleStrokeOn: 'rgba(0,0,0,1)',
-      thresholdCircleFillOff: 'rgba(150,150,150,1)',
-      thresholdCircleStrokeOff: 'rgba(0,0,0,1)',
+      bottomFill: colorTableau[3],
+      topFill: "black",
+      middleFill: colorTableau[2],
+      emissionsLineStroke: colorTableau[0],
+      emissionsCircleFill: colorTableau[0],
+      emissionsCircleStroke: "black",
+      thresholdCircleFillOn: colorTableau[2],
+      thresholdCircleStrokeOn: "black",
+      thresholdCircleFillOff: colorTableau[9],
+      thresholdCircleStrokeOff: "black",
     };
 
     const transition_duration = 0;
     const area_transition_duration = 0;
     const domain_padding = 1.2;
 
-    let { emissions, emissions_simple, thresholds, areaArrays } = createDataArrays(props.building.emissions_thresholds, props.building.annual_emissions)
-
+    let { emissions, emissions_simple, thresholds, areaArrays } =
+      createDataArrays(
+        props.building.emissions_thresholds,
+        props.building.annual_emissions
+      );
 
     let { svg, plot_g, annotation_g, legend_g, axis_g } = createSvgGroups({
       containerdims: containerdims,
       chartdims: chartdims,
       margins: margins,
-      node: node
-    })
+      node: node,
+    });
 
     let { xScale, yScale } = createScales({
       chartdims: chartdims,
       emissions: emissions,
       thresholds: thresholds,
       domain_padding: domain_padding,
-    })
-
+    });
 
     createAxes({
       svg: axis_g,
@@ -86,25 +93,24 @@ const LinePlot = (props) => {
       transition_duration: transition_duration,
     });
 
+    // createTopArea({
+    //   xScale: xScale,
+    //   yScale: yScale,
+    //   duration: area_transition_duration,
+    //   data: areaArrays.top,
+    //   fill: colors.topFill,
+    //   element: plot_g,
+    // });
 
-    createTopArea({
-      xScale: xScale,
-      yScale: yScale,
-      duration: area_transition_duration,
-      data: areaArrays.top,
-      fill: colors.topFill,
-      element: plot_g,
-    });
-
-    createBottomArea({
-      xScale: xScale,
-      yScale: yScale,
-      fill: colors.bottomFill,
-      element: plot_g,
-      data: areaArrays.bottom,
-      duration: area_transition_duration,
-      chartdims: chartdims,
-    });
+    // createBottomArea({
+    //   xScale: xScale,
+    //   yScale: yScale,
+    //   fill: colors.bottomFill,
+    //   element: plot_g,
+    //   data: areaArrays.bottom,
+    //   duration: area_transition_duration,
+    //   chartdims: chartdims,
+    // });
 
     createMiddleArea({
       xScale: xScale,
@@ -125,34 +131,29 @@ const LinePlot = (props) => {
       element: plot_g,
     });
 
-
     createEmissionsLine({
       xScale: xScale,
       yScale: yScale,
       element: plot_g,
       data: emissions_simple,
       colors: colors,
-      transition_duration: transition_duration
-    })
-
-
-    createThresholdPoints({
-      element: plot_g,
-      data: thresholds,
-      xScale: xScale,
-      yScale: yScale,
       transition_duration: transition_duration,
-      colors: colors
-    })
-
-
+    });
     createEmissionAnnotations({
       element: annotation_g,
       data: thresholds,
       transition_duration: transition_duration,
       xScale: xScale,
       yScale: yScale,
-    })
+    });
+    createThresholdPoints({
+      element: plot_g,
+      data: thresholds,
+      xScale: xScale,
+      yScale: yScale,
+      transition_duration: transition_duration,
+      colors: colors,
+    });
 
     createTitles({
       element: svg,
@@ -160,19 +161,15 @@ const LinePlot = (props) => {
       chartdims: chartdims,
     });
 
-
     createLegend({
       element: legend_g,
-      colors: colors
-
-    })
+      colors: colors,
+    });
 
     return;
   };
 
-  return (
-    <div style={{ height: "100%", width: '100%' }} ref={container} />
-  );
+  return <div style={{ height: "100%", width: "100%" }} ref={container} />;
 };
 
 const mapStateToProps = (state) => {
