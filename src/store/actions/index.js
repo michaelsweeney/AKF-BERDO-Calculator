@@ -62,7 +62,6 @@ export function setIsAboutModalOpen(bool) {
 }
 
 export function setIsLoadedSummaryModalOpen(bool) {
-  console.log(bool);
   return {
     type: "SET_IS_LOADED_SUMMARY_MODAL_OPEN",
     payload: bool,

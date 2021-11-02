@@ -27,8 +27,9 @@ const ModalComponent = (props) => {
     <Modal className="modal" open={isOpen} onClose={hideModal}>
       <div className="modal-content">
         <Box sx={style}>
-          <Button onClick={hideModal}>x</Button>
-
+          <Button color="primary" onClick={hideModal}>
+            x
+          </Button>
           {props.children}
         </Box>
       </div>

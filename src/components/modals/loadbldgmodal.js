@@ -1,7 +1,7 @@
-import { conn } from "../store/connect";
+import { conn } from "../../store/connect";
 
-import { ModalComponent } from "./modalcomponent";
-import BerdoApiComponent from "./berdoapi/berdoapi";
+import { ModalComponent } from "../modalcomponent";
+import BerdoApiComponent from "../berdoapi/berdoapicomponent";
 
 const LoadBldgModal = (props) => {
   const isLoadModalOpen = props.ui.isLoadModalOpen;

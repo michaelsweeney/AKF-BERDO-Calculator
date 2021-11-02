@@ -11,14 +11,12 @@ const initialState = {
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
     case "SET_IS_LOAD_MODAL_OPEN": {
-      console.log(action.payload);
       return {
         ...state,
         isLoadModalOpen: action.payload,
       };
     }
     case "SET_IS_ABOUT_MODAL_OPEN": {
-      console.log(action.payload);
       return {
         ...state,
         isAboutModalOpen: action.payload,

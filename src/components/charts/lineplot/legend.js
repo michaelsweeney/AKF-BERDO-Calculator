@@ -4,7 +4,8 @@ const createLegend = (config) => {
   let rowspacing = [25, 50, 75, 100];
   let colspacing = [0, 250];
   let paddingLeft = 100;
-  let textAlignLeft = 50;
+  let textAlignLeft = 35;
+  let textAlignLeftLong = 40;
 
   let today_cei_g = element
     .selectAll(".today-cei-g")
@@ -117,7 +118,7 @@ const createLegend = (config) => {
     .join("text")
     .attr("class", "legend-emissions-line-text")
     .text("CEI Over Time")
-    .attr("x", textAlignLeft)
+    .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
   let legend_area_g = element
@@ -146,7 +147,7 @@ const createLegend = (config) => {
     .join("text")
     .attr("class", "legend-area-text")
     .text("CEI deficit")
-    .attr("x", textAlignLeft)
+    .attr("x", textAlignLeftLong)
     .attr("y", 5);
 };
 

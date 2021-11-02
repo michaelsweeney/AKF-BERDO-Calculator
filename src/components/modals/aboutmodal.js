@@ -1,5 +1,5 @@
-import { conn } from "../store/connect";
-import { ModalComponent } from "./modalcomponent";
+import { conn } from "../../store/connect";
+import { ModalComponent } from "../modalcomponent";
 
 const AboutModal = (props) => {
   const isAboutModalOpen = props.ui.isAboutModalOpen;

@@ -17,6 +17,8 @@ const BerdoApiResultsTable = (props) => {
     queryBuildingDataFromCsv(e, callbackFunction);
 
     props.actions.setIsLoadModalOpen(false);
+    props.actions.setIsLoadedSummaryModalOpen(true);
+
     // handle synchronous & ui updates
   };
 

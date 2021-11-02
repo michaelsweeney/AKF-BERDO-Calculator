@@ -1,5 +1,4 @@
 import { compileBuildingProfile } from "../../calculations/compilebuilding";
-import berdoapi from "../../components/berdoapi/berdoapi";
 
 import { convertQueryResults } from "../../components/berdoapi/convertqueryresults";
 

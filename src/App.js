@@ -8,8 +8,9 @@ import { createTheme, ThemeProvider } from "@mui/material/styles";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import MainContainer from "./components/maincontainer";
-import LoadBldgModal from "./components/loadbldgmodal";
-import AboutModal from "./components/aboutmodal";
+import LoadBldgModal from "./components/modals/loadbldgmodal";
+import AboutModal from "./components/modals/aboutmodal";
+import LoadedSummaryModal from "./components/modals/loadedsummarymodal";
 
 const theme = createTheme({
   palette: {
@@ -83,6 +84,7 @@ const App = (props) => {
         <MainContainer />
         <LoadBldgModal />
         <AboutModal />
+        <LoadedSummaryModal />
         <Footer />
       </div>
     </ThemeProvider>
