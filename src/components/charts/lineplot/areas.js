@@ -60,6 +60,7 @@ const createMiddleArea = (config) => {
     element,
     fill,
     clipPath,
+    stroke,
   } = config;
 
   element.selectAll(".middle-area").attr("opacity", 0);
@@ -80,6 +81,7 @@ const createMiddleArea = (config) => {
     .transition()
     .duration(transition_duration)
     .attr("fill", fill)
+    .attr("stroke", stroke)
     .attr("opacity", 1);
 };
 

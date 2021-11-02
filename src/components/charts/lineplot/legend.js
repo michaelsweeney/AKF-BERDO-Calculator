@@ -121,32 +121,61 @@ const createLegend = (config) => {
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
-  let legend_area_g = element
-    .selectAll(".legend-area-g")
+  let legend_area_unmet_g = element
+    .selectAll(".legend-area-unmet-g")
     .data([0])
     .join("g")
-    .attr("class", "legend-area-g")
+    .attr("class", "legend-area-unmet-g")
     .attr(
       "transform",
       `translate(${colspacing[1] + paddingLeft},${rowspacing[1]})`
     );
-  legend_area_g
-    .selectAll(".legend-area-rect")
+  legend_area_unmet_g
+    .selectAll(".legend-area-unmet-rect")
     .data([0])
     .join("rect")
-    .attr("class", "legend-area-rect")
+    .attr("class", "legend-area-unmet-rect")
     .attr("x", 0)
     .attr("y", -7)
     .attr("width", 30)
     .attr("height", 10)
     .attr("stroke", "black")
     .attr("fill", colors.middleFill);
-  legend_area_g
-    .selectAll(".legend-area-text")
+  legend_area_unmet_g
+    .selectAll(".legend-area-unmet-text")
     .data([0])
     .join("text")
-    .attr("class", "legend-area-text")
-    .text("CEI deficit")
+    .attr("class", "legend-area-unmet-text")
+    .text("CEI above threshold")
+    .attr("x", textAlignLeftLong)
+    .attr("y", 5);
+
+  let legend_area_met_g = element
+    .selectAll(".legend-area-met-g")
+    .data([0])
+    .join("g")
+    .attr("class", "legend-area-met-g")
+    .attr(
+      "transform",
+      `translate(${colspacing[1] + paddingLeft},${rowspacing[2]})`
+    );
+  legend_area_met_g
+    .selectAll(".legend-area-met-rect")
+    .data([0])
+    .join("rect")
+    .attr("class", "legend-area-met-rect")
+    .attr("x", 0)
+    .attr("y", -7)
+    .attr("width", 30)
+    .attr("height", 10)
+    .attr("stroke", "black")
+    .attr("fill", colors.bottomFill);
+  legend_area_met_g
+    .selectAll(".legend-area-met-text")
+    .data([0])
+    .join("text")
+    .attr("class", "legend-area-met-text")
+    .text("CEI below threhsold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 };

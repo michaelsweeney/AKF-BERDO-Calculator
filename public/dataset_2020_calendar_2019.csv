@@ -1,4 +1,4 @@
-﻿Property Name,Tax Parcel,Property Type,Address, Gross Area (sq ft) ,Property Uses, Total Site Energy (kBTU) ,% Electricity,% Gas,% Steam,% Fuel Oil,% District Hot Water ,% District Chilled Water,"% Other (Diesel #2, Kerosene, Propane or Other Fuel)",Energy Star Score, Onsite Renewable (kWh) 
+﻿Property Name,Tax Parcel,Property Type,Address,Gross Area (sq ft),Property Uses,Total Site Energy (kBTU),% Electricity,% Gas,% Steam,% Fuel Oil,% District Hot Water,% District Chilled Water,"% Other (Diesel #2, Kerosene, Propane or Other Fuel)",Onsite Renewable (kWh),ENERGY STAR Score
 (71031A) BOSTON,304540000,Retail Store,450 WASHINGTON STREET,389183,Retail Store,5771701.5,1,,,,,,,100,
 0004-Roslindale,1807323050,Supermarket/Grocery Store,950 American Legion Highway,38160,Supermarket/Grocery Store,9071832.6,0.579682368,0.420317632,,,,,,43,
 00602-prudential,401037400,Supermarket/Grocery Store,53 Huntington Ave,42918,Supermarket/Grocery Store,14970545.6,0.676437965,0.323562035,,,,,,66,

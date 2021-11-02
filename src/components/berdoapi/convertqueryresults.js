@@ -10,6 +10,8 @@ ASSUMPTIONS IN DATASET CONVERSION:
 */
 
 const convertQueryResults = (results) => {
+  console.log(results);
+
   let area = +results["Gross Area (sq ft)"];
   let type = convertBuildingType(results["Property Type"]);
 

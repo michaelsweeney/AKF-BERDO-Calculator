@@ -48,9 +48,10 @@ const LinePlot = (props) => {
     let colorTableau = d3.schemeTableau10;
 
     const colors = {
-      bottomFill: colorTableau[3],
+      bottomFill: "rgba(0,0,0,0.1)", // colorTableau[3],
       topFill: "black",
       middleFill: colorTableau[2],
+      middleFillStroke: "black",
       emissionsLineStroke: colorTableau[0],
       emissionsCircleFill: colorTableau[0],
       emissionsCircleStroke: "black",
@@ -102,15 +103,15 @@ const LinePlot = (props) => {
     //   element: plot_g,
     // });
 
-    // createBottomArea({
-    //   xScale: xScale,
-    //   yScale: yScale,
-    //   fill: colors.bottomFill,
-    //   element: plot_g,
-    //   data: areaArrays.bottom,
-    //   duration: area_transition_duration,
-    //   chartdims: chartdims,
-    // });
+    createBottomArea({
+      xScale: xScale,
+      yScale: yScale,
+      fill: colors.bottomFill,
+      element: plot_g,
+      data: areaArrays.bottom,
+      duration: area_transition_duration,
+      chartdims: chartdims,
+    });
 
     createMiddleArea({
       xScale: xScale,
@@ -119,6 +120,7 @@ const LinePlot = (props) => {
       data: areaArrays.middle,
       element: plot_g,
       fill: colors.middleFill,
+      stroke: colors.middleFillStroke,
       clipPath: "url(#thresh-clip-id)",
     });
 

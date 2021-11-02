@@ -1,7 +1,14 @@
 import * as d3 from "d3";
 
-const dataset = "./dataset_2021_calendar_2020.csv";
-const queryCsvByTextInput = (input, callbackFunction) => {
+const dataset_lookup = {
+  "2021_cal_2020": "./dataset_2021_calendar_2020.csv",
+  "2020_cal_2019": "./dataset_2020_calendar_2019.csv",
+  "2019_cal_2018": "./dataset_2019_calendar_2018.csv",
+};
+
+const queryCsvByTextInput = async (input, callbackFunction, dataset_year) => {
+  const dataset = dataset_lookup[dataset_year];
+
   d3.csv(dataset).then((arr) => {
     let filtered = arr.filter((row) => {
       let query_string =
@@ -14,12 +21,17 @@ const queryCsvByTextInput = (input, callbackFunction) => {
         return row;
       }
     });
-
     callbackFunction(filtered);
   });
 };
 
-const queryBuildingDataFromCsv = (input, callbackFunction) => {
+const queryBuildingDataFromCsv = async (
+  input,
+  callbackFunction,
+  dataset_year
+) => {
+  const dataset = dataset_lookup[dataset_year];
+
   d3.csv(dataset).then((arr) => {
     let filtered = arr.filter((row) => {
       let row_property_name = row["Property Name"];

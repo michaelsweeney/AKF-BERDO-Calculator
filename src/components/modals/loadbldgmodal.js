@@ -1,5 +1,8 @@
 import { conn } from "../../store/connect";
 
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+
 import { ModalComponent } from "../modalcomponent";
 import BerdoApiComponent from "../berdoapi/berdoapicomponent";
 
@@ -9,7 +12,6 @@ const LoadBldgModal = (props) => {
   return (
     <ModalComponent isOpen={isLoadModalOpen} exitCallback={exitCallback}>
       <h3>Query the BERDO dataset for your building</h3>
-
       <BerdoApiComponent />
     </ModalComponent>
   );

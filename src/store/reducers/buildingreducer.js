@@ -7,6 +7,7 @@ const initialState = {
     inputQuery: "",
     inputQueryResults: [],
     loadedBuildingInfo: [],
+    berdo_dataset_year: "2021_cal_2020",
   },
   areas: [
     {
@@ -155,11 +156,20 @@ export default function buildingReducer(state = initialState, action) {
       };
     }
 
+    case "SET_BERDO_DATASET_YEAR": {
+      return {
+        ...state,
+        berdoapi: {
+          ...state.berdoapi,
+          berdo_dataset_year: action.payload,
+        },
+      };
+    }
+
     case "SET_LOADED_BUILDING_QUERY_INFO": {
       // get areas, consumption from action.payload
       // get compiled building info w/ compileBuildingProfile()
       // combine everything.
-
       let { areas, consumption, name } = convertQueryResults(action.payload);
 
       return {

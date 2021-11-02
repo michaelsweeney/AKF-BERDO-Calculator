@@ -63,6 +63,15 @@ const useStyles = makeStyles({
 
 const Header = (props) => {
   const classes = useStyles();
+
+  const is_building_loaded = props.building_name ? true : false;
+
+  const date_labels = {
+    "2021_cal_2020": "2020 dataset",
+    "2020_cal_2019": "2019 dataset",
+    "2019_cal_2018": "2018 dataset",
+  };
+
   return (
     <Paper elevation={2}>
       <div className={classes.header}>
@@ -73,7 +82,14 @@ const Header = (props) => {
         </div>
         <div className={classes.center}>
           <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
-          <div className={classes.h2}>{props.building_name}</div>
+          <div className={classes.h2}>
+            {is_building_loaded
+              ? props.building_name +
+                " (" +
+                date_labels[props.berdoapi.berdo_dataset_year] +
+                ")"
+              : ""}
+          </div>
         </div>
         <div className={classes.right}>
           <div className={classes.rightInner}>
@@ -107,6 +123,7 @@ const Header = (props) => {
 const mapStateToProps = (store) => {
   return {
     building_name: store.building.building_name,
+    berdoapi: store.building.berdoapi,
   };
 };
 

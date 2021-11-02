@@ -95,7 +95,12 @@ export function setLoadedBuildingQueryInfo(result) {
     payload: result,
   };
 }
-
+export function setBerdoDatasetYear(result) {
+  return {
+    type: "SET_BERDO_DATASET_YEAR",
+    payload: result,
+  };
+}
 // resize actions
 export function setWindowDimensions(dims) {
   return {
