@@ -33,7 +33,7 @@ const LinePlot = (props) => {
 
     let margins = {
       t: 50,
-      b: 200,
+      b: 150,
       r: 300,
       l: 100,
     };
@@ -139,6 +139,7 @@ const LinePlot = (props) => {
       colors: colors,
       transition_duration: transition_duration,
     });
+
     createEmissionAnnotations({
       element: annotation_g,
       data: thresholds,

@@ -6,8 +6,8 @@ import { Paper } from "@mui/material";
 
 const useStyles = makeStyles({
   root: {
-    height: "calc(100vh - 200px)",
-    boxSizing: 'border-box',
+    height: "calc(100vh - 175px)",
+    boxSizing: "border-box",
     overflow: "hidden",
   },
   main: {
@@ -15,8 +15,7 @@ const useStyles = makeStyles({
     width: "calc(100% - 325px)",
     height: "100%",
     display: "inline-block",
-    boxSizing: 'border-box',
-
+    boxSizing: "border-box",
   },
   side: {
     padding: 20,
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
     verticalAlign: "top",
     height: "100%",
     borderRight: "1px solid black",
-    boxSizing: 'border-box',
+    boxSizing: "border-box",
   },
 });
 

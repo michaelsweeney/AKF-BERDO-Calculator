@@ -9,6 +9,7 @@ import Header from "./components/header";
 import Footer from "./components/footer";
 import MainContainer from "./components/maincontainer";
 import LoadBldgModal from "./components/loadbldgmodal";
+import AboutModal from "./components/aboutmodal";
 
 const theme = createTheme({
   palette: {
@@ -25,6 +26,7 @@ const useStyles = makeStyles({
   app: {
     height: "100vh",
     width: "100vw",
+    minWidth: 900,
     boxSizing: "border-box",
     overflow: "hidden",
   },
@@ -80,6 +82,7 @@ const App = (props) => {
         <Header />
         <MainContainer />
         <LoadBldgModal />
+        <AboutModal />
         <Footer />
       </div>
     </ThemeProvider>

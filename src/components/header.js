@@ -4,11 +4,10 @@ import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { Paper } from "@mui/material";
 
-
 const useStyles = makeStyles({
   header: {
     height: 100,
-    width: "100vw",
+    width: "100%",
     // padding: 20,
     borderBottom: "1px gray solid",
     overflow: "hidden",
@@ -22,7 +21,7 @@ const useStyles = makeStyles({
     verticalAlign: "middle",
   },
   center: {
-    minWidth: "calc(100% - 300px)",
+    minWidth: "calc(100% - 400px)",
     display: "inline-block",
     textAlign: "center",
     verticalAlign: "middle",
@@ -30,11 +29,14 @@ const useStyles = makeStyles({
   },
   right: {
     display: "inline-block",
-    width: "200px",
+    width: "300px",
     textAlign: "right",
 
     // float: "right",
     // padding: 20,
+  },
+  rightInner: {
+    display: "inline-block",
   },
   h1: {
     fontSize: "1.5em",
@@ -51,8 +53,14 @@ const useStyles = makeStyles({
   },
   findButton: {
     paddingRight: 15,
+    display: "inline-block",
+  },
+  aboutButton: {
+    paddingRight: 15,
+    display: "inline-block",
   },
 });
+
 const Header = (props) => {
   const classes = useStyles();
   return (
@@ -64,26 +72,35 @@ const Header = (props) => {
           </div>
         </div>
         <div className={classes.center}>
-          <div className={classes.h1}>BERDO ARTICLE 37 CALCULATOR</div>
+          <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
           <div className={classes.h2}>{props.building_name}</div>
         </div>
         <div className={classes.right}>
-          <div className={classes.findButton}>
-            <Button
-              // size="small"
-              color="primary"
-              variant="contained"
-              onClick={() => props.actions.setIsLoadModalOpen(true)}
-            >
-              FIND YOUR BUILDING
-            </Button>
+          <div className={classes.rightInner}>
+            <div className={classes.findButton}>
+              <Button
+                // size="small"
+                color="primary"
+                variant="contained"
+                onClick={() => props.actions.setIsLoadModalOpen(true)}
+              >
+                FIND YOUR BUILDING
+              </Button>
+            </div>
+            <div className={classes.aboutButton}>
+              <Button
+                // size="small"
+                color="primary"
+                variant="contained"
+                onClick={() => props.actions.setIsAboutModalOpen(true)}
+              >
+                ABOUT
+              </Button>
+            </div>
           </div>
         </div>
       </div>
     </Paper>
-
-
-
   );
 };
 
