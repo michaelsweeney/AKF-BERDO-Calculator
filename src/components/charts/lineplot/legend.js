@@ -110,6 +110,7 @@ const createLegend = (config) => {
     .attr("y1", 1)
     .attr("stroke-width", 2)
     .attr("stroke", colors.emissionsLineStroke);
+
   legend_emissions_g
     .selectAll(".legend-emissions-line-text")
     .data([0])
