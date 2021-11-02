@@ -10,8 +10,8 @@ const createEmissionAnnotations = (config) => {
     .attr("class", "threshold-annotation")
     .transition()
     .duration(transition_duration)
-    .attr("x", xScale(2050) + 25)
-    .attr("y", (d) => yScale(d.val))
+    .attr("x", xScale(2050) + 15)
+    .attr("y", (d) => yScale(d.val) + 5)
     .text((d) => `${d.period}: ${d3.format(".2f")(d.val)} CEI`)
     .style("fill", (d) => (d.threshold_met ? "black" : "red"))
     .style("font-size", "1em");
@@ -23,12 +23,12 @@ const createEmissionAnnotations = (config) => {
     .attr("class", "thresh-line")
     .transition()
     .duration(transition_duration)
-    .attr("x1", (d) => xScale(d.starting_year))
+    .attr("x1", (d) => xScale(d.starting_year) + 5)
     .attr("x2", (d) => xScale("2050"))
     .attr("y1", (d) => yScale(d.val))
     .attr("y2", (d) => yScale(d.val))
     .attr("stroke-dasharray", "2 0 2")
-    .style("stroke", (d) => (d.threshold_met ? "gray" : "red"));
+    .style("stroke", (d) => (d.threshold_met ? "gray" : "black"));
 };
 
 export { createEmissionAnnotations };
