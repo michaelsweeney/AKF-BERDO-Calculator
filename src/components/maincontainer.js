@@ -7,6 +7,7 @@ import { Paper } from "@mui/material";
 const useStyles = makeStyles({
   root: {
     height: "calc(100vh - 175px)",
+    minHeight: 300,
     boxSizing: "border-box",
     overflow: "hidden",
   },
