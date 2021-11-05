@@ -18,7 +18,7 @@ const BerdoApiResultsTable = (props) => {
     props.actions.setIsLoadModalOpen(false);
 
     // todo: create table & results summary
-    // props.actions.setIsLoadedSummaryModalOpen(true);
+    props.actions.setIsLoadedSummaryModalOpen(true);
   };
 
   let { inputQueryResults } = props.berdoapi;
