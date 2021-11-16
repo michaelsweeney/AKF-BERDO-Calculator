@@ -7,31 +7,31 @@ const createLegend = (config) => {
   let textAlignLeft = 35;
   let textAlignLeftLong = 40;
 
-  let today_cei_g = element
-    .selectAll(".today-cei-g")
+  let today_es_g = element
+    .selectAll(".today-es-g")
     .data([0])
     .join("g")
-    .attr("class", "today-cei-g")
+    .attr("class", "today-es-g")
     .attr(
       "transform",
       `translate(${colspacing[0] + paddingLeft},${rowspacing[0]})`
     );
-  today_cei_g
-    .selectAll(".today-cei-circle")
+  today_es_g
+    .selectAll(".today-es-circle")
     .data([0])
     .join("circle")
-    .attr("class", "today-cei-circle")
+    .attr("class", "today-es-circle")
     .attr("cx", 15)
     .attr("cy", 0)
     .attr("r", 5)
     .attr("stroke", colors.emissionsCircleStroke)
     .attr("fill", colors.emissionsCircleFill);
-  today_cei_g
-    .selectAll(".today-cei-text")
+  today_es_g
+    .selectAll(".today-es-text")
     .data([0])
     .join("text")
-    .attr("class", "today-cei-text")
-    .text("CEI at Present-Day")
+    .attr("class", "today-es-text")
+    .text("ES at Present-Day")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -59,7 +59,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-met-text")
-    .text("CEI Threshold (met)")
+    .text("ES threshold (met)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -87,7 +87,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-unmet-text")
-    .text("CEI Threshold (unmet)")
+    .text("ES threshold (unmet)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -117,7 +117,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-emissions-line-text")
-    .text("CEI Over Time")
+    .text("ES over time")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -146,7 +146,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-area-unmet-text")
-    .text("CEI above threshold")
+    .text("ES above threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -175,7 +175,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-area-met-text")
-    .text("CEI below threhsold")
+    .text("ES below threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 };

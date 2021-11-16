@@ -50,6 +50,15 @@ const useStyles = makeStyles({
     fontSize: "1.0em",
     letterSpacing: 1.25,
   },
+  h2link: {
+    fontSize: "1.0em",
+    letterSpacing: 1.25,
+    transition: "color 250ms",
+    cursor: "pointer",
+    "&:hover": {
+      color: "rgba(0,0,0,0.5)",
+    },
+  },
   akfLogoContainer: {
     padding: 10,
   },
@@ -74,6 +83,10 @@ const Header = (props) => {
     "2019_cal_2018": "2018 dataset",
   };
 
+  const handleOpenAbout = () => {
+    props.actions.setIsLoadedSummaryModalOpen(true);
+  };
+
   return (
     <Paper elevation={2}>
       <div className={classes.header}>
@@ -85,7 +98,7 @@ const Header = (props) => {
         <div className={classes.center}>
           <div className={classes.centerInner}>
             <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
-            <div className={classes.h2}>
+            <div className={classes.h2link} onClick={handleOpenAbout}>
               {is_building_loaded
                 ? props.building_name +
                   " (" +

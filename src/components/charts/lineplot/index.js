@@ -14,12 +14,7 @@ import { createSvgGroups } from "./svggroups";
 import { createEmissionsLine, createThresholdPoints } from "./dataplot";
 import { createLegend } from "./legend";
 import { createDataArrays } from "./datacalcs";
-import {
-  createTopArea,
-  createBottomArea,
-  createMiddleArea,
-  createClipArea,
-} from "./areas";
+import { createBottomArea, createMiddleArea, createClipArea } from "./areas";
 
 const LinePlot = (props) => {
   const container = useRef(null);
@@ -57,8 +52,13 @@ const LinePlot = (props) => {
       emissionsCircleStroke: "black",
       thresholdCircleFillOn: colorTableau[2],
       thresholdCircleStrokeOn: "black",
-      thresholdCircleFillOff: colorTableau[9],
+      thresholdCircleFillOff: colorTableau[5],
       thresholdCircleStrokeOff: "black",
+
+      annotationLineOn: "black",
+      annotationLineOff: "black",
+      annotationTextOn: colorTableau[2],
+      annotationTextOff: "black",
     };
 
     const transition_duration = 0;
@@ -93,15 +93,6 @@ const LinePlot = (props) => {
       chartdims: chartdims,
       transition_duration: transition_duration,
     });
-
-    // createTopArea({
-    //   xScale: xScale,
-    //   yScale: yScale,
-    //   duration: area_transition_duration,
-    //   data: areaArrays.top,
-    //   fill: colors.topFill,
-    //   element: plot_g,
-    // });
 
     createBottomArea({
       xScale: xScale,
@@ -148,6 +139,10 @@ const LinePlot = (props) => {
       transition_duration: transition_duration,
       xScale: xScale,
       yScale: yScale,
+      lineColorOn: colors.annotationLineOn,
+      lineColorOff: colors.annotationLineOff,
+      textColorOn: colors.annotationTextOn,
+      textColorOff: colors.annotationTextOff,
     });
     createThresholdPoints({
       element: plot_g,

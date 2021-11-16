@@ -1,7 +1,17 @@
 import * as d3 from "d3";
 
 const createEmissionAnnotations = (config) => {
-  const { element, data, transition_duration, xScale, yScale } = config;
+  const {
+    element,
+    data,
+    transition_duration,
+    xScale,
+    yScale,
+    textColorOn,
+    textColorOff,
+    lineColorOn,
+    lineColorOff,
+  } = config;
 
   element
     .selectAll(".threshold-annotation")
@@ -12,8 +22,8 @@ const createEmissionAnnotations = (config) => {
     .duration(transition_duration)
     .attr("x", xScale(2050) + 15)
     .attr("y", (d) => yScale(d.val) + 5)
-    .text((d) => `${d.period}: ${d3.format(".2f")(d.val)} CEI`)
-    .style("fill", (d) => (d.threshold_met ? "black" : "red"))
+    .text((d) => `${d.period} ES: ${d3.format(".2f")(d.val)}`)
+    .style("fill", (d) => (d.threshold_met ? textColorOff : textColorOn))
     .style("font-size", "1em");
 
   element
@@ -28,7 +38,7 @@ const createEmissionAnnotations = (config) => {
     .attr("y1", (d) => yScale(d.val))
     .attr("y2", (d) => yScale(d.val))
     .attr("stroke-dasharray", "2 0 2")
-    .style("stroke", (d) => (d.threshold_met ? "gray" : "black"));
+    .style("stroke", (d) => (d.threshold_met ? lineColorOff : lineColorOn));
 };
 
 export { createEmissionAnnotations };

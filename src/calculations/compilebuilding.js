@@ -5,8 +5,10 @@ import {
   non_electric_emissions_factors,
 } from "./emissionsfactors";
 
-import { convertMMBtuToNative, convertNativeToMMBtu } from '../calculations/unitconversions'
-
+import {
+  convertMMBtuToNative,
+  convertNativeToMMBtu,
+} from "../calculations/unitconversions";
 
 const getEmissionsFactorsByYear = (year) => {
   return {
@@ -43,7 +45,7 @@ const getAnnualEmissions = (years, consumption, buildingarea) => {
       factors,
       buildingarea
     );
-    emissions['year'] = year
+    emissions["year"] = year;
     return emissions;
   });
 
@@ -51,20 +53,20 @@ const getAnnualEmissions = (years, consumption, buildingarea) => {
 };
 
 const compileBuildingProfile = (buildinginputs) => {
-
   const { areas, consumption_native } = buildinginputs;
 
+  console.log(buildinginputs);
 
-  const consumption_mmbtu = {}
+  const consumption_mmbtu = {};
 
-  Object.keys(consumption_native).map(fuel => {
-    let val = consumption_native[fuel]
-    consumption_mmbtu[fuel] = convertNativeToMMBtu(val, fuel)
-  })
+  Object.keys(consumption_native).map((fuel) => {
+    let val = consumption_native[fuel];
+    consumption_mmbtu[fuel] = convertNativeToMMBtu(val, fuel);
+  });
 
   const compiled_building = { areas, consumption_native, consumption_mmbtu };
 
-  const totalarea = sum(areas.map(e => e.area));
+  const totalarea = sum(areas.map((e) => e.area));
 
   const years = Object.keys(electric_emissions_factors_by_year);
 
@@ -95,10 +97,9 @@ const compileBuildingProfile = (buildinginputs) => {
       "2050-": 0,
     };
 
-    let total_area = sum(areas.map(e => e.area))
+    let total_area = sum(areas.map((e) => e.area));
 
     areas.forEach((e) => {
-
       let area_absolute = e.area;
       let area_fraction = area_absolute / total_area;
 
@@ -122,8 +123,7 @@ const compileBuildingProfile = (buildinginputs) => {
   };
 
   compiled_building.emissions_thresholds = getEmissionsThresholds(areas);
-
-
+  console.log(compiled_building);
   return compiled_building;
 };
 
