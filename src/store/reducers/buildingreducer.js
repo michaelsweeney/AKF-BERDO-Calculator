@@ -44,7 +44,7 @@ const initialState = {
   */
   },
   onsite_generation_native: {
-    solar_photovoltaic: 0,
+    elec: 0,
   },
   areas: [
     {
@@ -54,7 +54,7 @@ const initialState = {
     },
   ],
   consumption_native: {
-    grid_elec: 0,
+    elec: 0,
     gas: 0,
     fuel_1: 0,
     fuel_2: 0,
@@ -67,7 +67,7 @@ const initialState = {
     engine_driven_chiller_gas: 0,
   },
   consumption_mmbtu: {
-    grid_elec: 0,
+    elec: 0,
     gas: 0,
     fuel_1: 0,
     fuel_2: 0,
@@ -109,6 +109,7 @@ export default function buildingReducer(state = initialState, action) {
         ...state,
         areas: action.payload.areas,
         consumption_native: action.payload.consumption_native,
+        onsite_generation_native: action.payload.onsite_generation_native,
       };
     }
 
@@ -166,7 +167,7 @@ export default function buildingReducer(state = initialState, action) {
         compileBuildingProfile({
           areas: state.areas,
           consumption_native: state.consumption_native,
-          on_site_generation_native: state.on_site_generation_native,
+          onsite_generation_native: state.onsite_generation_native,
         });
       return {
         ...state,
@@ -211,6 +212,13 @@ export default function buildingReducer(state = initialState, action) {
       // combine everything.
       let { areas, consumption, name } = convertQueryResults(action.payload);
 
+      let { annual_emissions, emissions_thresholds, building_validation } =
+        compileBuildingProfile({
+          areas: state.areas,
+          consumption_native: state.consumption_native,
+          onsite_generation_native: state.onsite_generation_native,
+        });
+
       return {
         ...state,
         berdoapi: {
@@ -218,15 +226,10 @@ export default function buildingReducer(state = initialState, action) {
           loadedBuildingInfo: action.payload,
         },
         areas: areas,
+        building_validation: building_validation,
         consumption_native: consumption,
-        annual_emissions: compileBuildingProfile({
-          areas: areas,
-          consumption_native: consumption,
-        }).annual_emissions,
-        emissions_thresholds: compileBuildingProfile({
-          areas: areas,
-          consumption_native: consumption,
-        }).emissions_thresholds,
+        annual_emissions: annual_emissions,
+        emissions_thresholds: emissions_thresholds,
         building_name: name,
       };
     }

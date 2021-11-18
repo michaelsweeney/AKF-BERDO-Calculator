@@ -4,7 +4,7 @@ import { NumberInput } from "./numberinput";
 
 const UtilityInputContainer = (props) => {
   const fueltypes = {
-    grid_elec: "Grid Electricity (kWh)",
+    elec: "Grid Electricity (kWh)",
     gas: "Natural Gas (therms)",
     fuel_1: "Fuel Type One (gal)",
     fuel_2: "Fuel Type Two (gal)",

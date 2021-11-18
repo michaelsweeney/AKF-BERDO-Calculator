@@ -14,11 +14,11 @@ const fuel_two_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.1467);
 const fuel_four_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.51);
 const diesel_mmbtu_to_gallons = (mmbtu) => Math.round(mmbtu / 0.137381);
 
-const placeholder_conversion = (v) => Math.round(v)
+const placeholder_conversion = (v) => Math.round(v);
 
 const convertNativeToMMBtu = (val, fuel) => {
   let functionobj = {
-    grid_elec: elec_kwh_to_mmbtu,
+    elec: elec_kwh_to_mmbtu,
     gas: gas_therms_to_mmbtu,
     fuel_1: fuel_one_gallons_to_mmbtu,
     fuel_2: fuel_two_gallons_to_mmbtu,
@@ -38,7 +38,7 @@ const convertNativeToMMBtu = (val, fuel) => {
 
 const convertMMBtuToNative = (val, fuel) => {
   return {
-    grid_elec: elec_mmbtu_to_kwh,
+    elec: elec_mmbtu_to_kwh,
     gas: gas_mmbtu_to_therms,
     fuel_1: fuel_one_mmbtu_to_gallons,
     fuel_2: fuel_two_mmbtu_to_gallons,

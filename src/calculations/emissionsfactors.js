@@ -53,4 +53,10 @@ const electric_emissions_factors_by_year = {
   2050: 21,
 };
 
-export { electric_emissions_factors_by_year, non_electric_emissions_factors };
+const years = Object.keys(electric_emissions_factors_by_year);
+
+export {
+  electric_emissions_factors_by_year,
+  non_electric_emissions_factors,
+  years,
+};
