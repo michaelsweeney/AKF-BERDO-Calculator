@@ -10,8 +10,8 @@ const initialState = {
     berdo_dataset_year: "2021_cal_2020",
   },
   building_validation: {
-    is_above_35000_sf: false, // to be implemented
-    is_above_20000_sf: false, // to be implemented
+    is_above_35000_sf: false,
+    is_above_20000_sf: false,
     /* 
     Buildings equal to or greater than twenty thousand (20,000) 
     square or fifteen (15) units but less than thirty-five thousand 
@@ -43,7 +43,9 @@ const initialState = {
       be adjusted by the Regulations.
   */
   },
-  on_site_generation: {}, // to be implemented
+  onsite_generation_native: {
+    solar_photovoltaic: 0,
+  },
   areas: [
     {
       type: "office",
@@ -160,14 +162,17 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "COMPILE_BUILDING_OUTPUTS": {
-      let { annual_emissions, emissions_thresholds } = compileBuildingProfile({
-        areas: state.areas,
-        consumption_native: state.consumption_native,
-      });
+      let { annual_emissions, emissions_thresholds, building_validation } =
+        compileBuildingProfile({
+          areas: state.areas,
+          consumption_native: state.consumption_native,
+          on_site_generation_native: state.on_site_generation_native,
+        });
       return {
         ...state,
         annual_emissions: annual_emissions,
         emissions_thresholds: emissions_thresholds,
+        building_validation: building_validation,
       };
     }
 

@@ -51,8 +51,8 @@ const LoadedSummaryModal = (props) => {
       <h3>LOADED BUILDING SUMMARY</h3>
       The below information has been loaded for the selected building:
       <ul>
-        {loaded_summary_list.map((d) => (
-          <li>{d}</li>
+        {loaded_summary_list.map((d, i) => (
+          <li key={i}>{d}</li>
         ))}
       </ul>
       <h3>DATASET INFORMATION AND CAVEATS</h3>

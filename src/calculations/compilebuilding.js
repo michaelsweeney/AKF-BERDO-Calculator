@@ -53,20 +53,27 @@ const getAnnualEmissions = (years, consumption, buildingarea) => {
 };
 
 const compileBuildingProfile = (buildinginputs) => {
-  const { areas, consumption_native } = buildinginputs;
-
-  console.log(buildinginputs);
+  const { areas, consumption_native, onsite_generation } = buildinginputs;
 
   const consumption_mmbtu = {};
+  const totalarea = sum(areas.map((e) => e.area));
+
+  const building_validation = {
+    is_above_35000_sf: totalarea >= 35000 ? true : false,
+    is_above_20000_sf: totalarea >= 20000 ? true : false,
+  };
 
   Object.keys(consumption_native).map((fuel) => {
     let val = consumption_native[fuel];
     consumption_mmbtu[fuel] = convertNativeToMMBtu(val, fuel);
   });
 
-  const compiled_building = { areas, consumption_native, consumption_mmbtu };
-
-  const totalarea = sum(areas.map((e) => e.area));
+  const compiled_building = {
+    areas,
+    consumption_native,
+    consumption_mmbtu,
+    building_validation,
+  };
 
   const years = Object.keys(electric_emissions_factors_by_year);
 
@@ -79,7 +86,7 @@ const compileBuildingProfile = (buildinginputs) => {
   compiled_building.annual_emissions = annual_emissions_array;
 
   const getEmissionsThresholds = (areas) => {
-    const absolute = {
+    let absolute = {
       "2025-2029": 0,
       "2030-2034": 0,
       "2035-2039": 0,
@@ -88,7 +95,7 @@ const compileBuildingProfile = (buildinginputs) => {
       "2050-": 0,
     };
 
-    const normalized = {
+    let normalized = {
       "2025-2029": 0,
       "2030-2034": 0,
       "2035-2039": 0,
@@ -123,7 +130,20 @@ const compileBuildingProfile = (buildinginputs) => {
   };
 
   compiled_building.emissions_thresholds = getEmissionsThresholds(areas);
+
+  /* 
+  keys: 
+    consumption_native, // static
+    consumption_mmbtu, // static
+    building_validation, // static
+    annual_emissions, // area
+    ** annual_offsets, // array of annual offset based on kwh
+
+
+
+  */
   console.log(compiled_building);
+
   return compiled_building;
 };
 
