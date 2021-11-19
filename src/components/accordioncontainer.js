@@ -26,7 +26,7 @@ const AccordionContainer = (props) => {
   return (
     <Accordion
       className={classes.root}
-      expanded={props.ui.accordion[tag]}
+      expanded={tag === props.ui.accordion.active_key}
       onChange={() => handleAccordionChange(tag)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>

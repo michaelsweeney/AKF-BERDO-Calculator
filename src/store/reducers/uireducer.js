@@ -3,9 +3,7 @@ const initialState = {
   isAboutModalOpen: false,
   isLoadedSummaryModalOpen: false,
   accordion: {
-    property_types: true,
-    utility_consumption: false,
-    onsite_renewable: false,
+    active_key: "property_types",
   },
 };
 
@@ -36,14 +34,17 @@ export default function uiReducer(state = initialState, action) {
       };
     }
     case "TOGGLE_ACCORDION": {
+      let active_key;
+      if (action.payload === state.accordion.active_key) {
+        active_key = "property_types";
+      } else {
+        active_key = action.payload;
+      }
+
       return {
         ...state,
         accordion: {
-          property_types: action.payload === "property_types" ? true : false,
-          utility_consumption:
-            action.payload === "utility_consumption" ? true : false,
-          onsite_renewable:
-            action.payload === "onsite_renewable" ? true : false,
+          active_key: active_key,
         },
       };
     }
