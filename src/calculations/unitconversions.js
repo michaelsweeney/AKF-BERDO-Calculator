@@ -18,7 +18,8 @@ const placeholder_conversion = (v) => Math.round(v);
 
 const convertNativeToMMBtu = (val, fuel) => {
   let functionobj = {
-    elec: elec_kwh_to_mmbtu,
+    elec_grid: elec_kwh_to_mmbtu,
+    elec_pv: elec_kwh_to_mmbtu,
     gas: gas_therms_to_mmbtu,
     fuel_1: fuel_one_gallons_to_mmbtu,
     fuel_2: fuel_two_gallons_to_mmbtu,
@@ -38,7 +39,8 @@ const convertNativeToMMBtu = (val, fuel) => {
 
 const convertMMBtuToNative = (val, fuel) => {
   return {
-    elec: elec_mmbtu_to_kwh,
+    elec_grid: elec_mmbtu_to_kwh,
+    elec_pv: elec_mmbtu_to_kwh,
     gas: gas_mmbtu_to_therms,
     fuel_1: fuel_one_mmbtu_to_gallons,
     fuel_2: fuel_two_mmbtu_to_gallons,

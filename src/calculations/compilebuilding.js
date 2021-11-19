@@ -58,17 +58,34 @@ const getEmissionsThresholds = (areas) => {
 const getEmissionsFactorsByYear = (year) => {
   return {
     ...non_electric_emissions_factors,
-    elec: electric_emissions_factors_by_year[year],
+    elec_grid: electric_emissions_factors_by_year[year],
+    elec_pv: electric_emissions_factors_by_year[year],
   };
 };
 
-const getEmissionsFromConsumption = (consumption, factors, buildingarea) => {
+const getEmissionsFromConsumption = (
+  consumption,
+  onsite_generation,
+  factors,
+  buildingarea
+) => {
   const absolute = { total: 0 };
   const normalized = { total: 0 };
 
   Object.keys(consumption).forEach((k) => {
     const fuel_factor = factors[k];
     const fuel_consumption = consumption[k];
+    const fuel_emission = fuel_consumption * fuel_factor;
+    absolute[k] = fuel_emission;
+
+    normalized[k] = fuel_emission / buildingarea;
+    absolute["total"] += fuel_emission;
+    normalized["total"] += fuel_emission / buildingarea;
+  });
+
+  Object.keys(onsite_generation).forEach((k) => {
+    const fuel_factor = factors[k];
+    const fuel_consumption = onsite_generation[k];
     const fuel_emission = fuel_consumption * fuel_factor;
     absolute[k] = fuel_emission;
 
@@ -82,14 +99,22 @@ const getEmissionsFromConsumption = (consumption, factors, buildingarea) => {
   return { absolute, normalized };
 };
 
-const getAnnualEmissions = (years, consumption, buildingarea) => {
+const getAnnualEmissions = (
+  years,
+  consumption,
+  onsite_generation,
+  buildingarea
+) => {
   const annual_emissions_array = years.map((year) => {
     const factors = getEmissionsFactorsByYear(year);
     const emissions = getEmissionsFromConsumption(
       consumption,
+      onsite_generation,
       factors,
       buildingarea
     );
+
+    console.log(emissions, year);
     emissions["year"] = year;
     return emissions;
   });
@@ -116,19 +141,17 @@ const compileBuildingProfile = (buildinginputs) => {
   let onsite_generation_mmbtu = {};
   Object.keys(onsite_generation_native).map((fuel) => {
     let val = onsite_generation_native[fuel];
-    onsite_generation_mmbtu[fuel] = convertNativeToMMBtu(val, fuel);
+    onsite_generation_mmbtu[fuel] = -convertNativeToMMBtu(val, fuel);
   });
 
   let annual_emissions = getAnnualEmissions(
     years,
     consumption_mmbtu,
+    onsite_generation_mmbtu,
     totalarea
   );
 
   let emissions_thresholds = getEmissionsThresholds(areas);
-
-  console.log(onsite_generation_mmbtu);
-  console.log(building_validation, annual_emissions, emissions_thresholds);
 
   return {
     building_validation: building_validation,

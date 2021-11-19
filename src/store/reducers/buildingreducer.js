@@ -44,7 +44,7 @@ const initialState = {
   */
   },
   onsite_generation_native: {
-    elec: 0,
+    elec_pv: 0,
   },
   areas: [
     {
@@ -54,20 +54,7 @@ const initialState = {
     },
   ],
   consumption_native: {
-    elec: 0,
-    gas: 0,
-    fuel_1: 0,
-    fuel_2: 0,
-    fuel_4: 0,
-    diesel: 0,
-    district_steam: 0,
-    district_hot_water: 0,
-    elec_driven_chiller: 0,
-    absorption_chiller_gas: 0,
-    engine_driven_chiller_gas: 0,
-  },
-  consumption_mmbtu: {
-    elec: 0,
+    elec_grid: 0,
     gas: 0,
     fuel_1: 0,
     fuel_2: 0,
@@ -207,17 +194,7 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "SET_LOADED_BUILDING_QUERY_INFO": {
-      // get areas, consumption from action.payload
-      // get compiled building info w/ compileBuildingProfile()
-      // combine everything.
       let { areas, consumption, name } = convertQueryResults(action.payload);
-
-      let { annual_emissions, emissions_thresholds, building_validation } =
-        compileBuildingProfile({
-          areas: state.areas,
-          consumption_native: state.consumption_native,
-          onsite_generation_native: state.onsite_generation_native,
-        });
 
       return {
         ...state,
@@ -226,10 +203,7 @@ export default function buildingReducer(state = initialState, action) {
           loadedBuildingInfo: action.payload,
         },
         areas: areas,
-        building_validation: building_validation,
         consumption_native: consumption,
-        annual_emissions: annual_emissions,
-        emissions_thresholds: emissions_thresholds,
         building_name: name,
       };
     }

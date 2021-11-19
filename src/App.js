@@ -47,7 +47,7 @@ const App = (props) => {
         },
       ],
       consumption_native: {
-        elec: 18000,
+        elec_grid: 18000,
         gas: 0,
         fuel_1: 0,
         fuel_2: 0,
@@ -60,7 +60,7 @@ const App = (props) => {
         engine_driven_chiller_gas: 0,
       },
       onsite_generation_native: {
-        elec: 800,
+        elec_pv: 800,
       },
     };
     props.actions.setAllBuildingInputs(test_building_data);

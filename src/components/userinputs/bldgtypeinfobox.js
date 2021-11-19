@@ -8,7 +8,7 @@ import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
   root: {
     // display: 'inline-block'
-    overflow: 'hidden',
+    overflow: "hidden",
     marginTop: 0,
     marginBottom: 20,
   },
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
   },
   rmButton: {
     display: "inline-block",
-    position: 'relative',
+    position: "relative",
     top: 0,
     left: 120,
   },
@@ -34,9 +34,10 @@ const useStyles = makeStyles({
     marginLeft: 5,
   },
   selectLabelRow: {
-    display: 'inline-block',
-    marginBottom: 5, color: 'gray'
-  }
+    display: "inline-block",
+    marginBottom: 5,
+    color: "gray",
+  },
 });
 
 const BldgTypeInfoBox = (props) => {
@@ -68,24 +69,20 @@ const BldgTypeInfoBox = (props) => {
             <Button
               className={classes.rmButton}
               size="small"
-              sx={{ minWidth: '10px' }}
+              sx={{ minWidth: "10px" }}
               onClick={handleRemoveSelf}
             >
-              {index == 0 ? '' : 'x'}
+              {index == 0 ? "" : "x"}
             </Button>
           </div>
 
           <BldgTypeSelect
-            width='250px'
+            width="250px"
             changeCallback={handleTypeChange}
             type={type}
-
           />
-
-
         </div>
         <div className={classes.row2}>
-
           <div className={classes.input}>
             <NumberInput
               changeCallback={handleAreaChange}
@@ -93,12 +90,7 @@ const BldgTypeInfoBox = (props) => {
               value={area}
             />
           </div>
-
         </div>
-
-
-
-
       </div>
     </div>
   );

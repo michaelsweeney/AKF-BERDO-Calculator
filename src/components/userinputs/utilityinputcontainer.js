@@ -4,7 +4,8 @@ import { NumberInput } from "./numberinput";
 
 const UtilityInputContainer = (props) => {
   const fueltypes = {
-    elec: "Grid Electricity (kWh)",
+    elec_grid: "Grid Electricity (kWh)",
+    elec_pv: "Onsite PV Generation (kWh)",
     gas: "Natural Gas (therms)",
     fuel_1: "Fuel Type One (gal)",
     fuel_2: "Fuel Type Two (gal)",
@@ -16,7 +17,6 @@ const UtilityInputContainer = (props) => {
     absorption_chiller_gas: "Gas Absorption Chiller (MMBtu)",
     engine_driven_chiller_gas: "Gas-Driven Chiller (MMBtu)",
   };
-
   const handleUtilityChange = (val, fuel) => {
     props.actions.setNativeUtilityConsumption(val, fuel);
     props.actions.compileBuildingOutputs();

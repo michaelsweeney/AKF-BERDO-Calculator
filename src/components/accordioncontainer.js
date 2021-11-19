@@ -7,7 +7,10 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  root: {},
+  root: {
+    overflow: "hidden",
+    marginBottom: 10,
+  },
   accordionSummary: {
     fontWeight: 600,
   },
@@ -22,15 +25,14 @@ const AccordionContainer = (props) => {
   const classes = useStyles();
   return (
     <Accordion
+      className={classes.root}
       expanded={props.ui.accordion[tag]}
       onChange={() => handleAccordionChange(tag)}
     >
       <AccordionSummary expandIcon={<ExpandMoreIcon />}>
         <div className={classes.accordionSummary}>{label}</div>
       </AccordionSummary>
-      <AccordionDetails style={{ maxHeight: "500px", overflow: "auto" }}>
-        {props.children}
-      </AccordionDetails>
+      <AccordionDetails>{props.children}</AccordionDetails>
     </Accordion>
   );
 };

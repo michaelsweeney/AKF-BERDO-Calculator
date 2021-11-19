@@ -1,5 +1,5 @@
 import { conn } from "../store/connect";
-
+import { useEffect, useRef, useState } from "react";
 import { Paper } from "@mui/material";
 
 import { makeStyles } from "@material-ui/styles";
@@ -27,13 +27,18 @@ const Sidebar = (props) => {
         <AccordionContainer label="Utility Summary" tag="utility_consumption">
           <UtilityInputContainer />
         </AccordionContainer>
+        <AccordionContainer label="Onsite Renewable" tag="onsite_renewable">
+          input here...
+        </AccordionContainer>
       </div>
     </Paper>
   );
 };
 
 const mapStateToProps = (state) => {
-  return {};
+  return {
+    window: state.window,
+  };
 };
 
 export default conn(mapStateToProps)(Sidebar);

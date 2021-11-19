@@ -27,7 +27,7 @@ const convertQueryResults = (results) => {
     total_mmbtu *
     +results["% Other (Diesel #2, Kerosene, Propane or Other Fuel)"];
 
-  let elec_native = convertMMBtuToNative(elec_mmbtu, "elec");
+  let elec_native = convertMMBtuToNative(elec_mmbtu, "elec_grid");
   let gas_native = convertMMBtuToNative(gas_mmbtu, "gas");
   let district_chw_native = convertMMBtuToNative(
     district_chw_mmbtu,
@@ -50,7 +50,7 @@ const convertQueryResults = (results) => {
   ];
 
   let consumption = {
-    elec: elec_native || 0,
+    elec_grid: elec_native || 0,
     gas: gas_native || 0,
     fuel_1: 0, // fuel not in query reults
     fuel_2: fuel_oil_two_native || 0,

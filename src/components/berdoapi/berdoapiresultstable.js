@@ -10,7 +10,11 @@ import { queryBuildingDataFromCsv } from "./csvqueries";
 
 const BerdoApiResultsTable = (props) => {
   const handleSelectBuilding = (e) => {
-    let callbackFunction = props.actions.setLoadedBuildingQueryInfo;
+    let callbackFunction = (p) => {
+      props.actions.setLoadedBuildingQueryInfo(p);
+      props.actions.compileBuildingOutputs();
+    };
+
     let berdo_dataset_year = props.berdoapi.berdo_dataset_year;
 
     queryBuildingDataFromCsv(e, callbackFunction, berdo_dataset_year);
