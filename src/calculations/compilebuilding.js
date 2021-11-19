@@ -1,5 +1,5 @@
 import { emissions_standards } from "./emissionsstandards";
-import { sum } from "d3";
+import { sum, max } from "d3";
 import {
   electric_emissions_factors_by_year,
   non_electric_emissions_factors,
@@ -92,9 +92,14 @@ const getEmissionsFromConsumption = (
     normalized[k] = fuel_emission / buildingarea;
 
     absolute["total"] += fuel_emission;
-
     normalized["total"] += fuel_emission / buildingarea;
   });
+
+  // set any negative values to zero to account for potential net positive energy
+  // might be hacky or inelegant.
+
+  absolute["total"] = max([0, absolute["total"]]);
+  normalized["total"] = max([0, normalized["total"]]);
 
   return { absolute, normalized };
 };
@@ -114,7 +119,6 @@ const getAnnualEmissions = (
       buildingarea
     );
 
-    console.log(emissions, year);
     emissions["year"] = year;
     return emissions;
   });

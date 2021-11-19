@@ -33,6 +33,12 @@ export function setNativeUtilityConsumption(val, fuel) {
     payload: { val, fuel },
   };
 }
+export function setNativeOnsiteGeneration(val, fuel) {
+  return {
+    type: "SET_NATIVE_ONSITE_GENERATION",
+    payload: { val, fuel },
+  };
+}
 
 export function compileBuildingOutputs() {
   return {

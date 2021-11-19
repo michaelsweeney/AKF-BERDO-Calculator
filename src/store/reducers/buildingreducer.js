@@ -149,6 +149,16 @@ export default function buildingReducer(state = initialState, action) {
       };
     }
 
+    case "SET_NATIVE_ONSITE_GENERATION": {
+      return {
+        ...state,
+        onsite_generation_native: {
+          ...state.onsite_generation_native,
+          [action.payload.fuel]: action.payload.val,
+        },
+      };
+    }
+
     case "COMPILE_BUILDING_OUTPUTS": {
       let { annual_emissions, emissions_thresholds, building_validation } =
         compileBuildingProfile({

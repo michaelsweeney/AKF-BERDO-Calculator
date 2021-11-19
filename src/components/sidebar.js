@@ -6,6 +6,8 @@ import { makeStyles } from "@material-ui/styles";
 
 import BldgTypeInfoContainer from "./userinputs/bldgtypeinfocontainer";
 import UtilityInputContainer from "./userinputs/utilityinputcontainer";
+import OnsiteInputContainer from "./userinputs/onsiteinputcontainer";
+
 import AccordionContainer from "./accordioncontainer";
 
 const useStyles = makeStyles({
@@ -28,7 +30,7 @@ const Sidebar = (props) => {
           <UtilityInputContainer />
         </AccordionContainer>
         <AccordionContainer label="Onsite Renewable" tag="onsite_renewable">
-          input here...
+          <OnsiteInputContainer />
         </AccordionContainer>
       </div>
     </Paper>
