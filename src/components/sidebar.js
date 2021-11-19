@@ -26,7 +26,10 @@ const Sidebar = (props) => {
           <BldgTypeInfoContainer />
         </AccordionContainer>
 
-        <AccordionContainer label="Utility Summary" tag="utility_consumption">
+        <AccordionContainer
+          label="Utility Consumption"
+          tag="utility_consumption"
+        >
           <UtilityInputContainer />
         </AccordionContainer>
         <AccordionContainer label="Onsite Renewable" tag="onsite_renewable">
