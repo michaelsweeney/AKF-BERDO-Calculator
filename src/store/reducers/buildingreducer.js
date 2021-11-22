@@ -12,37 +12,10 @@ const initialState = {
   building_validation: {
     is_above_35000_sf: false,
     is_above_20000_sf: false,
-    /* 
-    Buildings equal to or greater than twenty thousand (20,000) 
-    square or fifteen (15) units but less than thirty-five thousand 
-    (35,000) square feet or thirty-five (35) units shall not be subject 
-    to the Emissions standards until 2031,
-    */
   },
 
-  alternate_compliance_payments: {
-    "2025-2029": 0, // to be implemented
-    "2030-2034": 0, // to be implemented
-    "2035-2039": 0, // to be implemented
-    "2040-2044": 0, // to be implemented
-    "2045-2049": 0, // to be implemented
-    "2050-": 0, // to be implemented
-    /* 
-      d. Alternative Compliance Payments: Buildings 
-      may mitigate CO2e Emissions from Energy use 
-      by making Alternative Compliance Payments. 
-      The price of an Alternative Compliance Payment 
-      shall be based on the average cost per metric 
-      ton of CO2e to decarbonize Buildings subject 
-      to this Subsection. The initial cost of an 
-      Alternative Compliance Payment shall be $234 
-      per metric ton of CO2e. The cost of an Alternative 
-      Compliance Payment shall be reviewed at least 
-      every five (5) years by the Review Board, with 
-      input from the Environment Department, and may 
-      be adjusted by the Regulations.
-  */
-  },
+  alternative_compliance_payments: {},
+
   onsite_generation_native: {
     elec_pv: 0,
   },
@@ -113,12 +86,14 @@ export default function buildingReducer(state = initialState, action) {
         ],
       };
     }
+
     case "REMOVE_BUILDING_TYPE": {
       return {
         ...state,
         areas: [...state.areas].filter((e) => e.index !== action.payload),
       };
     }
+
     case "SET_BUILDING_TYPE_AREA": {
       return {
         ...state,
@@ -129,6 +104,7 @@ export default function buildingReducer(state = initialState, action) {
         ),
       };
     }
+
     case "SET_BUILDING_TYPE": {
       return {
         ...state,
@@ -139,6 +115,7 @@ export default function buildingReducer(state = initialState, action) {
         ),
       };
     }
+
     case "SET_NATIVE_UTILITY_CONSUMPTION": {
       return {
         ...state,
@@ -160,17 +137,22 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "COMPILE_BUILDING_OUTPUTS": {
-      let { annual_emissions, emissions_thresholds, building_validation } =
-        compileBuildingProfile({
-          areas: state.areas,
-          consumption_native: state.consumption_native,
-          onsite_generation_native: state.onsite_generation_native,
-        });
+      let {
+        annual_emissions,
+        emissions_thresholds,
+        building_validation,
+        alternative_compliance_payments,
+      } = compileBuildingProfile({
+        areas: state.areas,
+        consumption_native: state.consumption_native,
+        onsite_generation_native: state.onsite_generation_native,
+      });
       return {
         ...state,
         annual_emissions: annual_emissions,
         emissions_thresholds: emissions_thresholds,
         building_validation: building_validation,
+        alternative_compliance_payments: alternative_compliance_payments,
       };
     }
 

@@ -1,5 +1,5 @@
 import { emissions_standards } from "./emissionsstandards";
-import { sum, max, min } from "d3";
+import { sum, max } from "d3";
 import {
   electric_emissions_factors_by_year,
   non_electric_emissions_factors,
@@ -9,8 +9,7 @@ import { convertNativeToMMBtu } from "../calculations/unitconversions";
 
 const getAlternativeCompliancePayments = (
   emissions_thresholds,
-  annual_emissions,
-  building_validation
+  annual_emissions
 ) => {
   let compliance_obj = [];
   let abs_thresholds = emissions_thresholds.absolute;
@@ -234,11 +233,8 @@ const compileBuildingProfile = (buildinginputs) => {
 
   let alternative_compliance_payments = getAlternativeCompliancePayments(
     emissions_thresholds,
-    annual_emissions,
-    building_validation
+    annual_emissions
   );
-
-  console.log(alternative_compliance_payments);
 
   return {
     building_validation: building_validation,
