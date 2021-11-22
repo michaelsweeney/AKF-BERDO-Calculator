@@ -6,12 +6,24 @@ import {
   years,
 } from "./emissionsfactors";
 
-import {
-  convertMMBtuToNative,
-  convertNativeToMMBtu,
-} from "../calculations/unitconversions";
+import { convertNativeToMMBtu } from "../calculations/unitconversions";
 
-const getEmissionsThresholds = (areas) => {
+const getEmissionsThresholds = (areas, building_validation) => {
+  let has_2025_2029_threshold;
+
+  if (!building_validation.is_above_20000_sf) {
+    has_2025_2029_threshold = false;
+  }
+
+  if (
+    building_validation.is_above_20000_sf &&
+    !building_validation.is_above_35000_sf
+  ) {
+    has_2025_2029_threshold = false;
+  } else {
+    has_2025_2029_threshold = true;
+  }
+
   let absolute = {
     "2025-2029": 0,
     "2030-2034": 0,
@@ -52,6 +64,29 @@ const getEmissionsThresholds = (areas) => {
     normalized["2045-2049"] += area_fraction * thresholds[4];
     normalized["2050-"] += area_fraction * thresholds[5];
   });
+
+  // handle area validation... is 'null' the right way to express this?
+  if (!has_2025_2029_threshold) {
+    absolute["2025-2029"] = null;
+    normalized["2025-2029"] = null;
+  }
+
+  if (!building_validation.is_above_20000_sf) {
+    absolute["2025-2029"] = null;
+    absolute["2030-2034"] = null;
+    absolute["2035-2039"] = null;
+    absolute["2040-2044"] = null;
+    absolute["2045-2049"] = null;
+    absolute["2050-"] = null;
+
+    normalized["2025-2029"] = null;
+    normalized["2030-2034"] = null;
+    normalized["2035-2039"] = null;
+    normalized["2040-2044"] = null;
+    normalized["2045-2049"] = null;
+    normalized["2050-"] = null;
+  }
+
   return { absolute, normalized };
 };
 
@@ -155,12 +190,23 @@ const compileBuildingProfile = (buildinginputs) => {
     totalarea
   );
 
-  let emissions_thresholds = getEmissionsThresholds(areas);
+  let emissions_thresholds = getEmissionsThresholds(areas, building_validation);
+
+  const getAlternativeCompliancePayments = (
+    emissions_thresholds,
+    annual_emissions
+  ) => {};
+
+  let alternative_compliance_payments = getAlternativeCompliancePayments(
+    emissions_thresholds,
+    annual_emissions
+  );
 
   return {
     building_validation: building_validation,
     annual_emissions: annual_emissions,
     emissions_thresholds: emissions_thresholds,
+    alternative_compliance_payments: alternative_compliance_payments,
   };
 };
 
