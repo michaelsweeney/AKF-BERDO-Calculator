@@ -41,6 +41,8 @@ const convertQueryResults = (results) => {
   let fuel_oil_two_native = convertMMBtuToNative(fuel_oil_two_mmbtu, "fuel_2");
   let other_native = convertMMBtuToNative(other_mmbtu, "diesel");
 
+  let onsite_elec_pv = results["Onsite Renewable (kWh)"];
+
   let areas = [
     {
       type: type,
@@ -63,10 +65,15 @@ const convertQueryResults = (results) => {
     engine_driven_chiller_gas: 0, // fuel not in query reults
   };
 
+  let onsite_generation_native = {
+    elec_pv: onsite_elec_pv,
+  };
+
   return {
     areas: areas,
     consumption: consumption,
     name: name,
+    onsite_generation_native: onsite_generation_native,
   };
 };
 

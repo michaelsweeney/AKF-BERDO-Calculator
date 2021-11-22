@@ -204,7 +204,8 @@ export default function buildingReducer(state = initialState, action) {
     }
 
     case "SET_LOADED_BUILDING_QUERY_INFO": {
-      let { areas, consumption, name } = convertQueryResults(action.payload);
+      let { areas, consumption, name, onsite_generation_native } =
+        convertQueryResults(action.payload);
 
       return {
         ...state,
@@ -215,6 +216,7 @@ export default function buildingReducer(state = initialState, action) {
         areas: areas,
         consumption_native: consumption,
         building_name: name,
+        onsite_generation_native: onsite_generation_native,
       };
     }
 

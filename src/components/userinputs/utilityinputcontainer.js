@@ -1,7 +1,6 @@
 import { conn } from "../../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { NumberInput } from "./numberinput";
-import { ClassNames } from "@emotion/react";
 
 const useStyles = makeStyles({
   root: {
