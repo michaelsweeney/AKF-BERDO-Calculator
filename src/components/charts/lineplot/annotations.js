@@ -21,10 +21,10 @@ const createEmissionAnnotations = (config) => {
     .transition()
     .duration(transition_duration)
     .attr("x", xScale(2050) + 15)
-    .attr("y", (d) => yScale(d.val) + 5)
-    .text((d) => `${d.period} ES: ${d3.format(".2f")(d.val)}`)
+    .attr("y", (d) => (d.val !== null ? yScale(d.val) + 5 : 0))
+    .text((d) => `${d.period} es: ${d3.format(".2f")(d.val)}`)
     .style("fill", (d) => (d.threshold_met ? textColorOff : textColorOn))
-    .style("font-size", "1em");
+    .style("font-size", "1.0em");
 
   element
     .selectAll(".thresh-line")

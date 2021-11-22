@@ -1,38 +1,60 @@
 const calcAreas = (thresholds, emissions) => {
-  let periods = [2018, 2025, 2030, 2035, 2040, 2045, 2050];
+  let is_2025_fine = thresholds[0].period == "2025-2029" ? true : false;
+
+  let periods = is_2025_fine
+    ? [2018, 2025, 2030, 2035, 2040, 2045, 2050]
+    : [2018, 2030, 2035, 2040, 2045, 2050];
+
   let combined_array = periods.map((d) => {
     return {
       year: d,
-      emission_val: emissions.filter((f) => f.year === d)[0]
-        ? emissions.filter((f) => f.year === d)[0].val
+      emission_val: emissions.filter((f) => +f.year === d)[0]
+        ? emissions.filter((f) => +f.year === d)[0].val
         : 0,
-      thresh_val: thresholds.filter((f) => f.starting_year === d)[0]
-        ? thresholds.filter((f) => f.starting_year === d)[0].val
+      thresh_val: thresholds.filter((f) => +f.starting_year === d)[0]
+        ? thresholds.filter((f) => +f.starting_year === d)[0].val
         : 0,
-      thresh_met: thresholds.filter((f) => f.starting_year === d)[0]
-        ? thresholds.filter((f) => f.starting_year === d)[0].threshold_met
+      thresh_met: thresholds.filter((f) => +f.starting_year === d)[0]
+        ? thresholds.filter((f) => +f.starting_year === d)[0].threshold_met
         : false,
     };
   });
 
-  let combined_top = [
-    combined_array[1],
-    combined_array[2],
-    combined_array[3],
-    combined_array[4],
-    combined_array[5],
-    combined_array[6],
-  ];
+  let combined_top = is_2025_fine
+    ? [
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+        combined_array[6],
+      ]
+    : [
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+      ];
 
-  let combined_bottom = [
-    combined_array[0],
-    combined_array[1],
-    combined_array[2],
-    combined_array[3],
-    combined_array[4],
-    combined_array[5],
-    combined_array[6],
-  ];
+  let combined_bottom = is_2025_fine
+    ? [
+        combined_array[0],
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+        combined_array[6],
+      ]
+    : [
+        combined_array[0],
+        combined_array[1],
+        combined_array[2],
+        combined_array[3],
+        combined_array[4],
+        combined_array[5],
+      ];
 
   let top = combined_top.map((d) => {
     return {
@@ -74,10 +96,11 @@ const calcAreas = (thresholds, emissions) => {
 
   let bottom = combined_bottom.map((d) => {
     return {
-      val: d.emission_val, //d3.max([d.thresh_val, d.emission_val]),
+      val: d.emission_val,
       year: d.year,
     };
   });
+
   top = [
     {
       val: top[0] ? top[0].val : 0,
@@ -123,7 +146,6 @@ const calcAreas = (thresholds, emissions) => {
   ];
 
   return { top, middle, bottom };
-  // returns {top, middle, bottom}
 };
 
 export { calcAreas };

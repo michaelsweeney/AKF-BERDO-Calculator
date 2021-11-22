@@ -9,7 +9,7 @@ const getThresholdArray = (thresholds, emissions) => {
   };
 
   const getThresholdsMet = (e) => {
-    let emission_period = emissions.filter((f) => f.year === domain_map[e])[0];
+    let emission_period = emissions.filter((f) => +f.year === domain_map[e])[0];
     if (emission_period) {
       if (emission_period.val < thresholds[e]) {
         return true;
@@ -29,6 +29,10 @@ const getThresholdArray = (thresholds, emissions) => {
       threshold_met: getThresholdsMet(e),
     };
   });
+
+  if (!thresholds[0].val) {
+    thresholds.shift();
+  }
 
   return thresholds;
 };

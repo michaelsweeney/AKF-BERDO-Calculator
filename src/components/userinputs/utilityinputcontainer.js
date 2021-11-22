@@ -4,7 +4,7 @@ import { NumberInput } from "./numberinput";
 
 const useStyles = makeStyles({
   root: {
-    overflow: "scroll",
+    overflowY: "scroll",
     maxHeight: (props) => props.height,
   },
 });

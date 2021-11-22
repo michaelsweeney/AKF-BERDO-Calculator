@@ -53,7 +53,6 @@ const LinePlot = (props) => {
       thresholdCircleStrokeOn: "black",
       thresholdCircleFillOff: colorTableau[3],
       thresholdCircleStrokeOff: "black",
-
       annotationLineOn: "black",
       annotationLineOff: "black",
       annotationTextOn: colorTableau[2],
@@ -67,7 +66,8 @@ const LinePlot = (props) => {
     let { emissions, emissions_simple, thresholds, areaArrays } =
       createDataArrays(
         props.building.emissions_thresholds,
-        props.building.annual_emissions
+        props.building.annual_emissions,
+        props.building.building_validation
       );
 
     let { svg, plot_g, annotation_g, legend_g, axis_g } = createSvgGroups({

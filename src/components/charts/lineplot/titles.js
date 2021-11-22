@@ -9,7 +9,7 @@ const createTitles = (props) => {
     .attr("x", -(margins.t + chartdims.height / 2))
     .attr("y", margins.l / 2 - 15)
     .attr("text-anchor", "middle")
-    .text("ES (kgCO2e/sf/yr)")
+    .text("es (kgCO2e/sf/yr)")
     .style("font-size", "1em");
 
   element
@@ -31,7 +31,7 @@ const createTitles = (props) => {
     .attr("x", margins.l + chartdims.width / 2)
     .attr("y", margins.t - 20)
     .attr("text-anchor", "middle")
-    .text("Emissions Standard (ES) Threshold Summary")
+    .text("Emissions Standard (es) Threshold Summary")
     .style("font-size", "1.25em");
 };
 

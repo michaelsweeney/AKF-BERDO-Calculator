@@ -42,12 +42,12 @@ const App = (props) => {
       areas: [
         {
           type: "office",
-          area: 120000,
+          area: 21000,
           index: 0,
         },
       ],
       consumption_native: {
-        elec_grid: 1800000,
+        elec_grid: 260000,
         gas: 0,
         fuel_1: 0,
         fuel_2: 0,

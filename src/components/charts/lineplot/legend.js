@@ -31,7 +31,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "today-es-text")
-    .text("ES at Present-Day")
+    .text("es at present day")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -59,7 +59,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-met-text")
-    .text("ES threshold (met)")
+    .text("es threshold (met)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -87,7 +87,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-unmet-text")
-    .text("ES threshold (unmet)")
+    .text("es threshold (unmet)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -117,7 +117,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-emissions-line-text")
-    .text("ES over time")
+    .text("es over time")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -146,7 +146,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-area-unmet-text")
-    .text("ES above threshold")
+    .text("es above threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -175,7 +175,7 @@ const createLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-area-met-text")
-    .text("ES below threshold")
+    .text("es below threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 };

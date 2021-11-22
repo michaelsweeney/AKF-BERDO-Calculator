@@ -39,7 +39,6 @@ const initialState = {
     absorption_chiller_gas: 0,
     engine_driven_chiller_gas: 0,
   },
-
   annual_emissions: [],
   emissions_thresholds: {
     absolute: {
