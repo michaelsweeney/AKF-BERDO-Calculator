@@ -114,3 +114,9 @@ export function setWindowDimensions(dims) {
     payload: dims,
   };
 }
+export function setActiveView(label) {
+  return {
+    type: "SET_ACTIVE_VIEW",
+    payload: label,
+  };
+}

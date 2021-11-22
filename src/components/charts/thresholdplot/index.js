@@ -28,7 +28,7 @@ const LinePlot = (props) => {
 
     let margins = {
       t: 50,
-      b: 150,
+      b: 175,
       r: 300,
       l: 100,
     };

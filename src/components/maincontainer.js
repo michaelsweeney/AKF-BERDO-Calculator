@@ -1,8 +1,9 @@
 import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import Sidebar from "./sidebar";
-import LinePlot from "./charts/lineplot";
-import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
+
+import ViewContainer from "./viewcontainer";
+
 const useStyles = makeStyles({
   root: {
     height: "calc(100vh - 175px)",
@@ -26,14 +27,16 @@ const useStyles = makeStyles({
     borderRight: "1px solid black",
     boxSizing: "border-box",
   },
+  viewSelectorBtn: {
+    marginLeft: 5,
+    display: "inline-block",
+  },
+  viewSelectorContainer: {
+    marginBottom: 10,
+  },
 });
 
 const MainContainer = (props) => {
-  const is_regulated = props.building_validation.is_above_20000_sf;
-
-  const unregulated_message =
-    "Buildings under 20,000 SF are unregulated under BERDO 2.0";
-
   const classes = useStyles();
   return (
     <div className={classes.root}>
@@ -41,11 +44,7 @@ const MainContainer = (props) => {
         <Sidebar />
       </div>
       <div className={classes.main}>
-        {is_regulated ? (
-          <LinePlot />
-        ) : (
-          <BuildingFeedbackMessage message={unregulated_message} />
-        )}
+        <ViewContainer />
       </div>
     </div>
   );
@@ -54,6 +53,7 @@ const MainContainer = (props) => {
 const mapStateToProps = (store) => {
   return {
     building_validation: store.building.building_validation,
+    activeView: store.ui.activeView,
   };
 };
 

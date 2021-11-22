@@ -6,7 +6,7 @@ import BldgTypeInfoBox from "./bldgtypeinfobox";
 
 const useStyles = makeStyles({
   root: {
-    overflowY: "scroll",
+    overflowY: "auto",
     maxHeight: (props) => props.height,
   },
   addBuildingType: {

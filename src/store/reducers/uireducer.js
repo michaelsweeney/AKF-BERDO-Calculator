@@ -5,6 +5,7 @@ const initialState = {
   accordion: {
     active_key: "property_types",
   },
+  activeView: "thresholds",
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -46,6 +47,13 @@ export default function uiReducer(state = initialState, action) {
         accordion: {
           active_key: active_key,
         },
+      };
+    }
+
+    case "SET_ACTIVE_VIEW": {
+      return {
+        ...state,
+        activeView: action.payload,
       };
     }
     default:
