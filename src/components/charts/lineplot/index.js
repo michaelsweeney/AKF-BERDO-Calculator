@@ -52,7 +52,7 @@ const LinePlot = (props) => {
       emissionsCircleStroke: "black",
       thresholdCircleFillOn: colorTableau[2],
       thresholdCircleStrokeOn: "black",
-      thresholdCircleFillOff: colorTableau[5],
+      thresholdCircleFillOff: colorTableau[3],
       thresholdCircleStrokeOff: "black",
 
       annotationLineOn: "black",

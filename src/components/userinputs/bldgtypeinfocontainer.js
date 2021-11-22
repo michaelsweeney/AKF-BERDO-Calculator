@@ -6,7 +6,8 @@ import BldgTypeInfoBox from "./bldgtypeinfobox";
 
 const useStyles = makeStyles({
   root: {
-    height: "100%",
+    overflow: "scroll",
+    maxHeight: (props) => props.height,
   },
   addBuildingType: {
     textAlign: "center",
@@ -14,7 +15,10 @@ const useStyles = makeStyles({
 });
 
 const BldgTypeInfoContainer = (props) => {
-  const classes = useStyles();
+  const styles = {
+    height: props.window.dims.height - 425,
+  };
+  const classes = useStyles(styles);
   const handleAddBuildingType = (e) => {
     const new_idx = max(props.building.areas.map((d) => d.index)) + 1;
     props.actions.addBuildingType(new_idx);
@@ -22,7 +26,7 @@ const BldgTypeInfoContainer = (props) => {
   };
 
   return (
-    <div>
+    <div className={classes.root}>
       {props.building.areas.map((e, i) => (
         <BldgTypeInfoBox
           key={i}
@@ -45,6 +49,7 @@ const mapStateToProps = (state) => {
   return {
     building: { ...state.building },
     actions: { ...state.actions },
+    window: { ...state.window },
   };
 };
 

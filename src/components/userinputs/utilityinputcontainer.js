@@ -1,8 +1,19 @@
 import { conn } from "../../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { NumberInput } from "./numberinput";
+import { ClassNames } from "@emotion/react";
 
+const useStyles = makeStyles({
+  root: {
+    overflow: "scroll",
+    maxHeight: (props) => props.height,
+  },
+});
 const UtilityInputContainer = (props) => {
+  let styles = {
+    height: props.window.dims.height - 425,
+  };
+  const classes = useStyles(styles);
   const fueltypes = {
     elec_grid: "Grid Electricity (kWh)",
     gas: "Natural Gas (therms)",
@@ -21,7 +32,7 @@ const UtilityInputContainer = (props) => {
     props.actions.compileBuildingOutputs();
   };
   return (
-    <div>
+    <div className={classes.root}>
       {Object.keys(fueltypes).map((e, i) => {
         return (
           <div key={i}>
@@ -41,6 +52,7 @@ const mapStateToProps = (state) => {
   return {
     building: { ...state.building },
     actions: { ...state.actions },
+    window: { ...state.window },
   };
 };
 
