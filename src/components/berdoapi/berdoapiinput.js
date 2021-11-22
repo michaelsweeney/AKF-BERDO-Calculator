@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { conn } from "../../store/connect";
 import { TextInput } from "../userinputs/textinput";
 import { queryCsvByTextInput } from "./csvqueries";

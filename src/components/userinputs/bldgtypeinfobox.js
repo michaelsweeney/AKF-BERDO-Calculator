@@ -72,7 +72,7 @@ const BldgTypeInfoBox = (props) => {
               sx={{ minWidth: "10px" }}
               onClick={handleRemoveSelf}
             >
-              {index == 0 ? "" : "x"}
+              {index === 0 ? "" : "x"}
             </Button>
           </div>
 

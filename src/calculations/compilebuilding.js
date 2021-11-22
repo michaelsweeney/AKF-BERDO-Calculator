@@ -1,12 +1,52 @@
 import { emissions_standards } from "./emissionsstandards";
-import { sum, max } from "d3";
+import { sum, max, min } from "d3";
 import {
   electric_emissions_factors_by_year,
   non_electric_emissions_factors,
   years,
 } from "./emissionsfactors";
-
 import { convertNativeToMMBtu } from "../calculations/unitconversions";
+
+const getAlternativeCompliancePayments = (
+  emissions_thresholds,
+  annual_emissions,
+  building_validation
+) => {
+  let compliance_obj = [];
+  let abs_thresholds = emissions_thresholds.absolute;
+  let acp_per_ton = 234;
+
+  annual_emissions.forEach((d) => {
+    let { year, absolute } = d;
+    let abs_total = absolute.total;
+
+    const getAcp = (abs_total, abs_thresholds) => {
+      let deficit = max([0, abs_total - abs_thresholds]);
+      let payment = deficit * acp_per_ton;
+      return { payment: payment, deficit: deficit };
+    };
+    let acpobj = {};
+    if (+year <= 2029) {
+      acpobj = getAcp(abs_total, abs_thresholds["2025-2029"]);
+    } else if (+year <= 2034) {
+      acpobj = getAcp(abs_total, abs_thresholds["2030-2034"]);
+    } else if (+year <= 2039) {
+      acpobj = getAcp(abs_total, abs_thresholds["2035-2039"]);
+    } else if (+year <= 2044) {
+      acpobj = getAcp(abs_total, abs_thresholds["2040-2044"]);
+    } else if (+year <= 2049) {
+      acpobj = getAcp(abs_total, abs_thresholds["2045-2049"]);
+    } else if (+year > 2049) {
+      acpobj = getAcp(abs_total, abs_thresholds["2050-"]);
+    }
+    compliance_obj.push({
+      year: year,
+      acp_payment: acpobj.payment,
+      deficit: acpobj.deficit,
+    });
+  });
+  return compliance_obj;
+};
 
 const getEmissionsThresholds = (areas, building_validation) => {
   let has_2025_2029_threshold;
@@ -172,13 +212,13 @@ const compileBuildingProfile = (buildinginputs) => {
   };
 
   let consumption_mmbtu = {};
-  Object.keys(consumption_native).map((fuel) => {
+  Object.keys(consumption_native).forEach((fuel) => {
     let val = consumption_native[fuel];
     consumption_mmbtu[fuel] = convertNativeToMMBtu(val, fuel);
   });
 
   let onsite_generation_mmbtu = {};
-  Object.keys(onsite_generation_native).map((fuel) => {
+  Object.keys(onsite_generation_native).forEach((fuel) => {
     let val = onsite_generation_native[fuel];
     onsite_generation_mmbtu[fuel] = -convertNativeToMMBtu(val, fuel);
   });
@@ -192,15 +232,13 @@ const compileBuildingProfile = (buildinginputs) => {
 
   let emissions_thresholds = getEmissionsThresholds(areas, building_validation);
 
-  const getAlternativeCompliancePayments = (
-    emissions_thresholds,
-    annual_emissions
-  ) => {};
-
   let alternative_compliance_payments = getAlternativeCompliancePayments(
     emissions_thresholds,
-    annual_emissions
+    annual_emissions,
+    building_validation
   );
+
+  console.log(alternative_compliance_payments);
 
   return {
     building_validation: building_validation,

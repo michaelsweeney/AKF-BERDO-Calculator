@@ -39,7 +39,6 @@ const LinePlot = (props) => {
       props.window
     );
 
-    let colorCat10 = d3.schemeCategory10;
     let colorTableau = d3.schemeTableau10;
 
     const colors = {

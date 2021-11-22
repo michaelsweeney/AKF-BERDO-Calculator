@@ -43,9 +43,9 @@ const queryBuildingDataFromCsv = async (
       let input_address = input["Address"];
 
       if (
-        row_property_name == input_property_name &&
-        row_tax_parcel == input_tax_parcel &&
-        row_address == input_address
+        row_property_name === input_property_name &&
+        row_tax_parcel === input_tax_parcel &&
+        row_address === input_address
       ) {
         return row;
       }

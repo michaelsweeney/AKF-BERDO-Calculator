@@ -3,14 +3,14 @@ const calcAreas = (thresholds, emissions) => {
   let combined_array = periods.map((d) => {
     return {
       year: d,
-      emission_val: emissions.filter((f) => f.year == d)[0]
-        ? emissions.filter((f) => f.year == d)[0].val
+      emission_val: emissions.filter((f) => f.year === d)[0]
+        ? emissions.filter((f) => f.year === d)[0].val
         : 0,
-      thresh_val: thresholds.filter((f) => f.starting_year == d)[0]
-        ? thresholds.filter((f) => f.starting_year == d)[0].val
+      thresh_val: thresholds.filter((f) => f.starting_year === d)[0]
+        ? thresholds.filter((f) => f.starting_year === d)[0].val
         : 0,
-      thresh_met: thresholds.filter((f) => f.starting_year == d)[0]
-        ? thresholds.filter((f) => f.starting_year == d)[0].threshold_met
+      thresh_met: thresholds.filter((f) => f.starting_year === d)[0]
+        ? thresholds.filter((f) => f.starting_year === d)[0].threshold_met
         : false,
     };
   });
@@ -41,7 +41,7 @@ const calcAreas = (thresholds, emissions) => {
       thresh_met: d.thresh_met,
     };
   });
-  let middleFilter = combined_top.filter((d) => d.thresh_met == false);
+  let middleFilter = combined_top.filter((d) => d.thresh_met === false);
 
   let middle = [];
 

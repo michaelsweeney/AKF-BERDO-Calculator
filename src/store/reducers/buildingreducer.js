@@ -123,7 +123,7 @@ export default function buildingReducer(state = initialState, action) {
       return {
         ...state,
         areas: state.areas.map((e) =>
-          e.index == action.payload.idx
+          e.index === action.payload.idx
             ? { type: e.type, area: action.payload.val, index: e.index }
             : e
         ),
@@ -133,7 +133,7 @@ export default function buildingReducer(state = initialState, action) {
       return {
         ...state,
         areas: state.areas.map((e) =>
-          e.index == action.payload.idx
+          e.index === action.payload.idx
             ? { type: action.payload.val, area: e.area, index: e.index }
             : e
         ),

@@ -2,7 +2,6 @@ import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import Sidebar from "./sidebar";
 import LinePlot from "./charts/lineplot";
-import { Paper } from "@mui/material";
 
 const useStyles = makeStyles({
   root: {

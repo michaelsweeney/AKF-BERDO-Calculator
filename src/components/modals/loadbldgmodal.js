@@ -1,8 +1,5 @@
 import { conn } from "../../store/connect";
 
-import Select from "@mui/material/Select";
-import MenuItem from "@mui/material/MenuItem";
-
 import { ModalComponent } from "../modalcomponent";
 import BerdoApiComponent from "../berdoapi/berdoapicomponent";
 

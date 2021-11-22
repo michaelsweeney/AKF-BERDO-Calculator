@@ -42,12 +42,12 @@ const App = (props) => {
       areas: [
         {
           type: "office",
-          area: 1200,
+          area: 120000,
           index: 0,
         },
       ],
       consumption_native: {
-        elec_grid: 18000,
+        elec_grid: 1800000,
         gas: 0,
         fuel_1: 0,
         fuel_2: 0,
@@ -78,7 +78,7 @@ const App = (props) => {
 
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);
-  }, []);
+  }, [props.actions]);
 
   return (
     <ThemeProvider theme={theme}>

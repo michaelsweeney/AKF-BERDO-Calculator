@@ -1,6 +1,5 @@
 import TextField from "@mui/material/TextField";
 import { InputLabel } from "@mui/material";
-import { useRef, useEffect } from "react";
 const TextInput = (props) => {
   const { label, changeCallback, value, autoFocus } = props;
   return (

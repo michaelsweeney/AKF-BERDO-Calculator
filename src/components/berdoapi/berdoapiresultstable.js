@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { conn } from "../../store/connect";
 import { Paper } from "@mui/material";
 import Table from "@mui/material/Table";

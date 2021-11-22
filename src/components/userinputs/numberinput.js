@@ -1,5 +1,4 @@
 import TextField from "@mui/material/TextField";
-import { InputLabel } from "@mui/material";
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
@@ -11,7 +10,7 @@ const useStyles = makeStyles({
 const NumberInput = (props) => {
   const { label, changeCallback, value } = props;
   const classes = useStyles();
-  const step = 500
+  const step = 500;
   return (
     <div>
       <div className={classes.label}>{label}</div>
