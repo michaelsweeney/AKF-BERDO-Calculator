@@ -20,17 +20,25 @@ const getAlternativeCompliancePayments = (
     let abs_total = absolute.total;
 
     const getAcp = (abs_total, abs_thresholds) => {
-      let carbon_deficit, payment;
-      console.log(abs_thresholds);
+      let carbon_deficit, payment, carbon_surplus, payment_avoidance;
       if (abs_thresholds || abs_thresholds === 0) {
         carbon_deficit = max([0, abs_total - abs_thresholds]);
+        carbon_surplus = max([0, abs_thresholds - abs_total]);
         payment = carbon_deficit * acp_per_ton;
+        payment_avoidance = carbon_surplus * acp_per_ton;
       } else {
         carbon_deficit = 0;
         payment = 0;
+        payment_avoidance = 0;
+        carbon_surplus = 0;
       }
 
-      return { payment: payment, carbon_deficit: carbon_deficit };
+      return {
+        payment: payment,
+        carbon_deficit: carbon_deficit,
+        carbon_surplus: carbon_surplus,
+        payment_avoidance: payment_avoidance,
+      };
     };
     let acpobj = {};
     if (+year <= 2029) {
@@ -50,6 +58,8 @@ const getAlternativeCompliancePayments = (
       year: year,
       acp_payment: acpobj.payment,
       carbon_deficit: acpobj.carbon_deficit,
+      carbon_surplus: acpobj.carbon_surplus,
+      payment_avoidance: acpobj.payment_avoidance,
     });
   });
   return compliance_obj;

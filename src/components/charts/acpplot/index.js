@@ -89,10 +89,14 @@ const ACPPlot = (props) => {
       .range([0, chartdims.width])
       .domain([2018, 2050]);
 
+    let acp_extent_high = d3.extent(data, (d) => d["acp_payment"]);
+    let acp_extent_low = d3.extent(data, (d) => d["payment_avoidance"]);
+    let acp_extent = [acp_extent_low[0], acp_extent_high[1]];
+
     let yScaleLeft = d3
       .scaleLinear()
       .range([chartdims.height, 0])
-      .domain(d3.extent(data, (d) => d["acp_payment"]));
+      .domain(acp_extent);
 
     let yScaleRight = d3
       .scaleLinear()
@@ -118,7 +122,7 @@ const ACPPlot = (props) => {
       .data([0])
       .join("g")
       .attr("class", "x-axis-bottom-g")
-      .attr("transform", `translate(${0},${chartdims.height})`)
+      .attr("transform", `translate(${0},${chartdims.height / 2})`)
       .call(
         d3
           .axisBottom()
@@ -143,10 +147,10 @@ const ACPPlot = (props) => {
       .attr("transform", `translate(${chartdims.width},${0})`)
       .call(d3.axisRight().scale(yScaleRight).tickSizeOuter(0));
 
-    let paymentLine = d3
-      .line()
-      .x((d) => xScale(d.year))
-      .y((d) => yScaleLeft(d.acp_payment));
+    // let paymentLine = d3
+    //   .line()
+    //   .x((d) => xScale(d.year))
+    //   .y((d) => yScaleLeft(d.acp_payment));
 
     // plot_g
     //   .selectAll(".payment-line")
@@ -171,11 +175,20 @@ const ACPPlot = (props) => {
       .join("rect")
       .attr("class", "payment-bar")
       .attr("x", (d) => xScale(d.year) - 5)
-      .attr("y", (d) => yScaleLeft(d.acp_payment))
+      .attr("y", (d) => yScaleLeft(d.acp_payment) / 2)
       .attr("height", (d) => chartdims.height - yScaleLeft(d.acp_payment))
       .attr("width", 10)
-      .style("fill", "red");
-
+      .style("fill", colorTableau[2]);
+    plot_g
+      .selectAll(".payment-avoidance-bar")
+      .data(data)
+      .join("rect")
+      .attr("class", "payment-avoidance-bar")
+      .attr("x", (d) => xScale(d.year) - 5)
+      .attr("y", (d) => yScaleLeft(d.acp_payment) / 2)
+      .attr("height", (d) => chartdims.height - yScaleLeft(d.payment_avoidance))
+      .attr("width", 10)
+      .style("fill", colorTableau[3]);
     // console.log(data);
   };
 

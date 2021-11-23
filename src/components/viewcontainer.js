@@ -64,7 +64,7 @@ const ViewContainer = (props) => {
 
   return (
     <div className={classes.root}>
-      <div className={classes.viewSelectorContainer}>
+      {/* <div className={classes.viewSelectorContainer}>
         {views.map((d, i) => {
           return (
             <div key={i} className={classes.viewSelectorBtn}>
@@ -79,7 +79,7 @@ const ViewContainer = (props) => {
             </div>
           );
         })}
-      </div>
+      </div> */}
       <div className={classes.main}>{ActiveViewComponent}</div>
     </div>
   );

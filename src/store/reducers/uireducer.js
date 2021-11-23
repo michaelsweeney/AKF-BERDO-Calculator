@@ -3,7 +3,7 @@ const initialState = {
   isAboutModalOpen: false,
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
-  activeView: "payments",
+  activeView: "thresholds",
 };
 
 export default function uiReducer(state = initialState, action) {
