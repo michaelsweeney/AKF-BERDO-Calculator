@@ -20,8 +20,16 @@ const getAlternativeCompliancePayments = (
     let abs_total = absolute.total;
 
     const getAcp = (abs_total, abs_thresholds) => {
-      let carbon_deficit = max([0, abs_total - abs_thresholds]);
-      let payment = carbon_deficit * acp_per_ton;
+      let carbon_deficit, payment;
+      console.log(abs_thresholds);
+      if (abs_thresholds || abs_thresholds === 0) {
+        carbon_deficit = max([0, abs_total - abs_thresholds]);
+        payment = carbon_deficit * acp_per_ton;
+      } else {
+        carbon_deficit = 0;
+        payment = 0;
+      }
+
       return { payment: payment, carbon_deficit: carbon_deficit };
     };
     let acpobj = {};

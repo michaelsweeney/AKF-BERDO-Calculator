@@ -143,7 +143,40 @@ const ACPPlot = (props) => {
       .attr("transform", `translate(${chartdims.width},${0})`)
       .call(d3.axisRight().scale(yScaleRight).tickSizeOuter(0));
 
-    console.log(data);
+    let paymentLine = d3
+      .line()
+      .x((d) => xScale(d.year))
+      .y((d) => yScaleLeft(d.acp_payment));
+
+    // plot_g
+    //   .selectAll(".payment-line")
+    //   .data([0])
+    //   .join("path")
+    //   .attr("class", "payment-line");
+
+    // plot_g
+    //   .selectAll(".payment-line")
+    //   .datum(data)
+    //   .join("path")
+    //   .attr("class", "payment-line")
+
+    //   .attr("stroke", "blue")
+    //   .attr("stroke-width", 2)
+    //   .attr("fill", "none")
+    //   .attr("d", paymentLine);
+
+    plot_g
+      .selectAll(".payment-bar")
+      .data(data)
+      .join("rect")
+      .attr("class", "payment-bar")
+      .attr("x", (d) => xScale(d.year) - 5)
+      .attr("y", (d) => yScaleLeft(d.acp_payment))
+      .attr("height", (d) => chartdims.height - yScaleLeft(d.acp_payment))
+      .attr("width", 10)
+      .style("fill", "red");
+
+    // console.log(data);
   };
 
   // const createAxes = (config) => {};
