@@ -20,9 +20,9 @@ const getAlternativeCompliancePayments = (
     let abs_total = absolute.total;
 
     const getAcp = (abs_total, abs_thresholds) => {
-      let deficit = max([0, abs_total - abs_thresholds]);
-      let payment = deficit * acp_per_ton;
-      return { payment: payment, deficit: deficit };
+      let carbon_deficit = max([0, abs_total - abs_thresholds]);
+      let payment = carbon_deficit * acp_per_ton;
+      return { payment: payment, carbon_deficit: carbon_deficit };
     };
     let acpobj = {};
     if (+year <= 2029) {
@@ -41,7 +41,7 @@ const getAlternativeCompliancePayments = (
     compliance_obj.push({
       year: year,
       acp_payment: acpobj.payment,
-      deficit: acpobj.deficit,
+      carbon_deficit: acpobj.carbon_deficit,
     });
   });
   return compliance_obj;
