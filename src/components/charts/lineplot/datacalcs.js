@@ -1,12 +1,8 @@
 import { getThresholdArray } from "./thresholdarray";
 
-import { calcAreas } from "./areacalcs";
+import { calcAreas } from "./thresholdareacalcs";
 
-const createDataArrays = (
-  thresholds_raw,
-  emissions_raw,
-  building_validation
-) => {
+const createDataArrays = (thresholds_raw, emissions_raw) => {
   // process data. handle any missing values due
   // to area regulations here.
 
@@ -20,7 +16,7 @@ const createDataArrays = (
 
   let emissions_simple =
     emissions.length > 30
-      ? [emissions.slice(0)[0], emissions.slice(-1)[0]]
+      ? [emissions.slice(0)[0], emissions.slice(-2)[0], emissions.slice(-1)[0]]
       : emissions;
 
   let thresholds = getThresholdArray(thresholds_raw.normalized, emissions);

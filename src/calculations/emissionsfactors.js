@@ -51,6 +51,7 @@ const electric_emissions_factors_by_year = {
   2048: 25,
   2049: 23,
   2050: 21,
+  2051: 21,
 };
 
 const years = Object.keys(electric_emissions_factors_by_year);

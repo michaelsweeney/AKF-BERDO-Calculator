@@ -87,7 +87,7 @@ const ACPPlot = (props) => {
     let xScale = d3
       .scaleTime()
       .range([0, chartdims.width])
-      .domain([2018, 2050]);
+      .domain([2018, 2051]);
 
     let acp_extent_high = d3.extent(data, (d) => d["acp_payment"]);
     let acp_extent_low = d3.extent(data, (d) => d["payment_avoidance"]);

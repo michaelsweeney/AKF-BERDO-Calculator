@@ -1,4 +1,4 @@
-const createLegend = (config) => {
+const createThresholdLegend = (config) => {
   const { element, colors } = config;
 
   let rowspacing = [25, 50, 75, 100];
@@ -7,7 +7,13 @@ const createLegend = (config) => {
   let textAlignLeft = 35;
   let textAlignLeftLong = 40;
 
-  let today_es_g = element
+  let threshold_legend_g = element
+    .selectAll(".threshold-legend-g")
+    .data([0])
+    .join("g")
+    .attr("class", "threshold-legend-g");
+
+  let today_es_g = threshold_legend_g
     .selectAll(".today-es-g")
     .data([0])
     .join("g")
@@ -35,7 +41,7 @@ const createLegend = (config) => {
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
-  let threshold_met_g = element
+  let threshold_met_g = threshold_legend_g
     .selectAll(".threshold-met-g")
     .data([0])
     .join("g")
@@ -63,7 +69,7 @@ const createLegend = (config) => {
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
-  let threshold_unmet_g = element
+  let threshold_unmet_g = threshold_legend_g
     .selectAll(".threshold-unmet-g")
     .data([0])
     .join("g")
@@ -91,7 +97,7 @@ const createLegend = (config) => {
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
-  let legend_emissions_g = element
+  let legend_emissions_g = threshold_legend_g
     .selectAll(".legend-emissions-g")
     .data([0])
     .join("g")
@@ -121,7 +127,7 @@ const createLegend = (config) => {
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
-  let legend_area_unmet_g = element
+  let legend_area_unmet_g = threshold_legend_g
     .selectAll(".legend-area-unmet-g")
     .data([0])
     .join("g")
@@ -150,7 +156,7 @@ const createLegend = (config) => {
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
-  let legend_area_met_g = element
+  let legend_area_met_g = threshold_legend_g
     .selectAll(".legend-area-met-g")
     .data([0])
     .join("g")
@@ -178,6 +184,8 @@ const createLegend = (config) => {
     .text("es below threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
+
+  return threshold_legend_g;
 };
 
-export { createLegend };
+export { createThresholdLegend };

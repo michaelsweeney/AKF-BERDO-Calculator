@@ -2,8 +2,8 @@ const calcAreas = (thresholds, emissions) => {
   let is_2025_fine = thresholds[0].period == "2025-2029" ? true : false;
 
   let periods = is_2025_fine
-    ? [2018, 2025, 2030, 2035, 2040, 2045, 2050]
-    : [2018, 2030, 2035, 2040, 2045, 2050];
+    ? [2018, 2025, 2030, 2035, 2040, 2045, 2050, 2051]
+    : [2018, 2030, 2035, 2040, 2045, 2050, 2051];
 
   let combined_array = periods.map((d) => {
     return {
@@ -28,6 +28,7 @@ const calcAreas = (thresholds, emissions) => {
         combined_array[4],
         combined_array[5],
         combined_array[6],
+        combined_array[7],
       ]
     : [
         combined_array[1],
@@ -35,6 +36,7 @@ const calcAreas = (thresholds, emissions) => {
         combined_array[3],
         combined_array[4],
         combined_array[5],
+        combined_array[6],
       ];
 
   let combined_bottom = is_2025_fine
@@ -46,6 +48,7 @@ const calcAreas = (thresholds, emissions) => {
         combined_array[4],
         combined_array[5],
         combined_array[6],
+        combined_array[7],
       ]
     : [
         combined_array[0],
@@ -54,6 +57,7 @@ const calcAreas = (thresholds, emissions) => {
         combined_array[3],
         combined_array[4],
         combined_array[5],
+        combined_array[6],
       ];
 
   let top = combined_top.map((d) => {
@@ -142,6 +146,14 @@ const calcAreas = (thresholds, emissions) => {
     {
       val: top[4] ? top[4].val : 0,
       year: top[5] ? top[5].year : 0,
+    },
+    {
+      val: top[5] ? top[5].val : 0,
+      year: top[5] ? top[5].year : 0,
+    },
+    {
+      val: top[5] ? top[5].val : 0,
+      year: top[6] ? top[6].year : 0,
     },
   ];
 

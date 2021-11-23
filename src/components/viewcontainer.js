@@ -6,7 +6,7 @@ import OfflineBoltIcon from "@mui/icons-material/OfflineBolt";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TableChartIcon from "@mui/icons-material/TableChart";
 
-import LinePlot from "./charts/thresholdplot";
+import LinePlot from "./charts/lineplot";
 import TabularPlot from "./charts/tabularplot";
 import ACPPlot from "./charts/acpplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
@@ -64,7 +64,7 @@ const ViewContainer = (props) => {
 
   return (
     <div className={classes.root}>
-      {/* <div className={classes.viewSelectorContainer}>
+      <div className={classes.viewSelectorContainer}>
         {views.map((d, i) => {
           return (
             <div key={i} className={classes.viewSelectorBtn}>
@@ -79,7 +79,7 @@ const ViewContainer = (props) => {
             </div>
           );
         })}
-      </div> */}
+      </div>
       <div className={classes.main}>{ActiveViewComponent}</div>
     </div>
   );

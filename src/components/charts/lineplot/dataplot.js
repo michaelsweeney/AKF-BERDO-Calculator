@@ -2,7 +2,7 @@ import * as d3 from "d3";
 
 const createThresholdPoints = (config) => {
   const { data, transition_duration, xScale, yScale, element, colors } = config;
-  element
+  let threshold_points = element
     .selectAll(".thresh-point")
     .data(data)
     .join("circle")
@@ -22,6 +22,8 @@ const createThresholdPoints = (config) => {
         ? colors.thresholdCircleFillOff
         : colors.thresholdCircleFillOn
     );
+
+  return threshold_points;
 };
 
 const createEmissionsLine = (config) => {
@@ -33,7 +35,7 @@ const createEmissionsLine = (config) => {
     .join("path")
     .attr("class", "emissions-line");
 
-  element
+  let emissions_line = element
     .selectAll(".emissions-line")
     .datum(data)
     .join("path")
@@ -52,7 +54,7 @@ const createEmissionsLine = (config) => {
     )
     .attr("fill", "none");
 
-  element
+  let emissions_today_circle = element
     .selectAll(".emissions-today-circle")
     .data(data)
     .join("circle")
@@ -62,6 +64,8 @@ const createEmissionsLine = (config) => {
     .attr("r", (d, i) => (i === 0 ? 5 : 0))
     .attr("fill", colors.emissionsCircleFill)
     .attr("stroke", colors.emissionsCircleStroke);
+
+  return { emissions_line, emissions_today_circle };
 };
 
 export { createEmissionsLine, createThresholdPoints };

@@ -43,7 +43,14 @@ const createSvgGroups = (config) => {
     .join("g")
     .attr("class", "annotation-g")
     .attr("transform", `translate(${margins.l}, ${margins.t})`);
-  return { svg, plot_g, annotation_g, legend_g, axis_g };
+
+  let title_g = svg
+    .selectAll(".title-g")
+    .data([0])
+    .join("g")
+    .attr("class", "title-g");
+
+  return { svg, plot_g, annotation_g, legend_g, axis_g, title_g };
 };
 
 export { createSvgGroups };

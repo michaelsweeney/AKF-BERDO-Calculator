@@ -11,16 +11,16 @@ const createBottomArea = (config) => {
 
   element.selectAll(".bottom-area").attr("opacity", 0);
 
-  element
+  let bottom_area = element
     .selectAll(".bottom-area")
     .data([data])
     .join("path")
     .attr("class", "bottom-area")
     .attr("d", emissionsAreaGen)
-    .transition()
-    .duration(duration)
     .attr("fill", fill)
     .attr("opacity", 1);
+
+  return bottom_area;
 };
 
 const createTopArea = (config) => {
@@ -38,34 +38,25 @@ const createTopArea = (config) => {
     });
   element.selectAll(".top-area").attr("opacity", 0);
 
-  element
+  let top_area = element
     .selectAll(".top-area")
     .data([data])
     .join("path")
     .attr("class", "top-area")
     .attr("d", threshAreaGen)
 
-    .transition()
-    .duration(duration)
     .attr("fill", fill)
     .attr("opacity", 1);
+
+  return top_area;
 };
 
 const createMiddleArea = (config) => {
-  const {
-    xScale,
-    yScale,
-    transition_duration,
-    data,
-    element,
-    fill,
-    clipPath,
-    stroke,
-  } = config;
+  const { xScale, yScale, data, element, fill, clipPath, stroke } = config;
 
   element.selectAll(".middle-area").attr("opacity", 0);
 
-  element
+  let middle_area = element
     .selectAll(".middle-area")
     .data([data])
     .join("polygon")
@@ -78,11 +69,11 @@ const createMiddleArea = (config) => {
         })
         .join(" ");
     })
-    .transition()
-    .duration(transition_duration)
     .attr("fill", fill)
     .attr("stroke", stroke)
     .attr("opacity", 1);
+
+  return middle_area;
 };
 
 const createClipArea = (config) => {
@@ -110,6 +101,8 @@ const createClipArea = (config) => {
     .attr("d", clipAreaGen)
     .attr("fill", "black")
     .attr("opacity", 1);
+
+  return clip_element;
 };
 
 export { createTopArea, createBottomArea, createMiddleArea, createClipArea };
