@@ -2,9 +2,7 @@ const initialState = {
   isLoadModalOpen: false,
   isAboutModalOpen: false,
   isLoadedSummaryModalOpen: false,
-  accordion: {
-    active_key: "property_types",
-  },
+  activeAccordionKey: "property_types",
   activeView: "thresholds",
 };
 
@@ -36,7 +34,7 @@ export default function uiReducer(state = initialState, action) {
     }
     case "TOGGLE_ACCORDION": {
       let active_key;
-      if (action.payload === state.accordion.active_key) {
+      if (action.payload === state.activeAccordionKey) {
         active_key = "property_types";
       } else {
         active_key = action.payload;
@@ -44,9 +42,7 @@ export default function uiReducer(state = initialState, action) {
 
       return {
         ...state,
-        accordion: {
-          active_key: active_key,
-        },
+        activeAccordionKey: active_key,
       };
     }
 

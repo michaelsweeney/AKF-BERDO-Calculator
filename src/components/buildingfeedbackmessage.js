@@ -1,11 +1,12 @@
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  root: { padding: 40 },
+  root: { padding: "20%" },
   copy: {
     verticalAlign: "middle",
     textAlign: "center",
-    fontSize: "1.5em",
+    fontSize: "1em",
+    color: "rgba(0,0,0,0.6)",
   },
 });
 

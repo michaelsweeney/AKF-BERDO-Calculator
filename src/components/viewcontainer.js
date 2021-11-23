@@ -1,10 +1,14 @@
 import { conn } from "../store/connect";
 import { makeStyles } from "@material-ui/styles";
 import { Button } from "@mui/material";
-import LinePlot from "./charts/thresholdplot";
+
 import OfflineBoltIcon from "@mui/icons-material/OfflineBolt";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
-import TableViewIcon from "@mui/icons-material/TableView";
+import TableChartIcon from "@mui/icons-material/TableChart";
+
+import LinePlot from "./charts/thresholdplot";
+import TabularPlot from "./charts/tabularplot";
+import ACPPlot from "./charts/acpplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
 
 const useStyles = makeStyles({
@@ -43,29 +47,25 @@ const ViewContainer = (props) => {
     "Buildings under 20,000 SF are unregulated under BERDO 2.0";
   let ActiveViewComponent;
 
-  const selectorButtons = [
-    { key: "thresholds", label: <OfflineBoltIcon /> },
-    { key: "payments", label: <AttachMoneyIcon /> },
-    { key: "tabular", label: <TableViewIcon /> },
+  const views = [
+    { key: "thresholds", label: <OfflineBoltIcon />, component: <LinePlot /> },
+    { key: "payments", label: <AttachMoneyIcon />, component: <ACPPlot /> },
+    { key: "tabular", label: <TableChartIcon />, component: <TabularPlot /> },
   ];
 
-  const viewComponents = {
-    thresholds: <LinePlot />,
-    payments: <div>some payment stuff</div>,
-    tabular: <div>some table stuff</div>,
-  };
   if (!is_regulated) {
     ActiveViewComponent = (
       <BuildingFeedbackMessage message={unregulated_message} />
     );
   } else {
-    ActiveViewComponent = viewComponents[props.activeView];
+    ActiveViewComponent = views.filter((f) => f.key == [props.activeView])[0]
+      .component;
   }
 
   return (
     <div className={classes.root}>
       <div className={classes.viewSelectorContainer}>
-        {selectorButtons.map((d, i) => {
+        {views.map((d, i) => {
           return (
             <div key={i} className={classes.viewSelectorBtn}>
               <Button

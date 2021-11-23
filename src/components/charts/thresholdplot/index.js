@@ -29,7 +29,7 @@ const LinePlot = (props) => {
     let margins = {
       t: 50,
       b: 175,
-      r: 300,
+      r: 200,
       l: 100,
     };
 
@@ -42,7 +42,7 @@ const LinePlot = (props) => {
     let colorTableau = d3.schemeTableau10;
 
     const colors = {
-      bottomFill: "rgba(0,0,0,0.1)", // colorTableau[3],
+      bottomFill: "rgba(0,0,0,0.1)",
       topFill: "black",
       middleFill: colorTableau[2],
       middleFillStroke: "black",
