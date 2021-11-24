@@ -15,15 +15,18 @@ const createACPScales = (config) => {
     data,
     (d) => -d["carbon_surplus_normalized"]
   );
+
+  console.log(acp_carbon_extent_high, acp_carbon_extent_low);
+
   let acp_carbon_extent = [acp_carbon_extent_low[0], acp_carbon_extent_high[1]];
 
-  let acp_payment_extent_high = d3.extent(data, (d) => d["acp_payment"]);
-  let acp_payment_extent_low = d3.extent(data, (d) => -d["payment_avoidance"]);
+  let acp_payment_extent_high = d3.extent(data, (d) => d["payment_avoidance"]);
+  let acp_payment_extent_low = d3.extent(data, (d) => -d["acp_payment"]);
   let acp_payment_extent = [
-    acp_payment_extent_low[0],
-    acp_payment_extent_high[1],
+    acp_payment_extent_low[0] * domain_padding,
+    acp_payment_extent_high[1] * domain_padding,
   ];
-
+  console.log(acp_payment_extent_high, acp_payment_extent_low);
   let yACPScaleLeft = d3
     .scaleLinear()
     .range([chartdims.height, 0])

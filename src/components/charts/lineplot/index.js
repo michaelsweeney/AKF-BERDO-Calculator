@@ -224,6 +224,9 @@ const LinePlot = (props) => {
     });
 
     if (activeView == "thresholds") {
+      let payment_components = [payment_bars, payment_avoidance_bars];
+      payment_components.forEach((f) => f.remove());
+
       x_axis_top_g.call(
         d3
           .axisTop()
