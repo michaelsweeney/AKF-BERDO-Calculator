@@ -48,8 +48,7 @@ const ViewContainer = (props) => {
   let ActiveViewComponent;
 
   const views = [
-    { key: "thresholds", label: <OfflineBoltIcon />, component: <LinePlot /> },
-    { key: "payments", label: <AttachMoneyIcon />, component: <ACPPlot /> },
+    { key: "lineplot", label: <OfflineBoltIcon />, component: <LinePlot /> },
     { key: "tabular", label: <TableChartIcon />, component: <TabularPlot /> },
   ];
 

@@ -3,7 +3,8 @@ const initialState = {
   isAboutModalOpen: false,
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
-  activeView: "thresholds",
+  activeView: "lineplot",
+  activePlot: "thresholds'",
 };
 
 export default function uiReducer(state = initialState, action) {
@@ -50,6 +51,13 @@ export default function uiReducer(state = initialState, action) {
       return {
         ...state,
         activeView: action.payload,
+      };
+    }
+
+    case "SET_ACTIVE_PLOT": {
+      return {
+        ...state,
+        activePlot: action.payload,
       };
     }
     default:

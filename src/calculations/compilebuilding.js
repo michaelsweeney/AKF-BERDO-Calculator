@@ -13,55 +13,105 @@ const getAlternativeCompliancePayments = (
 ) => {
   let compliance_obj = [];
   let abs_thresholds = emissions_thresholds.absolute;
+  let norm_thresholds = emissions_thresholds.normalized;
   let acp_per_ton = 234;
 
   annual_emissions.forEach((d) => {
-    let { year, absolute } = d;
+    let { year, absolute, normalized } = d;
     let abs_total = absolute.total;
+    let norm_total = normalized.total;
+    const getAcp = (abs_total, abs_thresholds, norm_total, norm_thresholds) => {
+      let carbon_deficit_absolute,
+        carbon_surplus_absolute,
+        carbon_deficit_normalized,
+        carbon_surplus_normalized,
+        payment,
+        payment_avoidance;
 
-    const getAcp = (abs_total, abs_thresholds) => {
-      let carbon_deficit, payment, carbon_surplus, payment_avoidance;
       if (abs_thresholds || abs_thresholds === 0) {
-        carbon_deficit = max([0, abs_total - abs_thresholds]);
-        carbon_surplus = max([0, abs_thresholds - abs_total]);
-        payment = carbon_deficit * acp_per_ton;
-        payment_avoidance = carbon_surplus * acp_per_ton;
+        carbon_deficit_absolute = max([0, abs_total - abs_thresholds]);
+        carbon_surplus_absolute = max([0, abs_thresholds - abs_total]);
+
+        carbon_deficit_normalized = max([0, norm_total - norm_thresholds]);
+        carbon_surplus_normalized = max([0, norm_thresholds - norm_total]);
+
+        payment = carbon_deficit_absolute * acp_per_ton;
+        payment_avoidance = carbon_surplus_absolute * acp_per_ton;
       } else {
-        carbon_deficit = 0;
+        carbon_deficit_absolute = 0;
+        carbon_surplus_absolute = 0;
+
+        carbon_deficit_normalized = 0;
+        carbon_surplus_normalized = 0;
+
         payment = 0;
         payment_avoidance = 0;
-        carbon_surplus = 0;
       }
 
       return {
         payment: payment,
-        carbon_deficit: carbon_deficit,
-        carbon_surplus: carbon_surplus,
         payment_avoidance: payment_avoidance,
+        carbon_deficit_absolute: carbon_deficit_absolute,
+        carbon_surplus_absolute: carbon_surplus_absolute,
+        carbon_deficit_normalized: carbon_deficit_normalized,
+        carbon_surplus_normalized: carbon_surplus_normalized,
       };
     };
     let acpobj = {};
     if (+year <= 2029) {
-      acpobj = getAcp(abs_total, abs_thresholds["2025-2029"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2025-2029"],
+        norm_total,
+        norm_thresholds["2025-2029"]
+      );
     } else if (+year <= 2034) {
-      acpobj = getAcp(abs_total, abs_thresholds["2030-2034"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2030-2034"],
+        norm_total,
+        norm_thresholds["2030-2034"]
+      );
     } else if (+year <= 2039) {
-      acpobj = getAcp(abs_total, abs_thresholds["2035-2039"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2035-2039"],
+        norm_total,
+        norm_thresholds["2035-2039"]
+      );
     } else if (+year <= 2044) {
-      acpobj = getAcp(abs_total, abs_thresholds["2040-2044"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2040-2044"],
+        norm_total,
+        norm_thresholds["2040-2044"]
+      );
     } else if (+year <= 2049) {
-      acpobj = getAcp(abs_total, abs_thresholds["2045-2049"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2045-2049"],
+        norm_total,
+        norm_thresholds["2045-2049"]
+      );
     } else if (+year > 2049) {
-      acpobj = getAcp(abs_total, abs_thresholds["2050-"]);
+      acpobj = getAcp(
+        abs_total,
+        abs_thresholds["2050-"],
+        norm_total,
+        norm_thresholds["2050-"]
+      );
     }
     compliance_obj.push({
       year: year,
       acp_payment: acpobj.payment,
-      carbon_deficit: acpobj.carbon_deficit,
-      carbon_surplus: acpobj.carbon_surplus,
+      carbon_deficit_absolute: acpobj.carbon_deficit_absolute,
+      carbon_surplus_absolute: acpobj.carbon_surplus_absolute,
+      carbon_deficit_normalized: acpobj.carbon_deficit_normalized,
+      carbon_surplus_normalized: acpobj.carbon_surplus_normalized,
       payment_avoidance: acpobj.payment_avoidance,
     });
   });
+
   return compliance_obj;
 };
 

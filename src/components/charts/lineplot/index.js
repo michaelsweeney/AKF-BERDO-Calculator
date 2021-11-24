@@ -1,39 +1,38 @@
 import { conn } from "../../../store/connect";
 
 import * as d3 from "d3";
-
+import { Button } from "@mui/material";
 import { useRef, useEffect } from "react";
 
 import { createAxisGroups } from "./axisgroups";
 import { createThresholdTitles } from "./thresholdtitles";
 import { createACPScales } from "./acpscales";
-
 import { createThresholdScales } from "./thresholdscales";
 import { createThresholdAnnotations } from "./thresholdannotations";
 import { createSvgGroups } from "./svggroups";
-import { createEmissionsLine, createThresholdPoints } from "./dataplot";
+import { createEmissionsLine, createThresholdPoints } from "./thresholdplot";
 import { createThresholdLegend } from "./thresholdlegend";
 import { createDataArrays } from "./datacalcs";
-import {
-  createBottomArea,
-  createMiddleArea,
-  createClipArea,
-} from "./thresholdareas";
 
 const LinePlot = (props) => {
   const container = useRef(null);
+  const toggleChartType = () => {
+    let new_plot_type_view =
+      props.ui.activePlot == "thresholds" ? "payments" : "thresholds";
 
+    props.actions.setActivePlot(new_plot_type_view);
+  };
   useEffect(() => {
-    createChart();
+    createChart(props.ui.activePlot);
   });
 
-  const createChart = () => {
+  const createChart = (activeView) => {
     let node = container.current;
 
     /*
-    --------------
+    ----------------------------------------------------------------------
     GENERAL DIMENSIONS AND AESTHETICS
-    --------------
+    ----------------------------------------------------------------------
     */
 
     let margins = {
@@ -77,14 +76,14 @@ const LinePlot = (props) => {
       annotationTextOff: "black",
     };
 
-    const transition_duration = 0;
-    const area_transition_duration = 0;
     const domain_padding = 1.2;
 
+    const transition_duration = 0;
+
     /*
-    --------------
+    ----------------------------------------------------------------------
     GENERATE DATA ARRAYS
-    --------------
+    ----------------------------------------------------------------------
     */
 
     let { emissions, emissions_simple, thresholds, areaArrays } =
@@ -94,11 +93,16 @@ const LinePlot = (props) => {
         props.building.building_validation,
         props.building.alternative_compliance_payments
       );
-
+    let { alternative_compliance_payments } = props.building;
+    let emissions_simple_normalized = [
+      { year: 2018, val: 0 },
+      { year: 2050, val: 0 },
+      { year: 2051, val: 0 },
+    ];
     /*
-    --------------
+    ----------------------------------------------------------------------
     COMMON SHARED SVG ELEMENTS AND DIMENSIONS
-    --------------
+    ----------------------------------------------------------------------
     */
 
     let { svg, plot_g, annotation_g, legend_g, axis_g, title_g } =
@@ -116,10 +120,100 @@ const LinePlot = (props) => {
         chartdims: chartdims,
       });
 
+    let bottom_area = plot_g
+      .selectAll(".bottom-area")
+      .data([0])
+      .join("path")
+      .attr("class", "bottom-area");
+    let middle_area = plot_g
+      .selectAll(".middle-area")
+      .data([0])
+      .join("polygon")
+      .attr("class", "middle-area")
+      .attr("clip-path", "url(#thresh-clip-id)");
+
+    let clip_area = plot_g
+      .selectAll(".clip-area-element")
+      .data([0])
+      .join("clipPath")
+      .attr("class", "clip-area-element")
+      .attr("id", "thresh-clip-id");
+
+    let emissions_line = plot_g
+      .selectAll(".emissions-line")
+      .data([0])
+      .join("path")
+      .attr("class", "emissions-line");
+
+    let emissions_today_circle = plot_g
+      .selectAll(".emissions-today-circle")
+      .data([0])
+      .join("circle")
+      .attr("class", "emissions-today-circle");
+
+    let threshold_annotation_g = annotation_g
+      .selectAll(".threshold-annotation-g")
+      .data([0])
+      .join("g")
+      .attr("class", "threshold-annotation-g");
+
+    let threshold_points = plot_g
+      .selectAll(".thresh-point")
+      .data([0])
+      .join("circle")
+      .attr("class", "thresh-point");
+
+    let y_title = title_g
+      .selectAll(".y-axis-title")
+      .data([0])
+      .join("text")
+      .attr("class", "y-axis-title")
+      .attr("transform", "rotate(270)")
+      .attr("x", -(margins.t + chartdims.height / 2))
+      .attr("y", margins.l / 2 - 15)
+      .attr("text-anchor", "middle");
+
+    let x_title = title_g
+      .selectAll(".x-axis-title")
+      .data([0])
+      .join("text")
+      .attr("class", "x-axis-title")
+      .attr("x", margins.l + chartdims.width / 2)
+      .attr("y", margins.t + chartdims.height + 40)
+      .attr("text-anchor", "middle")
+      .style("font-size", "1em");
+
+    let chart_title = title_g
+      .selectAll(".chart-title")
+      .data([0])
+      .join("text")
+      .attr("class", "chart-title")
+      .attr("x", margins.l + chartdims.width / 2)
+      .attr("y", margins.t - 20)
+      .attr("text-anchor", "middle")
+      .style("font-size", "1em");
+
+    let threshold_legend_g = createThresholdLegend({
+      element: legend_g,
+      colors: colors,
+    });
+
+    let payment_avoidance_bars = plot_g
+      .selectAll(".payment-avoidance-bar")
+      .data([0])
+      .join("rect")
+      .attr("class", "payment-avoidance-bar");
+
+    let payment_bars = plot_g
+      .selectAll(".payment-bar")
+      .data([0])
+      .join("rect")
+      .attr("class", "payment-bar");
+
     /*
-    --------------
+    ----------------------------------------------------------------------
     THRESHOLD VIEW
-    --------------
+    ----------------------------------------------------------------------
     */
 
     let { xThresholdScale, yThresholdScale } = createThresholdScales({
@@ -129,147 +223,273 @@ const LinePlot = (props) => {
       domain_padding: domain_padding,
     });
 
-    // apply threshold scales to axes
-    x_axis_top_g.call(
-      d3
-        .axisTop()
-        .scale(xThresholdScale)
-        .ticks(0)
-        .tickFormat(d3.format("0"))
-        .tickSizeOuter(0)
-    );
-    x_axis_bottom_g.call(
-      d3
-        .axisBottom()
-        .scale(xThresholdScale)
-        .tickFormat(d3.format("0"))
-        .tickSizeOuter(0)
-    );
-    y_axis_left_g.call(
-      d3
-        .axisLeft()
-        .scale(yThresholdScale)
-        .ticks(5)
-        .tickSizeOuter(5)
-        .tickFormat(d3.format(".2f"))
-        .tickSizeOuter(0)
-    );
-    y_axis_right_g.call(
-      d3
-        .axisLeft()
-        .scale(yThresholdScale)
-        .ticks(0)
-        .tickFormat(d3.format(".2f"))
-        .tickSizeOuter(0)
-    );
+    if (activeView == "thresholds") {
+      x_axis_top_g.call(
+        d3
+          .axisTop()
+          .scale(xThresholdScale)
+          .ticks(0)
+          .tickFormat(d3.format("0"))
+          .tickSizeOuter(0)
+      );
+      x_axis_bottom_g.call(
+        d3
+          .axisBottom()
+          .scale(xThresholdScale)
+          .tickFormat(d3.format("0"))
+          .tickSizeOuter(0)
+      );
+      y_axis_left_g.call(
+        d3
+          .axisLeft()
+          .scale(yThresholdScale)
+          .ticks(5)
+          .tickFormat(d3.format(".2f"))
+          .tickSizeOuter(0)
+      );
+      y_axis_right_g.call(
+        d3
+          .axisRight()
+          .scale(yThresholdScale)
+          .ticks(0)
+          .tickFormat(d3.format(".2f"))
+          .tickSizeOuter(0)
+      );
+      bottom_area
+        .data([areaArrays.bottom])
+        .attr(
+          "d",
+          d3
+            .area()
+            .x((d) => xThresholdScale(d.year))
+            .y0(chartdims.height)
+            .y1((d) => yThresholdScale(d.val))
+        )
+        .attr("fill", colors.bottomFill);
 
-    let bottom_area = createBottomArea({
-      xScale: xThresholdScale,
-      yScale: yThresholdScale,
-      fill: colors.bottomFill,
-      element: plot_g,
-      data: areaArrays.bottom,
-      chartdims: chartdims,
-    });
+      middle_area
+        .data([areaArrays.middle])
+        .attr("points", (d) => {
+          return d
+            .map((d) => {
+              return [xThresholdScale(d.year), yThresholdScale(d.val)].join(
+                ","
+              );
+            })
+            .join(" ");
+        })
+        .attr("fill", colors.middleFill)
+        .attr("stroke", colors.middleFillStroke)
+        .attr("opacity", 1);
 
-    let middle_area = createMiddleArea({
-      xScale: xThresholdScale,
-      yScale: yThresholdScale,
-      data: areaArrays.middle,
-      element: plot_g,
-      fill: colors.middleFill,
-      stroke: colors.middleFillStroke,
-      clipPath: "url(#thresh-clip-id)",
-    });
+      clip_area
+        .selectAll(".clip-area-path")
+        .data([emissions_simple])
+        .join("path")
+        .attr("class", "clip-area-path")
+        .attr(
+          "d",
+          d3
+            .area()
+            .x((d) => xThresholdScale(d.year))
+            .y0((d) => chartdims.height)
+            .y1((d) => yThresholdScale(d.val))
+        );
 
-    let clip_area = createClipArea({
-      clipId: "thresh-clip-id",
-      xScale: xThresholdScale,
-      yScale: yThresholdScale,
-      data: emissions_simple,
-      chartdims: chartdims,
-      element: plot_g,
-    });
+      emissions_line
+        .datum(emissions_simple)
+        .join("path")
+        .attr("class", "emissions-line")
+        .attr("stroke", colors.emissionsLineStroke)
+        .attr("stroke-width", 2)
+        .transition()
+        .duration(transition_duration)
+        .attr(
+          "d",
+          d3
+            .line()
+            .x((d) => xThresholdScale(d.year))
+            .y((d) => yThresholdScale(d.val))
+        )
+        .attr("fill", "none");
 
-    let { emissions_line, emissions_today_circle } = createEmissionsLine({
-      xScale: xThresholdScale,
-      yScale: yThresholdScale,
-      element: plot_g,
-      data: emissions_simple,
-      colors: colors,
-    });
+      emissions_today_circle
+        .data(emissions_simple)
+        .join("circle")
+        .attr("class", "emissions-today-circle")
+        .transition()
+        .duration(transition_duration)
+        .attr("cx", (d) => xThresholdScale(d.year))
+        .attr("cy", (d) => yThresholdScale(d.val))
+        .attr("r", (d, i) => (i === 0 ? 5 : 0))
+        .attr("fill", colors.emissionsCircleFill)
+        .attr("stroke", colors.emissionsCircleStroke);
 
-    let { threshold_annotations, threshold_lines } = createThresholdAnnotations(
-      {
-        element: annotation_g,
-        data: thresholds,
-        transition_duration: transition_duration,
-        xScale: xThresholdScale,
-        yScale: yThresholdScale,
-        lineColorOn: colors.annotationLineOn,
-        lineColorOff: colors.annotationLineOff,
-        textColorOn: colors.annotationTextOn,
-        textColorOff: colors.annotationTextOff,
-      }
-    );
-    let threshold_points = createThresholdPoints({
-      element: plot_g,
-      data: thresholds,
-      xScale: xThresholdScale,
-      yScale: yThresholdScale,
-      transition_duration: transition_duration,
-      colors: colors,
-    });
+      threshold_annotation_g
+        .selectAll(".thresh-text")
+        .data(thresholds)
+        .join("text")
+        .attr("class", "thresh-text")
+        .attr("x", xThresholdScale(2051) + 15)
+        .attr("y", (d) => (d.val !== null ? yThresholdScale(d.val) + 5 : 0))
+        .text((d) => `${d.period} es: ${d3.format(".2f")(d.val)}`)
+        .style("fill", (d) =>
+          d.threshold_met ? colors.annotationTextOff : colors.annotationTextOn
+        )
+        .style("font-size", "0.75em");
 
-    let { threshold_x_title, threshold_y_title, threshold_chart_title } =
-      createThresholdTitles({
-        element: title_g,
-        margins: margins,
-        chartdims: chartdims,
-      });
+      threshold_annotation_g
+        .selectAll(".thresh-line")
+        .data(thresholds)
+        .join("line")
+        .attr("class", "thresh-line")
+        .attr("x1", (d) => xThresholdScale(d.starting_year) + 5)
+        .attr("x2", (d) => xThresholdScale(2051))
+        .attr("y1", (d) => yThresholdScale(d.val))
+        .attr("y2", (d) => yThresholdScale(d.val))
+        .attr("stroke-dasharray", "2 0 2")
+        .style("stroke", (d) =>
+          d.threshold_met ? colors.annotationLineOff : colors.annotationLineOn
+        );
 
-    let threshold_legend_g = createThresholdLegend({
-      element: legend_g,
-      colors: colors,
-    });
+      threshold_points
+        .data(thresholds)
+        .join("circle")
+        .attr("class", "thresh-point")
+        .attr("r", 5)
+        .attr("cx", (d) => xThresholdScale(d.starting_year))
+        .attr("cy", (d) => yThresholdScale(d.val))
+        .attr("stroke", (d) =>
+          d.threshold_met
+            ? colors.thresholdCircleStrokeOff
+            : colors.thresholdCircleStrokeOn
+        )
+        .style("fill", (d) =>
+          d.threshold_met
+            ? colors.thresholdCircleFillOff
+            : colors.thresholdCircleFillOn
+        );
+      y_title.text("es (kgCO2e/sf/yr)");
+      x_title.text("Year");
+      chart_title.text("Emissions Standard (es) Threshold Summary");
+    }
 
     /*
-    --------------
+    ----------------------------------------------------------------------
     ACP VIEW
-    --------------
+    ----------------------------------------------------------------------
     */
 
-    let { alternative_compliance_payments } = props.building;
-    console.log(alternative_compliance_payments);
+    if (activeView == "payments") {
+      let thresh_components = [
+        threshold_annotation_g,
+        threshold_legend_g,
+        threshold_points,
+        bottom_area,
+        middle_area,
+        clip_area,
+      ];
+      thresh_components.forEach((f) => f.remove());
+      let { xACPScale, yACPScaleLeft, yACPScaleRight } = createACPScales({
+        chartdims: chartdims,
+        data: alternative_compliance_payments,
+        domain_padding: domain_padding,
+      });
 
-    // shared elements
-    // svg, plot_g, annotation_g, legend_g, axis_g
-    // shared variables
-    // chartdims
+      x_axis_bottom_g.call(
+        d3
+          .axisBottom()
+          .scale(xACPScale)
+          .tickFormat(d3.format("0"))
+          .tickSizeOuter(0)
+      );
+      x_axis_top_g.call(
+        d3
+          .axisBottom()
+          .scale(xACPScale)
+          .ticks(0)
+          .tickFormat(d3.format("0"))
+          .tickSizeOuter(0)
+      );
+      y_axis_left_g.call(
+        d3
+          .axisLeft()
+          .scale(yACPScaleLeft)
+          .ticks(5)
+          .tickFormat(d3.format(".2f"))
+          .tickSizeOuter(0)
+      );
+      y_axis_right_g.call(
+        d3
+          .axisRight()
+          .scale(yACPScaleRight)
+          .ticks(5)
+          .tickFormat(d3.format("$,.0f"))
+          .tickSizeOuter(0)
+      );
 
-    // containerdims
+      emissions_line
+        .datum(emissions_simple_normalized)
+        .transition()
+        .duration(transition_duration)
+        .attr(
+          "d",
+          d3
+            .line()
+            .x((d) => xACPScale(d.year))
+            .y((d) => yACPScaleLeft(d.val))
+        );
 
-    let { xACPScale, yACPScaleLeft, yACPScaleRight } = createACPScales({
-      chartdims: chartdims,
-      data: alternative_compliance_payments,
-      domain_padding: domain_padding,
-    });
+      emissions_today_circle
+        .transition()
+        .duration(transition_duration)
+        .attr("cx", xACPScale(2018))
+        .attr("cy", yACPScaleLeft(0));
 
-    // create axes (same axis variable as above)
-    // create emission-baseline line (same plot element as above)
-    // create bars
-    // create titles
-    //
+      payment_bars
+        .data(alternative_compliance_payments)
+        .join("rect")
+        .attr("class", "payment-bar")
+        .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
+        .attr("y", (d) => yACPScaleRight(0))
+        .attr(
+          "height",
+          (d) => yACPScaleRight(0) - yACPScaleRight(d.acp_payment)
+        )
+        .attr("width", chartdims.width / 33 - 2)
+        .attr("stroke", "gray")
+        .style("fill", colorTableau[2]);
 
+      payment_avoidance_bars
+        .data(alternative_compliance_payments)
+        .join("rect")
+        .attr("class", "payment-avoidance-bar")
+        .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
+        .attr("y", (d) => yACPScaleRight(d.payment_avoidance))
+        .attr(
+          "height",
+          (d) => yACPScaleRight(0) - yACPScaleRight(d.payment_avoidance)
+        )
+        .attr("width", chartdims.width / 33 - 2)
+        .attr("stroke", "gray")
+        .style("fill", colorTableau[3]);
+    }
     return;
   };
 
-  return <div style={{ height: "100%", width: "100%" }} ref={container} />;
+  return (
+    <div style={{ height: "100%", width: "100%" }} ref={container}>
+      <Button size="small" variant="outlined" onClick={toggleChartType}>
+        toggle view
+      </Button>
+    </div>
+  );
 };
 
 const mapStateToProps = (state) => {
   return {
     building: { ...state.building },
+    ui: { ...state.ui },
     window: { ...state.window },
   };
 };

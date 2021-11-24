@@ -120,3 +120,10 @@ export function setActiveView(label) {
     payload: label,
   };
 }
+
+export function setActivePlot(label) {
+  return {
+    type: "SET_ACTIVE_PLOT",
+    payload: label,
+  };
+}

@@ -14,13 +14,13 @@ const TabularPlot = (props) => {
       <Table>
         <TableBody>
           <TableRow>
-            {["a", "b", "c", "d", "e", "f"].map((e) => (
-              <TableCell>{e}</TableCell>
+            {["a", "b", "c", "d", "e", "f"].map((e, i) => (
+              <TableCell key={i}>{e}</TableCell>
             ))}
           </TableRow>
           <TableRow>
-            {["a", "b", "c", "d", "e", "f"].map((e) => (
-              <TableCell>{e}</TableCell>
+            {["a", "b", "c", "d", "e", "f"].map((e, i) => (
+              <TableCell key={i}>{e}</TableCell>
             ))}
           </TableRow>
         </TableBody>

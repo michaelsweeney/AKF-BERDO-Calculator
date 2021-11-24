@@ -7,19 +7,32 @@ const createACPScales = (config) => {
     .range([0, chartdims.width])
     .domain([2018, 2051]);
 
-  let acp_extent_high = d3.extent(data, (d) => d["acp_payment"]);
-  let acp_extent_low = d3.extent(data, (d) => d["payment_avoidance"]);
-  let acp_extent = [acp_extent_low[0], acp_extent_high[1]];
+  let acp_carbon_extent_high = d3.extent(
+    data,
+    (d) => d["carbon_deficit_normalized"]
+  );
+  let acp_carbon_extent_low = d3.extent(
+    data,
+    (d) => -d["carbon_surplus_normalized"]
+  );
+  let acp_carbon_extent = [acp_carbon_extent_low[0], acp_carbon_extent_high[1]];
+
+  let acp_payment_extent_high = d3.extent(data, (d) => d["acp_payment"]);
+  let acp_payment_extent_low = d3.extent(data, (d) => -d["payment_avoidance"]);
+  let acp_payment_extent = [
+    acp_payment_extent_low[0],
+    acp_payment_extent_high[1],
+  ];
 
   let yACPScaleLeft = d3
     .scaleLinear()
     .range([chartdims.height, 0])
-    .domain(acp_extent);
+    .domain(acp_carbon_extent);
 
   let yACPScaleRight = d3
     .scaleLinear()
     .range([chartdims.height, 0])
-    .domain(d3.extent(data, (d) => d["carbon_deficit"]));
+    .domain(acp_payment_extent);
 
   return { xACPScale, yACPScaleLeft, yACPScaleRight };
 };

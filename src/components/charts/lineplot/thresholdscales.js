@@ -6,7 +6,7 @@ const createThresholdScales = (config) => {
   // create scales
   let xThresholdScale = d3
     .scaleLinear()
-    .domain([2018, 2050])
+    .domain([2018, 2051])
     .range([0, chartdims.width]);
 
   let yThresholdScale = d3

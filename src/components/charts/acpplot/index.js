@@ -101,7 +101,7 @@ const ACPPlot = (props) => {
     let yScaleRight = d3
       .scaleLinear()
       .range([chartdims.height, 0])
-      .domain(d3.extent(data, (d) => d["carbon_deficit"]));
+      .domain(d3.extent(data, (d) => d["carbon_deficit_absolute"]));
 
     let xaxis_top_g = axis_g
       .selectAll(".x-axis-top-g")
