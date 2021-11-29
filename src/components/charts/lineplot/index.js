@@ -5,12 +5,10 @@ import { Button } from "@mui/material";
 import { useRef, useEffect } from "react";
 
 import { createAxisGroups } from "./axisgroups";
-import { createThresholdTitles } from "./thresholdtitles";
+
 import { createACPScales } from "./acpscales";
 import { createThresholdScales } from "./thresholdscales";
-import { createThresholdAnnotations } from "./thresholdannotations";
 import { createSvgGroups } from "./svggroups";
-import { createEmissionsLine, createThresholdPoints } from "./thresholdplot";
 import { createThresholdLegend } from "./thresholdlegend";
 import { createDataArrays } from "./datacalcs";
 
@@ -125,6 +123,7 @@ const LinePlot = (props) => {
       .data([0])
       .join("path")
       .attr("class", "bottom-area");
+
     let middle_area = plot_g
       .selectAll(".middle-area")
       .data([0])
@@ -242,22 +241,31 @@ const LinePlot = (props) => {
           .tickFormat(d3.format("0"))
           .tickSizeOuter(0)
       );
-      y_axis_left_g.call(
-        d3
-          .axisLeft()
-          .scale(yThresholdScale)
-          .ticks(5)
-          .tickFormat(d3.format(".2f"))
-          .tickSizeOuter(0)
-      );
-      y_axis_right_g.call(
-        d3
-          .axisRight()
-          .scale(yThresholdScale)
-          .ticks(0)
-          .tickFormat(d3.format(".2f"))
-          .tickSizeOuter(0)
-      );
+
+      y_axis_left_g
+        .transition()
+        .duration(transition_duration)
+        .call(
+          d3
+            .axisLeft()
+            .scale(yThresholdScale)
+            .ticks(5)
+            .tickFormat(d3.format(".2f"))
+            .tickSizeOuter(0)
+        );
+
+      y_axis_right_g
+        .transition()
+        .duration(transition_duration)
+        .call(
+          d3
+            .axisRight()
+            .scale(yThresholdScale)
+            .ticks(0)
+            .tickFormat(d3.format(".2f"))
+            .tickSizeOuter(0)
+        );
+
       bottom_area
         .data([areaArrays.bottom])
         .attr(
@@ -333,6 +341,8 @@ const LinePlot = (props) => {
         .data(thresholds)
         .join("text")
         .attr("class", "thresh-text")
+        .transition()
+        .duration(transition_duration)
         .attr("x", xThresholdScale(2051) + 15)
         .attr("y", (d) => (d.val !== null ? yThresholdScale(d.val) + 5 : 0))
         .text((d) => `${d.period} es: ${d3.format(".2f")(d.val)}`)
@@ -449,8 +459,12 @@ const LinePlot = (props) => {
         .attr("cx", xACPScale(2018))
         .attr("cy", yACPScaleLeft(0));
 
+      let acp_data = [...alternative_compliance_payments];
+      acp_data.pop();
+      acp_data.shift();
+
       payment_bars
-        .data(alternative_compliance_payments)
+        .data(acp_data)
         .join("rect")
         .attr("class", "payment-bar")
         .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
@@ -464,7 +478,7 @@ const LinePlot = (props) => {
         .style("fill", colorTableau[2]);
 
       payment_avoidance_bars
-        .data(alternative_compliance_payments)
+        .data(acp_data)
         .join("rect")
         .attr("class", "payment-avoidance-bar")
         .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
@@ -476,6 +490,10 @@ const LinePlot = (props) => {
         .attr("width", chartdims.width / 33 - 2)
         .attr("stroke", "gray")
         .style("fill", colorTableau[3]);
+
+      y_title.text("es delta (kgCO2e/sf/yr)");
+      x_title.text("Year");
+      chart_title.text("ACP Payment Summary");
     }
     return;
   };

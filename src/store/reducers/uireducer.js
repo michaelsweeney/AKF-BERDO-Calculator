@@ -4,7 +4,7 @@ const initialState = {
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
   activeView: "lineplot",
-  activePlot: "thresholds'",
+  activePlot: "thresholds",
 };
 
 export default function uiReducer(state = initialState, action) {

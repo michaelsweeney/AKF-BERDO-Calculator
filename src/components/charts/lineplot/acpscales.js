@@ -7,35 +7,37 @@ const createACPScales = (config) => {
     .range([0, chartdims.width])
     .domain([2018, 2051]);
 
-  let acp_carbon_extent_high = d3.extent(
-    data,
-    (d) => d["carbon_deficit_normalized"]
+  let carbon_deficit_normalized_max = d3.max(
+    data.map((d) => d["carbon_deficit_normalized"])
   );
-  let acp_carbon_extent_low = d3.extent(
-    data,
-    (d) => -d["carbon_surplus_normalized"]
+  let carbon_surplus_normalized_max = d3.max(
+    data.map((d) => d["carbon_surplus_normalized"])
   );
+  let acp_payment_max = d3.max(data.map((d) => d["acp_payment"]));
+  let payment_avoidance_max = d3.max(data.map((d) => d["payment_avoidance"]));
 
-  console.log(acp_carbon_extent_high, acp_carbon_extent_low);
+  let acp_max = d3.max([acp_payment_max, payment_avoidance_max]);
 
-  let acp_carbon_extent = [acp_carbon_extent_low[0], acp_carbon_extent_high[1]];
+  let carbon_max = d3.max([
+    carbon_deficit_normalized_max,
+    carbon_surplus_normalized_max,
+  ]);
 
-  let acp_payment_extent_high = d3.extent(data, (d) => d["payment_avoidance"]);
-  let acp_payment_extent_low = d3.extent(data, (d) => -d["acp_payment"]);
-  let acp_payment_extent = [
-    acp_payment_extent_low[0] * domain_padding,
-    acp_payment_extent_high[1] * domain_padding,
+  let carbon_domain = [
+    -carbon_max * domain_padding,
+    carbon_max * domain_padding,
   ];
-  console.log(acp_payment_extent_high, acp_payment_extent_low);
+  let acp_domain = [-acp_max * domain_padding, acp_max * domain_padding];
+
   let yACPScaleLeft = d3
     .scaleLinear()
     .range([chartdims.height, 0])
-    .domain(acp_carbon_extent);
+    .domain(carbon_domain);
 
   let yACPScaleRight = d3
     .scaleLinear()
     .range([chartdims.height, 0])
-    .domain(acp_payment_extent);
+    .domain(acp_domain);
 
   return { xACPScale, yACPScaleLeft, yACPScaleRight };
 };

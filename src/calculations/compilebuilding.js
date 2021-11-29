@@ -9,8 +9,24 @@ import { convertNativeToMMBtu } from "../calculations/unitconversions";
 
 const getAlternativeCompliancePayments = (
   emissions_thresholds,
-  annual_emissions
+  annual_emissions,
+  building_validation
 ) => {
+  let has_2025_2029_threshold;
+
+  if (!building_validation.is_above_20000_sf) {
+    has_2025_2029_threshold = false;
+  }
+
+  if (
+    building_validation.is_above_20000_sf &&
+    !building_validation.is_above_35000_sf
+  ) {
+    has_2025_2029_threshold = false;
+  } else {
+    has_2025_2029_threshold = true;
+  }
+
   let compliance_obj = [];
   let abs_thresholds = emissions_thresholds.absolute;
   let norm_thresholds = emissions_thresholds.normalized;
@@ -20,6 +36,7 @@ const getAlternativeCompliancePayments = (
     let { year, absolute, normalized } = d;
     let abs_total = absolute.total;
     let norm_total = normalized.total;
+
     const getAcp = (abs_total, abs_thresholds, norm_total, norm_thresholds) => {
       let carbon_deficit_absolute,
         carbon_surplus_absolute,
@@ -58,7 +75,20 @@ const getAlternativeCompliancePayments = (
       };
     };
     let acpobj = {};
-    if (+year <= 2029) {
+
+    const nullAcp = {
+      payment: 0,
+      payment_avoidance: 0,
+      carbon_deficit_absolute: 0,
+      carbon_surplus_absolute: 0,
+      carbon_deficit_normalized: 0,
+      carbon_surplus_normalized: 0,
+    };
+    if (+year <= 2024) {
+      acpobj = nullAcp;
+    } else if (+year <= 2029 && !has_2025_2029_threshold) {
+      acpobj = nullAcp;
+    } else if (+year <= 2029 && has_2025_2029_threshold) {
       acpobj = getAcp(
         abs_total,
         abs_thresholds["2025-2029"],
@@ -111,7 +141,6 @@ const getAlternativeCompliancePayments = (
       payment_avoidance: acpobj.payment_avoidance,
     });
   });
-
   return compliance_obj;
 };
 
@@ -301,15 +330,18 @@ const compileBuildingProfile = (buildinginputs) => {
 
   let alternative_compliance_payments = getAlternativeCompliancePayments(
     emissions_thresholds,
-    annual_emissions
+    annual_emissions,
+    building_validation
   );
 
-  return {
+  let compiled_obj = {
     building_validation: building_validation,
     annual_emissions: annual_emissions,
     emissions_thresholds: emissions_thresholds,
     alternative_compliance_payments: alternative_compliance_payments,
   };
+
+  return compiled_obj;
 };
 
 export { compileBuildingProfile };
