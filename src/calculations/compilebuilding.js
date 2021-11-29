@@ -31,6 +31,7 @@ const getAlternativeCompliancePayments = (
   let abs_thresholds = emissions_thresholds.absolute;
   let norm_thresholds = emissions_thresholds.normalized;
   let acp_per_ton = 234;
+  let acp_per_kg = acp_per_ton * 0.001;
 
   annual_emissions.forEach((d) => {
     let { year, absolute, normalized } = d;
@@ -52,8 +53,8 @@ const getAlternativeCompliancePayments = (
         carbon_deficit_normalized = max([0, norm_total - norm_thresholds]);
         carbon_surplus_normalized = max([0, norm_thresholds - norm_total]);
 
-        payment = carbon_deficit_absolute * acp_per_ton;
-        payment_avoidance = carbon_surplus_absolute * acp_per_ton;
+        payment = carbon_deficit_absolute * acp_per_kg;
+        payment_avoidance = carbon_surplus_absolute * acp_per_kg;
       } else {
         carbon_deficit_absolute = 0;
         carbon_surplus_absolute = 0;

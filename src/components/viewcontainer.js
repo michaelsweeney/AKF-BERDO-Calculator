@@ -8,7 +8,6 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 
 import LinePlot from "./charts/lineplot";
 import TabularPlot from "./charts/tabularplot";
-import ACPPlot from "./charts/void_acpplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
 
 const useStyles = makeStyles({
