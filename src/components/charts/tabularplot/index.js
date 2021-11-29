@@ -57,61 +57,23 @@ const TabularPlot = (props) => {
     building.berdoapi.loadedBuildingInfo.length == 0 ? false : true;
 
   const threshold_table = [
-    {
-      period: "2025-2029",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2025")[0]
+    ["2025-2029", "2025"],
+    ["2030-2034", "2030"],
+    ["2035-2039", "2035"],
+    ["2040-2044", "2040"],
+    ["2045-2049", "2045"],
+    ["2050-", "2050"],
+  ].map((t) => {
+    return {
+      period: t[0],
+      es_emissions: building.annual_emissions.filter((f) => f.year == t[1])[0]
         .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2025-2029"],
+      es_threshold: building.emissions_thresholds.normalized[t[0]],
       acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2025"
+        (f) => f.year == t[1]
       )[0].acp_payment,
-    },
-    {
-      period: "2030-2034",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2030")[0]
-        .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2030-2034"],
-      acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2030"
-      )[0].acp_payment,
-    },
-    {
-      period: "2035-2039",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2035")[0]
-        .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2035-2039"],
-      acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2035"
-      )[0].acp_payment,
-    },
-    {
-      period: "2040-2044",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2040")[0]
-        .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2040-2044"],
-      acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2040"
-      )[0].acp_payment,
-    },
-    {
-      period: "2045-2049",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2045")[0]
-        .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2045-2049"],
-      acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2045"
-      )[0].acp_payment,
-    },
-    {
-      period: "2050-",
-      es_emissions: building.annual_emissions.filter((f) => f.year == "2050")[0]
-        .normalized.total,
-      es_threshold: building.emissions_thresholds.normalized["2050-"],
-      acp_payment: building.alternative_compliance_payments.filter(
-        (f) => f.year == "2045"
-      )[0].acp_payment,
-    },
-  ];
+    };
+  });
 
   return (
     <div className={classes.root}>
