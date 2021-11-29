@@ -18,9 +18,6 @@ const non_electric_emissions_factors = {
 
 // kg CO2e/ MMBtu
 const electric_emissions_factors_by_year = {
-  2018: 87,
-  2019: 85,
-  2020: 83,
   2021: 81,
   2022: 79,
   2023: 77,
@@ -51,6 +48,7 @@ const electric_emissions_factors_by_year = {
   2048: 25,
   2049: 23,
   2050: 21,
+  2051: 21,
 };
 
 const years = Object.keys(electric_emissions_factors_by_year);

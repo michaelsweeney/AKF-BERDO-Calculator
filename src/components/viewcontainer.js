@@ -6,9 +6,8 @@ import OfflineBoltIcon from "@mui/icons-material/OfflineBolt";
 import AttachMoneyIcon from "@mui/icons-material/AttachMoney";
 import TableChartIcon from "@mui/icons-material/TableChart";
 
-import LinePlot from "./charts/thresholdplot";
+import LinePlot from "./charts/lineplot";
 import TabularPlot from "./charts/tabularplot";
-import ACPPlot from "./charts/acpplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
 
 const useStyles = makeStyles({
@@ -48,8 +47,16 @@ const ViewContainer = (props) => {
   let ActiveViewComponent;
 
   const views = [
-    { key: "thresholds", label: <OfflineBoltIcon />, component: <LinePlot /> },
-    { key: "payments", label: <AttachMoneyIcon />, component: <ACPPlot /> },
+    {
+      key: "lineplot_thresholds",
+      label: <OfflineBoltIcon />,
+      component: <LinePlot view="thresholds" />,
+    },
+    {
+      key: "lineplot_payments",
+      label: <AttachMoneyIcon />,
+      component: <LinePlot view="payments" />,
+    },
     { key: "tabular", label: <TableChartIcon />, component: <TabularPlot /> },
   ];
 
@@ -64,7 +71,7 @@ const ViewContainer = (props) => {
 
   return (
     <div className={classes.root}>
-      {/* <div className={classes.viewSelectorContainer}>
+      <div className={classes.viewSelectorContainer}>
         {views.map((d, i) => {
           return (
             <div key={i} className={classes.viewSelectorBtn}>
@@ -79,7 +86,7 @@ const ViewContainer = (props) => {
             </div>
           );
         })}
-      </div> */}
+      </div>
       <div className={classes.main}>{ActiveViewComponent}</div>
     </div>
   );
