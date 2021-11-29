@@ -8,7 +8,7 @@ import TableChartIcon from "@mui/icons-material/TableChart";
 
 import LinePlot from "./charts/lineplot";
 import TabularPlot from "./charts/tabularplot";
-import ACPPlot from "./charts/acpplot";
+import ACPPlot from "./charts/void_acpplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
 
 const useStyles = makeStyles({
@@ -48,7 +48,16 @@ const ViewContainer = (props) => {
   let ActiveViewComponent;
 
   const views = [
-    { key: "lineplot", label: <OfflineBoltIcon />, component: <LinePlot /> },
+    {
+      key: "lineplot_thresholds",
+      label: <OfflineBoltIcon />,
+      component: <LinePlot view="thresholds" />,
+    },
+    {
+      key: "lineplot_payments",
+      label: <AttachMoneyIcon />,
+      component: <LinePlot view="payments" />,
+    },
     { key: "tabular", label: <TableChartIcon />, component: <TabularPlot /> },
   ];
 

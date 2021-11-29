@@ -5,7 +5,7 @@ const createACPScales = (config) => {
   let xACPScale = d3
     .scaleTime()
     .range([0, chartdims.width])
-    .domain([2018, 2051]);
+    .domain([2021, 2051]);
 
   let carbon_deficit_normalized_max = d3.max(
     data.map((d) => d["carbon_deficit_normalized"])

@@ -11,20 +11,17 @@ import { createThresholdScales } from "./thresholdscales";
 import { createSvgGroups } from "./svggroups";
 import { createThresholdLegend } from "./thresholdlegend";
 import { createDataArrays } from "./datacalcs";
+import { createACPLegend } from "./acplegend";
 
 const LinePlot = (props) => {
   const container = useRef(null);
-  const toggleChartType = () => {
-    let new_plot_type_view =
-      props.ui.activePlot == "thresholds" ? "payments" : "thresholds";
+  const { view } = props;
 
-    props.actions.setActivePlot(new_plot_type_view);
-  };
   useEffect(() => {
-    createChart(props.ui.activePlot);
+    createChart();
   });
 
-  const createChart = (activeView) => {
+  const createChart = () => {
     let node = container.current;
 
     /*
@@ -72,6 +69,8 @@ const LinePlot = (props) => {
       annotationLineOff: "black",
       annotationTextOn: colorTableau[2],
       annotationTextOff: "black",
+      paymentBars: colorTableau[2],
+      paymentAvoidanceBars: colorTableau[3],
     };
 
     const domain_padding = 1.2;
@@ -93,7 +92,7 @@ const LinePlot = (props) => {
       );
     let { alternative_compliance_payments } = props.building;
     let emissions_simple_normalized = [
-      { year: 2018, val: 0 },
+      { year: 2021, val: 0 },
       { year: 2050, val: 0 },
       { year: 2051, val: 0 },
     ];
@@ -142,13 +141,19 @@ const LinePlot = (props) => {
       .selectAll(".emissions-line")
       .data([0])
       .join("path")
-      .attr("class", "emissions-line");
+      .attr("class", "emissions-line")
+      .attr("class", "emissions-line")
+      .attr("stroke", colors.emissionsLineStroke)
+      .attr("stroke-width", 2);
 
     let emissions_today_circle = plot_g
       .selectAll(".emissions-today-circle")
       .data([0])
       .join("circle")
-      .attr("class", "emissions-today-circle");
+      .attr("class", "emissions-today-circle")
+      .attr("fill", colors.emissionsCircleFill)
+      .attr("stroke", colors.emissionsCircleStroke)
+      .attr("r", 5);
 
     let threshold_annotation_g = annotation_g
       .selectAll(".threshold-annotation-g")
@@ -162,14 +167,24 @@ const LinePlot = (props) => {
       .join("circle")
       .attr("class", "thresh-point");
 
-    let y_title = title_g
-      .selectAll(".y-axis-title")
+    let y_title_left = title_g
+      .selectAll(".y-axis-title-left")
       .data([0])
       .join("text")
-      .attr("class", "y-axis-title")
+      .attr("class", "y-axis-title-left")
       .attr("transform", "rotate(270)")
       .attr("x", -(margins.t + chartdims.height / 2))
       .attr("y", margins.l / 2 - 15)
+      .attr("text-anchor", "middle");
+
+    let y_title_right = title_g
+      .selectAll(".y-axis-title-right")
+      .data([0])
+      .join("text")
+      .attr("class", "y-axis-title-right")
+      .attr("transform", "rotate(270)")
+      .attr("x", -(margins.t + chartdims.height / 2))
+      .attr("y", margins.l + chartdims.width + 100)
       .attr("text-anchor", "middle");
 
     let x_title = title_g
@@ -193,6 +208,11 @@ const LinePlot = (props) => {
       .style("font-size", "1em");
 
     let threshold_legend_g = createThresholdLegend({
+      element: legend_g,
+      colors: colors,
+    });
+
+    let acp_legend_g = createACPLegend({
       element: legend_g,
       colors: colors,
     });
@@ -222,8 +242,12 @@ const LinePlot = (props) => {
       domain_padding: domain_padding,
     });
 
-    if (activeView == "thresholds") {
-      let payment_components = [payment_bars, payment_avoidance_bars];
+    if (view == "thresholds") {
+      let payment_components = [
+        payment_bars,
+        payment_avoidance_bars,
+        acp_legend_g,
+      ];
       payment_components.forEach((f) => f.remove());
 
       x_axis_top_g.call(
@@ -238,6 +262,7 @@ const LinePlot = (props) => {
         d3
           .axisBottom()
           .scale(xThresholdScale)
+          .ticks(8)
           .tickFormat(d3.format("0"))
           .tickSizeOuter(0)
       );
@@ -310,9 +335,6 @@ const LinePlot = (props) => {
       emissions_line
         .datum(emissions_simple)
         .join("path")
-        .attr("class", "emissions-line")
-        .attr("stroke", colors.emissionsLineStroke)
-        .attr("stroke-width", 2)
         .transition()
         .duration(transition_duration)
         .attr(
@@ -325,16 +347,13 @@ const LinePlot = (props) => {
         .attr("fill", "none");
 
       emissions_today_circle
-        .data(emissions_simple)
+        .data([emissions_simple[0]])
         .join("circle")
         .attr("class", "emissions-today-circle")
         .transition()
         .duration(transition_duration)
         .attr("cx", (d) => xThresholdScale(d.year))
-        .attr("cy", (d) => yThresholdScale(d.val))
-        .attr("r", (d, i) => (i === 0 ? 5 : 0))
-        .attr("fill", colors.emissionsCircleFill)
-        .attr("stroke", colors.emissionsCircleStroke);
+        .attr("cy", (d) => yThresholdScale(d.val));
 
       threshold_annotation_g
         .selectAll(".thresh-text")
@@ -382,7 +401,9 @@ const LinePlot = (props) => {
             ? colors.thresholdCircleFillOff
             : colors.thresholdCircleFillOn
         );
-      y_title.text("es (kgCO2e/sf/yr)");
+      y_title_left.text("es (kgCO2e/sf/yr)");
+      y_title_right.text("");
+
       x_title.text("Year");
       chart_title.text("Emissions Standard (es) Threshold Summary");
     }
@@ -393,7 +414,7 @@ const LinePlot = (props) => {
     ----------------------------------------------------------------------
     */
 
-    if (activeView == "payments") {
+    if (view == "payments") {
       let thresh_components = [
         threshold_annotation_g,
         threshold_legend_g,
@@ -413,12 +434,13 @@ const LinePlot = (props) => {
         d3
           .axisBottom()
           .scale(xACPScale)
+          .ticks(8)
           .tickFormat(d3.format("0"))
           .tickSizeOuter(0)
       );
       x_axis_top_g.call(
         d3
-          .axisBottom()
+          .axisTop()
           .scale(xACPScale)
           .ticks(0)
           .tickFormat(d3.format("0"))
@@ -456,7 +478,7 @@ const LinePlot = (props) => {
       emissions_today_circle
         .transition()
         .duration(transition_duration)
-        .attr("cx", xACPScale(2018))
+        .attr("cx", xACPScale(2021))
         .attr("cy", yACPScaleLeft(0));
 
       let acp_data = [...alternative_compliance_payments];
@@ -475,7 +497,7 @@ const LinePlot = (props) => {
         )
         .attr("width", chartdims.width / 33 - 2)
         .attr("stroke", "gray")
-        .style("fill", colorTableau[2]);
+        .style("fill", colors.paymentBars);
 
       payment_avoidance_bars
         .data(acp_data)
@@ -489,22 +511,17 @@ const LinePlot = (props) => {
         )
         .attr("width", chartdims.width / 33 - 2)
         .attr("stroke", "gray")
-        .style("fill", colorTableau[3]);
+        .style("fill", colors.paymentAvoidanceBars);
 
-      y_title.text("es delta (kgCO2e/sf/yr)");
+      y_title_left.text("es delta (kgCO2e/sf/yr)");
+      y_title_right.text("ACP ($)");
       x_title.text("Year");
-      chart_title.text("ACP Payment Summary");
+      chart_title.text("Alternative Compliance Payment (ACP) Summary");
     }
     return;
   };
 
-  return (
-    <div style={{ height: "100%", width: "100%" }} ref={container}>
-      <Button size="small" variant="outlined" onClick={toggleChartType}>
-        toggle view
-      </Button>
-    </div>
-  );
+  return <div style={{ height: "100%", width: "100%" }} ref={container}></div>;
 };
 
 const mapStateToProps = (state) => {

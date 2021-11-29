@@ -2,8 +2,8 @@ const calcAreas = (thresholds, emissions) => {
   let is_2025_fine = thresholds[0].period == "2025-2029" ? true : false;
 
   let periods = is_2025_fine
-    ? [2018, 2025, 2030, 2035, 2040, 2045, 2050, 2051]
-    : [2018, 2030, 2035, 2040, 2045, 2050, 2051];
+    ? [2021, 2025, 2030, 2035, 2040, 2045, 2050, 2051]
+    : [2021, 2030, 2035, 2040, 2045, 2050, 2051];
 
   let combined_array = periods.map((d) => {
     return {
