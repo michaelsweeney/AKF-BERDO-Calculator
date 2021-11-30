@@ -2,7 +2,7 @@ import { conn } from "../../store/connect";
 
 import { ModalComponent } from "../modalcomponent";
 import { building_types } from "../../calculations/buildingtypes";
-
+import * as d3 from 'd3'
 const LoadedSummaryModal = (props) => {
   const isLoadModalOpen = props.ui.isLoadedSummaryModalOpen;
   const exitCallback = props.actions.setIsLoadedSummaryModalOpen;
@@ -12,6 +12,9 @@ const LoadedSummaryModal = (props) => {
 
   let converted_property_type = building_types[props.building.areas[0].type];
 
+
+
+
   let dataset_year_name = {
     "2021_cal_2020": "2021 (calendar year 2020)",
     "2020_cal_2019": "2020 (calendar year 2019)",
@@ -19,31 +22,37 @@ const LoadedSummaryModal = (props) => {
   }[berdoapi.berdo_dataset_year];
 
   const convertBlank = (d) => (d === "" ? 0 : d);
+  const pctFormat = d3.format(',.1%')
+  const numFormat = d3.format(',')
 
+  console.log(loadedBuildingInfo)
   let loaded_summary_list = [
     `Property Name: ${loadedBuildingInfo["Property Name"]}`,
     `Address: ${loadedBuildingInfo["Address"]}`,
     `Tax Parcel: ${loadedBuildingInfo["Tax Parcel"]}`,
-    `Gross Area (sq ft): ${loadedBuildingInfo["Gross Area (sq ft)"]}`,
+    `Gross Area (sq ft): ${numFormat(loadedBuildingInfo["Gross Area (sq ft)"])}`,
     `Energy Star Score: ${loadedBuildingInfo["ENERGY STAR Score"]}`,
     `Onsite Renewable (kWh): ${convertBlank(
       loadedBuildingInfo["Onsite Renewable (kWh)"]
     )}`,
     `Property Type: ${loadedBuildingInfo["Property Type"]}`,
     `Property Uses: ${loadedBuildingInfo["Property Uses"]}`,
-    `Total Site Energy (kBtu): ${loadedBuildingInfo["Total Site Energy (kBTU)"]}`,
-    `% Electricity: ${convertBlank(loadedBuildingInfo["% Electricity"])}`,
-    `% Gas: ${convertBlank(loadedBuildingInfo["% Gas"])}`,
-    `% Other (Diesel #2, Kerosene, Propane, or Other Fuel): ${convertBlank(
+    `Total Site Energy (kBtu): ${numFormat(loadedBuildingInfo["Total Site Energy (kBTU)"])}`,
+    `Portion Electricity: ${pctFormat(convertBlank(loadedBuildingInfo["% Electricity"]))}`,
+    `Portion Gas: ${pctFormat(convertBlank(loadedBuildingInfo["% Gas"]))}`,
+    `Portion Other (Diesel #2, Kerosene, Propane, or Other Fuel): ${pctFormat(convertBlank(
       loadedBuildingInfo["% Other (Diesel #2, Kerosene, Propane or Other Fuel)"]
-    )}`,
-    `% Fuel Oil: ${convertBlank(loadedBuildingInfo["% Fuel Oil"])}`,
-    `% District Hot Water: ${convertBlank(
+    ))}`,
+    `Portion Fuel Oil: ${pctFormat(convertBlank(loadedBuildingInfo["% Fuel Oil"]))}`,
+    `Portion District Hot Water: ${pctFormat(convertBlank(
       loadedBuildingInfo["% District Hot Water"]
-    )}`,
-    `% District Chilled Water: ${convertBlank(
+    ))}`,
+    `Portion Steam: ${pctFormat(convertBlank(
+      loadedBuildingInfo["% Steam"]
+    ))}`,
+    `Portion District Chilled Water: ${pctFormat(convertBlank(
       loadedBuildingInfo["% District Chilled Water"]
-    )}`,
+    ))}`,
   ];
 
   return (
