@@ -422,6 +422,8 @@ const LinePlot = (props) => {
         bottom_area,
         middle_area,
         clip_area,
+        emissions_line,
+        emissions_today_circle
       ];
       thresh_components.forEach((f) => f.remove());
       let { xACPScale, yACPScaleLeft, yACPScaleRight } = createACPScales({
@@ -463,23 +465,23 @@ const LinePlot = (props) => {
           .tickSizeOuter(0)
       );
 
-      emissions_line
-        .datum(emissions_simple_normalized)
-        .transition()
-        .duration(transition_duration)
-        .attr(
-          "d",
-          d3
-            .line()
-            .x((d) => xACPScale(d.year))
-            .y((d) => yACPScaleLeft(d.val))
-        );
+      // emissions_line
+      //   .datum(emissions_simple_normalized)
+      //   .transition()
+      //   .duration(transition_duration)
+      //   .attr(
+      //     "d",
+      //     d3
+      //       .line()
+      //       .x((d) => xACPScale(d.year))
+      //       .y((d) => yACPScaleLeft(d.val))
+      //   );
 
-      emissions_today_circle
-        .transition()
-        .duration(transition_duration)
-        .attr("cx", xACPScale(2021))
-        .attr("cy", yACPScaleLeft(0));
+      // emissions_today_circle
+      //   .transition()
+      //   .duration(transition_duration)
+      //   .attr("cx", xACPScale(2021))
+      //   .attr("cy", yACPScaleLeft(0));
 
       let acp_data = [...alternative_compliance_payments];
       acp_data.pop();
@@ -490,7 +492,7 @@ const LinePlot = (props) => {
         .join("rect")
         .attr("class", "payment-bar")
         .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
-        .attr("y", (d) => yACPScaleRight(0))
+        .attr("y", (d) => yACPScaleRight(d.acp_payment))
         .attr(
           "height",
           (d) => yACPScaleRight(0) - yACPScaleRight(d.acp_payment)
@@ -499,21 +501,21 @@ const LinePlot = (props) => {
         .attr("stroke", "gray")
         .style("fill", colors.paymentBars);
 
-      payment_avoidance_bars
-        .data(acp_data)
-        .join("rect")
-        .attr("class", "payment-avoidance-bar")
-        .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
-        .attr("y", (d) => yACPScaleRight(d.payment_avoidance))
-        .attr(
-          "height",
-          (d) => yACPScaleRight(0) - yACPScaleRight(d.payment_avoidance)
-        )
-        .attr("width", chartdims.width / 33 - 2)
-        .attr("stroke", "gray")
-        .style("fill", colors.paymentAvoidanceBars);
+      // payment_avoidance_bars
+      //   .data(acp_data)
+      //   .join("rect")
+      //   .attr("class", "payment-avoidance-bar")
+      //   .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
+      //   .attr("y", (d) => yACPScaleRight(d.payment_avoidance))
+      //   .attr(
+      //     "height",
+      //     (d) => yACPScaleRight(0) - yACPScaleRight(d.payment_avoidance)
+      //   )
+      //   .attr("width", chartdims.width / 33 - 2)
+      //   .attr("stroke", "gray")
+      //   .style("fill", colors.paymentAvoidanceBars);
 
-      y_title_left.text("es delta (kgCO2e/sf/yr)");
+      y_title_left.text("es above threshold (kgCO2e/sf/yr)");
       y_title_right.text("ACP ($)");
       x_title.text("Year");
       chart_title.text("Alternative Compliance Payment (ACP) Summary");

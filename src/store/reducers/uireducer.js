@@ -3,7 +3,7 @@ const initialState = {
   isAboutModalOpen: false,
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
-  activeView: "lineplot_thresholds", // lineplot_thresholds, lineplot_acp, tabular
+  activeView: "lineplot_payments", // lineplot_thresholds, lineplot_payments, tabular
 };
 
 export default function uiReducer(state = initialState, action) {
