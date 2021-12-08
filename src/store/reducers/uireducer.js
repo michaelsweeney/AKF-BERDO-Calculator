@@ -1,9 +1,9 @@
 const initialState = {
   isLoadModalOpen: false,
-  isAboutModalOpen: false,
+  isAboutModalOpen: true,
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
-  activeView: "lineplot_payments", // lineplot_thresholds, lineplot_payments, tabular
+  activeView: "lineplot_thresholds", // lineplot_thresholds, lineplot_payments, tabular
 };
 
 export default function uiReducer(state = initialState, action) {

@@ -87,6 +87,10 @@ const Header = (props) => {
     props.actions.setIsLoadedSummaryModalOpen(true);
   };
 
+  const handleFileSave = () => {
+    props.actions.saveCalculatorInstance();
+  };
+
   return (
     <Paper elevation={2}>
       <div className={classes.header}>
@@ -97,7 +101,9 @@ const Header = (props) => {
         </div>
         <div className={classes.center}>
           <div className={classes.centerInner}>
-            <div className={classes.h1}>BERDO 2.0 CALCULATOR</div>
+            <div className={classes.h1}>
+              BERDO 2.0 CALCULATOR <span style={{ color: "red" }}>(beta)</span>
+            </div>
             <div className={classes.h2link} onClick={handleOpenAbout}>
               {is_building_loaded
                 ? props.building_name +
@@ -121,6 +127,7 @@ const Header = (props) => {
                 {/* FIND YOUR BUILDING */}
               </Button>
             </div>
+
             <div className={classes.aboutButton}>
               <Button
                 // size="small"
