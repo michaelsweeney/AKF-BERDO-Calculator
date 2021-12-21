@@ -95,7 +95,7 @@ const TabularPlot = (props) => {
                 <TableCell>Period</TableCell>
                 <TableCell>Building Emissions (es) - kgCO2e/sf/yr*</TableCell>
                 <TableCell>BERDO Threshold (es) - kgCO2e/sf/yr*</TableCell>
-                <TableCell>ACP Payments ($)</TableCell>
+                <TableCell>ACP Payments ($/yr)</TableCell>
               </TableRow>
             </TableHead>
             <TableBody>

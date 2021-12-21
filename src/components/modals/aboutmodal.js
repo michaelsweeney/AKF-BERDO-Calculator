@@ -34,17 +34,23 @@ const AboutModal = (props) => {
           report and used to project anticipated carbon emissions for each year.
         </li>
         <li className={classes.li}>
-          the tool currently estimates compliance costs using only Alternative
+          The tool currently estimates compliance costs using only Alternative
           Compliance Payments (ACPs at $234/metric ton of CO2) and does not
           demonstrate options for power purchase agreements or purchase of BERDO
           2.0-approved renewable energy certificates whose prices fluctuate with
           potential costs and savings highly dependent on the market and
           individual projects circumstances
         </li>
+
         <li className={classes.li}>
-          This calculator is based on AKF's interpretation of "CBC Chapter VII,
-          Section 7-2.2 Building Energy Reporting and Disclosure Ordinance
-          (BERDO)" and provides only an approximation of the impact of the
+          For the most up-to-date information on BERDO 2.0 policies and
+          implementation, please see{" "}
+          <a target="_blank" href="https://boston.gov/berdo">
+            https://boston.gov/berdo
+          </a>
+          . However, this calculator is based on "CBC Chapter VII, Section 7-2.2
+          Building Energy Reporting and Disclosure Ordinance (BERDO)," as of
+          December 2021, and provides only an approximation of the impact of the
           carbon emissions thresholds and Alternative Compliance Payments. As
           actual results will vary, the tool should not be relied on as specific
           legal or risk mitigation guidance.
@@ -58,12 +64,14 @@ const AboutModal = (props) => {
           circumstances and critical building uses. These are not accounted for
           in the calculator.
         </li>
+
         <li className={classes.li}>
-          For the most up-to-date information on BERDO 2.0 policies and
-          implementation, please see{" "}
-          <a target="_blank" href="https://boston.gov/berdo">
-            https://boston.gov/berdo
-          </a>
+          AKF provides the information on this website ("site") for the
+          convenience of its customers. The calculator may be used for
+          informational purposes only. All such information derived herefrom is
+          provided "as is" and without warranties as to the suitability,
+          accuracy or completeness of the information. Permission to use this
+          site is conditioned upon your agreeing to these terms.
         </li>
       </ul>
     </ModalComponent>
