@@ -36,7 +36,7 @@ const UtilityInputContainer = (props) => {
         return (
           <div key={i}>
             <NumberInput
-              changeCallback={(v) => handleUtilityChange(v.target.value, e)}
+              changeCallback={(v) => handleUtilityChange(v, e)}
               label={fueltypes[e]}
               value={props.building.consumption_native[e]}
             />

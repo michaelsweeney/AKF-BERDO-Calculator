@@ -10,7 +10,7 @@ const OnsiteInputContainer = (props) => {
   return (
     <div>
       <NumberInput
-        changeCallback={(v) => handleUtilityChange(v.target.value, "elec_pv")}
+        changeCallback={(v) => handleUtilityChange(v, "elec_pv")}
         label={"Electric Photovoltaic (kWh)"}
         value={props.building.onsite_generation_native.elec_pv}
       />

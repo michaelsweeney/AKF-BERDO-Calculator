@@ -51,7 +51,7 @@ const BldgTypeInfoBox = (props) => {
   };
 
   const handleAreaChange = (e) => {
-    props.actions.setBuildingTypeArea(e.target.value, index);
+    props.actions.setBuildingTypeArea(e, index);
     props.actions.compileBuildingOutputs();
   };
 
