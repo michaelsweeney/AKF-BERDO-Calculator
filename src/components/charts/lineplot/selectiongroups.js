@@ -1,6 +1,6 @@
 import * as d3 from "d3";
 
-const createSvgGroups = (config) => {
+const createSelectionGroups = (config) => {
   const { containerdims, margins, node, chartdims } = config;
 
   // create containers
@@ -50,7 +50,24 @@ const createSvgGroups = (config) => {
     .join("g")
     .attr("class", "title-g");
 
-  return { svg, plot_g, annotation_g, legend_g, axis_g, title_g };
+  let tooltip_div = d3
+    .select(node)
+    .selectAll(".tooltip-div")
+    .data([0])
+    .join("div")
+    .attr("class", "tooltip-div")
+    .style("opacity", 0)
+    .style("position", "absolute")
+    .style("text-align", "left")
+    .style("padding", "10px")
+    .style("background-color", "#595954")
+    .style("color", "white")
+    .style("font-size", "12px")
+
+    .style("border-radius", "8px")
+    .style("pointer-events", "none");
+
+  return { svg, plot_g, annotation_g, legend_g, axis_g, title_g, tooltip_div };
 };
 
-export { createSvgGroups };
+export { createSelectionGroups };

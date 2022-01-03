@@ -1,17 +1,22 @@
 import { conn } from "../../../store/connect";
 
 import * as d3 from "d3";
-import { Button } from "@mui/material";
+import { Button, requirePropFactory } from "@mui/material";
 import { useRef, useEffect } from "react";
 
 import { createAxisGroups } from "./axisgroups";
 
 import { createACPScales } from "./acpscales";
 import { createThresholdScales } from "./thresholdscales";
-import { createSvgGroups } from "./svggroups";
+import { createSelectionGroups } from "./selectiongroups";
 import { createThresholdLegend } from "./thresholdlegend";
 import { createDataArrays } from "./datacalcs";
 import { createACPLegend } from "./acplegend";
+import {
+  CircleOutlined,
+  CompressOutlined,
+  RecentActorsOutlined,
+} from "@mui/icons-material";
 
 const LinePlot = (props) => {
   const container = useRef(null);
@@ -45,6 +50,8 @@ const LinePlot = (props) => {
         ? node.getBoundingClientRect()["height"]
         : props.window.dims.height - 225,
     };
+
+    let tooltip_duration = 200;
 
     let chartdims = {
       width: containerdims.width - margins.l - margins.r,
@@ -90,20 +97,22 @@ const LinePlot = (props) => {
         props.building.building_validation,
         props.building.alternative_compliance_payments
       );
+
     let { alternative_compliance_payments } = props.building;
     let emissions_simple_normalized = [
       { year: 2021, val: 0 },
       { year: 2050, val: 0 },
       { year: 2051, val: 0 },
     ];
+
     /*
     ----------------------------------------------------------------------
     COMMON SHARED SVG ELEMENTS AND DIMENSIONS
     ----------------------------------------------------------------------
     */
 
-    let { svg, plot_g, annotation_g, legend_g, axis_g, title_g } =
-      createSvgGroups({
+    let { svg, plot_g, annotation_g, legend_g, axis_g, title_g, tooltip_div } =
+      createSelectionGroups({
         containerdims: containerdims,
         chartdims: chartdims,
         margins: margins,
@@ -355,6 +364,39 @@ const LinePlot = (props) => {
         .attr("cx", (d) => xThresholdScale(d.year))
         .attr("cy", (d) => yThresholdScale(d.val));
 
+      emissions_today_circle
+        .on("mouseover", function (event, d) {
+          let circle = d3.select(this);
+          circle
+            .style("stroke-width", "1px")
+            .attr("fill", d3.color(colors.emissionsCircleFill).darker());
+
+          tooltip_div
+            .html(
+              `
+            <div>
+              <div>Year: ${d.year}</div>
+              <div>Emissions: ${d3.format(".2f")(d.val)} kg/co2e/sf/yr</div>
+            </div>
+            `
+            )
+            .style("left", event.pageX + 28 + "px")
+            .style("top", event.pageY + 28 + "px")
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 1);
+        })
+        .on("mouseout", function () {
+          let circle = d3.select(this);
+          circle
+            .style("stroke-width", "1px")
+            .attr("fill", colors.emissionsCircleFill);
+          tooltip_div
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 0);
+        });
+
       threshold_annotation_g
         .selectAll(".thresh-text")
         .data(thresholds)
@@ -400,7 +442,54 @@ const LinePlot = (props) => {
           d.threshold_met
             ? colors.thresholdCircleFillOff
             : colors.thresholdCircleFillOn
-        );
+        )
+        .on("mouseover", function (event, d) {
+          let circle = d3.select(this);
+          circle
+            .style("stroke-width", "1px")
+            .style("fill", (d) =>
+              d.threshold_met
+                ? d3.color(colors.thresholdCircleFillOff).darker()
+                : d3.color(colors.thresholdCircleFillOn).darker()
+            );
+
+          let em = emissions.filter((e) => e.year == d.starting_year)[0].val;
+          tooltip_div
+            .html(
+              `
+              <div>
+                <div>Period: ${d.period}</div>
+                <div>Threshold (${d.starting_year}): ${d3.format(".2f")(
+                d.val
+              )} kg/CO2e/sf/yr</div>
+                <div>Emissions (${d.starting_year}): ${d3.format(".2f")(
+                em
+              )} kg/CO2e/sf/yr</div>
+                <div>Threshold Met: ${d.threshold_met ? "Yes" : "No"}</div>
+              </div>
+              `
+            )
+            .style("left", event.pageX - 250 + "px")
+            .style("top", event.pageY - 100 + "px")
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 1);
+        })
+        .on("mouseout", function () {
+          let circle = d3.select(this);
+          circle
+            .style("stroke-width", "1px")
+            .style("fill", (d) =>
+              d.threshold_met
+                ? colors.thresholdCircleFillOff
+                : colors.thresholdCircleFillOn
+            );
+          tooltip_div
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 0);
+        });
+
       y_title_left.text("es (kgCO2e/sf/yr)");
       y_title_right.text("");
 
@@ -423,7 +512,7 @@ const LinePlot = (props) => {
         middle_area,
         clip_area,
         emissions_line,
-        emissions_today_circle
+        emissions_today_circle,
       ];
       thresh_components.forEach((f) => f.remove());
       let { xACPScale, yACPScaleLeft, yACPScaleRight } = createACPScales({
@@ -465,24 +554,6 @@ const LinePlot = (props) => {
           .tickSizeOuter(0)
       );
 
-      // emissions_line
-      //   .datum(emissions_simple_normalized)
-      //   .transition()
-      //   .duration(transition_duration)
-      //   .attr(
-      //     "d",
-      //     d3
-      //       .line()
-      //       .x((d) => xACPScale(d.year))
-      //       .y((d) => yACPScaleLeft(d.val))
-      //   );
-
-      // emissions_today_circle
-      //   .transition()
-      //   .duration(transition_duration)
-      //   .attr("cx", xACPScale(2021))
-      //   .attr("cy", yACPScaleLeft(0));
-
       let acp_data = [...alternative_compliance_payments];
       acp_data.pop();
       acp_data.shift();
@@ -498,22 +569,46 @@ const LinePlot = (props) => {
           (d) => yACPScaleRight(0) - yACPScaleRight(d.acp_payment)
         )
         .attr("width", chartdims.width / 33 - 2)
-        .attr("stroke", "gray")
-        .style("fill", colors.paymentBars);
+        .style("stroke", "gray")
+        .style("stroke-width", "1px")
+        .style("fill", colors.paymentBars)
+        .on("mouseover", function (event, d) {
+          let rect = d3.select(this);
+          console.log(d);
+          rect
+            .style("stroke-width", "1px")
+            .style("stroke", "black")
+            .style("fill", d3.color(colors.paymentBars).brighter());
+          tooltip_div
+            .html(
+              `
+            <div>
+              <div>Year: ${d.year}</div>
+              <div>Carbon Deficit (kg/co2e/sf/yr): ${d3.format(".2f")(
+                d.carbon_deficit_normalized
+              )}</div>
+              <div>ACP Payment (est): ${d3.format(".2f")(d.acp_payment)}</div>
+            </div>
+            `
+            )
+            .style("left", event.pageX - 250 + "px")
+            .style("top", event.pageY - 100 + "px")
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 1);
+        })
+        .on("mouseout", function () {
+          let rect = d3.select(this);
+          rect
+            .style("stroke-width", "1px")
+            .style("stroke", "gray")
+            .style("fill", colors.paymentBars);
 
-      // payment_avoidance_bars
-      //   .data(acp_data)
-      //   .join("rect")
-      //   .attr("class", "payment-avoidance-bar")
-      //   .attr("x", (d) => xACPScale(d.year) - (chartdims.width / 33 - 2) / 2)
-      //   .attr("y", (d) => yACPScaleRight(d.payment_avoidance))
-      //   .attr(
-      //     "height",
-      //     (d) => yACPScaleRight(0) - yACPScaleRight(d.payment_avoidance)
-      //   )
-      //   .attr("width", chartdims.width / 33 - 2)
-      //   .attr("stroke", "gray")
-      //   .style("fill", colors.paymentAvoidanceBars);
+          tooltip_div
+            .transition()
+            .duration(tooltip_duration)
+            .style("opacity", 0);
+        });
 
       y_title_left.text("es above threshold (kgCO2e/sf/yr)");
       y_title_right.text("ACP ($)");
