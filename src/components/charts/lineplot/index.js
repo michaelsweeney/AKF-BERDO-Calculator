@@ -1,7 +1,6 @@
 import { conn } from "../../../store/connect";
 
 import * as d3 from "d3";
-import { Button, requirePropFactory } from "@mui/material";
 import { useRef, useEffect } from "react";
 
 import { createAxisGroups } from "./axisgroups";
@@ -12,11 +11,6 @@ import { createSelectionGroups } from "./selectiongroups";
 import { createThresholdLegend } from "./thresholdlegend";
 import { createDataArrays } from "./datacalcs";
 import { createACPLegend } from "./acplegend";
-import {
-  CircleOutlined,
-  CompressOutlined,
-  RecentActorsOutlined,
-} from "@mui/icons-material";
 
 const LinePlot = (props) => {
   const container = useRef(null);
