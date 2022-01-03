@@ -6,10 +6,6 @@ const createDataArrays = (thresholds_raw, emissions_raw) => {
   // process data. handle any missing values due
   // to area regulations here.
 
-  // console.log(thresholds_raw);
-  // console.log(emissions_raw);
-  // console.log(building_validation);
-
   let emissions = emissions_raw.map((e) => {
     return { year: e.year, val: e.normalized.total };
   });

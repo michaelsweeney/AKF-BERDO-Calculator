@@ -1,5 +1,3 @@
-import * as d3 from "d3";
-
 const createAxisGroups = (config) => {
   const { svg, chartdims, margins } = config;
   // create axes

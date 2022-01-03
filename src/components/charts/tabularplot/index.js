@@ -6,8 +6,7 @@ import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import { useRef, useEffect } from "react";
-import { Typography } from "@mui/material";
+
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({

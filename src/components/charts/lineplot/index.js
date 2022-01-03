@@ -581,7 +581,7 @@ const LinePlot = (props) => {
               <div>Carbon Deficit (kg/co2e/sf/yr): ${d3.format(".2f")(
                 d.carbon_deficit_normalized
               )}</div>
-              <div>ACP Payment (est): ${d3.format(".2f")(d.acp_payment)}</div>
+              <div>ACP Payment (est): ${d3.format("$,.0f")(d.acp_payment)}</div>
             </div>
             `
             )
