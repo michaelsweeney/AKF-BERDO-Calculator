@@ -575,7 +575,6 @@ const LinePlot = (props) => {
         .style("fill", colors.paymentBars)
         .on("mouseover", function (event, d) {
           let rect = d3.select(this);
-          console.log(d);
           rect
             .style("stroke-width", "1px")
             .style("stroke", "gray")

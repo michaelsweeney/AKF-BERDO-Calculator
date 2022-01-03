@@ -46,7 +46,7 @@ const useStyles = makeStyles({
 const TabularPlot = (props) => {
   const classes = useStyles();
   const { building } = props;
-  console.log(building);
+
   const dataset_lookup = {
     "2021_cal_2020": "2021 Dataset (calendar year 2020)",
     "2020_cal_2019": "2020 Dataset (calendar year 2019)",
