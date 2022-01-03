@@ -1,6 +1,6 @@
 const initialState = {
   isLoadModalOpen: false,
-  isAboutModalOpen: false,
+  isAboutModalOpen: true,
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
   activeView: "lineplot_thresholds", // lineplot_thresholds, lineplot_payments, tabular

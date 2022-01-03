@@ -23,14 +23,14 @@ const useStyles = makeStyles({
     // overflowY: "scroll",
   },
   h1: {
-    fontSize: "1.25em",
+    fontSize: "1em",
     fontWeight: 600,
     marginBottom: 15,
     marginTop: 15,
     textAlign: "center",
   },
   h2: {
-    fontSize: "1.25em",
+    fontSize: "1em",
     fontWeight: 600,
     marginBottom: 20,
     textAlign: "center",

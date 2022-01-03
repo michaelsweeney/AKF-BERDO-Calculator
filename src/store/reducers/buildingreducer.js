@@ -7,7 +7,7 @@ const initialState = {
     inputQuery: "",
     inputQueryResults: [],
     loadedBuildingInfo: [],
-    berdo_dataset_year: "2021_cal_2020",
+    berdo_dataset_year: "2020_cal_2019", // cal 2019 used bc of covid
   },
   building_validation: {
     is_above_35000_sf: false,

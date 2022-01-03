@@ -214,7 +214,8 @@ const LinePlot = (props) => {
       .attr("x", margins.l + chartdims.width / 2)
       .attr("y", margins.t - 20)
       .attr("text-anchor", "middle")
-      .style("font-size", "1em");
+      .style("font-size", "1em")
+      .style("font-weight", 600);
 
     let threshold_legend_g = createThresholdLegend({
       element: legend_g,
@@ -577,8 +578,8 @@ const LinePlot = (props) => {
           console.log(d);
           rect
             .style("stroke-width", "1px")
-            .style("stroke", "black")
-            .style("fill", d3.color(colors.paymentBars).brighter());
+            .style("stroke", "gray")
+            .style("fill", d3.color(colors.paymentBars).darker());
           tooltip_div
             .html(
               `
