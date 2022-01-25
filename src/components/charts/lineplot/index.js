@@ -503,7 +503,7 @@ const LinePlot = (props) => {
 
       x_title.text("Year");
       acp_annotation.text("");
-      chart_title.text("Emissions Standard (es) Threshold Summary");
+      chart_title.text("Emissions Standard (es) Threshold Summary*");
     }
 
     /*
@@ -621,8 +621,8 @@ const LinePlot = (props) => {
       y_title_left.text("es above threshold (kgCO2e/sf/yr)");
       y_title_right.text("ACP ($)");
       x_title.text("Year");
-      acp_annotation.text("(acp payments are $234 / metric ton)");
-      chart_title.text("Alternative Compliance Payment (ACP) Summary");
+      acp_annotation.text("* (acp payments are $234 / metric ton)");
+      chart_title.text("Alternative Compliance Payment (ACP) Summary*");
     }
     return;
   };

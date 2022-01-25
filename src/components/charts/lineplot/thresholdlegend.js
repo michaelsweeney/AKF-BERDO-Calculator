@@ -1,11 +1,13 @@
 const createThresholdLegend = (config) => {
   const { element, colors } = config;
 
-  let rowspacing = [25, 50, 75, 100];
+  let rowspacing = [15, 35, 55, 75, 95];
   let colspacing = [0, 250];
   let paddingLeft = 100;
   let textAlignLeft = 35;
   let textAlignLeftLong = 40;
+
+  let textSize = "0.75em";
 
   let threshold_legend_g = element
     .selectAll(".threshold-legend-g")
@@ -32,11 +34,13 @@ const createThresholdLegend = (config) => {
     .attr("r", 5)
     .attr("stroke", colors.emissionsCircleStroke)
     .attr("fill", colors.emissionsCircleFill);
+
   today_es_g
     .selectAll(".today-es-text")
     .data([0])
     .join("text")
     .attr("class", "today-es-text")
+    .attr("font-size", textSize)
     .text("es at present day")
     .attr("x", textAlignLeft)
     .attr("y", 5);
@@ -65,6 +69,7 @@ const createThresholdLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-met-text")
+    .attr("font-size", textSize)
     .text("es threshold (met)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
@@ -93,6 +98,8 @@ const createThresholdLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "threshold-unmet-text")
+    .attr("font-size", textSize)
+
     .text("es threshold (unmet)")
     .attr("x", textAlignLeft)
     .attr("y", 5);
@@ -123,6 +130,8 @@ const createThresholdLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-emissions-line-text")
+    .attr("font-size", textSize)
+
     .text("es over time")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
@@ -152,6 +161,7 @@ const createThresholdLegend = (config) => {
     .data([0])
     .join("text")
     .attr("class", "legend-area-unmet-text")
+    .attr("font-size", textSize)
     .text("es above threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
@@ -176,14 +186,36 @@ const createThresholdLegend = (config) => {
     .attr("height", 10)
     .attr("stroke", "black")
     .attr("fill", colors.bottomFill);
+
   legend_area_met_g
     .selectAll(".legend-area-met-text")
     .data([0])
     .join("text")
     .attr("class", "legend-area-met-text")
+    .attr("font-size", textSize)
     .text("es below threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
+
+  let es_footnote_g = threshold_legend_g
+    .selectAll(".es-footnote-g")
+    .data([0])
+    .join("g")
+    .attr("class", "es-footnote-g")
+    .attr(
+      "transform",
+      `translate(${colspacing[0] + 10 + paddingLeft},${rowspacing[3] + 10})`
+    );
+  es_footnote_g
+    .selectAll(".es-footnote-text")
+    .data([0])
+    .join("text")
+    .attr("class", "es-footnote-g")
+    .attr("font-size", textSize)
+    .attr("font-style", "italic")
+    .text(
+      "* Emissions Standard (es) includes projected electric grid decarbonization"
+    );
 
   return threshold_legend_g;
 };

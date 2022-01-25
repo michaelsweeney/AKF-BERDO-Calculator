@@ -32,6 +32,8 @@ const AboutModal = (props) => {
             Boston Performance Standard Technical Methods
           </a>{" "}
           report and used to project anticipated carbon emissions for each year.
+          Emissions factors reflect projected electric grid decarbonation
+          between now and 2050.
         </li>
         <li className={classes.li}>
           The tool currently estimates compliance costs using only Alternative
@@ -39,7 +41,7 @@ const AboutModal = (props) => {
           demonstrate options for power purchase agreements or purchase of BERDO
           2.0-approved renewable energy certificates whose prices fluctuate with
           potential costs and savings highly dependent on the market and
-          individual projects circumstances
+          individual projects' circumstances.
         </li>
 
         <li className={classes.li}>
@@ -71,7 +73,7 @@ const AboutModal = (props) => {
           informational purposes only. All such information derived herefrom is
           provided "as is" and without warranties as to the suitability,
           accuracy or completeness of the information. Permission to use this
-          site is conditioned upon your agreeing to these terms.
+          site is conditioned upon agreeing to these terms.
         </li>
       </ul>
     </ModalComponent>
