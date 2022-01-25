@@ -1,5 +1,5 @@
 const createACPLegend = (config) => {
-  const { element } = config;
+  const { element, margins, chartdims } = config;
 
   let acp_legend_g = element
     .selectAll(".acp-legend-g")

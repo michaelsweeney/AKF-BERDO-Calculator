@@ -200,6 +200,17 @@ const LinePlot = (props) => {
       .attr("text-anchor", "middle")
       .style("font-size", "1em");
 
+    let acp_annotation = title_g
+      .selectAll(".acp-annotation-text")
+      .data([0])
+      .join("text")
+      .attr("class", "acp-annotation-text")
+      .attr("x", margins.l + chartdims.width / 2)
+      .attr("y", margins.t + chartdims.height + 75)
+      .attr("text-anchor", "middle")
+      .attr("font-style", "italic")
+      .style("font-size", "0.75em");
+
     let chart_title = title_g
       .selectAll(".chart-title")
       .data([0])
@@ -217,8 +228,10 @@ const LinePlot = (props) => {
     });
 
     let acp_legend_g = createACPLegend({
-      element: legend_g,
+      element: svg,
       colors: colors,
+      margins: margins,
+      chartdims: chartdims,
     });
 
     let payment_avoidance_bars = plot_g
@@ -489,6 +502,7 @@ const LinePlot = (props) => {
       y_title_right.text("");
 
       x_title.text("Year");
+      acp_annotation.text("");
       chart_title.text("Emissions Standard (es) Threshold Summary");
     }
 
@@ -607,6 +621,7 @@ const LinePlot = (props) => {
       y_title_left.text("es above threshold (kgCO2e/sf/yr)");
       y_title_right.text("ACP ($)");
       x_title.text("Year");
+      acp_annotation.text("(acp payments are $234 / metric ton)");
       chart_title.text("Alternative Compliance Payment (ACP) Summary");
     }
     return;
