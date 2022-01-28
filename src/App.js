@@ -63,7 +63,7 @@ const App = (props) => {
         elec_pv: 800,
       },
     };
-    props.actions.setAllBuildingInputs(test_building_data);
+    // props.actions.setAllBuildingInputs(test_building_data);
     props.actions.compileBuildingOutputs();
   }, [props.actions]);
 
