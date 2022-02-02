@@ -304,6 +304,7 @@ const compileBuildingProfile = (buildinginputs) => {
   let totalarea = sum(areas.map((e) => e.area));
 
   let building_validation = {
+    has_input: totalarea == 0 ? false : true,
     is_above_35000_sf: totalarea >= 35000 ? true : false,
     is_above_20000_sf: totalarea >= 20000 ? true : false,
   };

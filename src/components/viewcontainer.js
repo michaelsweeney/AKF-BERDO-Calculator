@@ -46,7 +46,12 @@ const ViewContainer = (props) => {
 
   const unregulated_message =
     "Buildings under 20,000 SF are unregulated under BERDO 2.0";
-  let ActiveViewComponent;
+
+  const has_input = props.building_validation.has_input;
+
+  const no_input_message = `No building area has been entered. 
+  Either complete the sidebar to the left or search the BERDO Dataset 
+  for your building`;
 
   const views = [
     {
@@ -68,14 +73,20 @@ const ViewContainer = (props) => {
       hovercontent: "Tabular Data",
     },
   ];
-
-  if (!is_regulated) {
+  let ActiveViewComponent;
+  if (!has_input) {
     ActiveViewComponent = (
-      <BuildingFeedbackMessage message={unregulated_message} />
+      <BuildingFeedbackMessage message={no_input_message} />
     );
   } else {
-    ActiveViewComponent = views.filter((f) => f.key == [props.activeView])[0]
-      .component;
+    if (!is_regulated) {
+      ActiveViewComponent = (
+        <BuildingFeedbackMessage message={unregulated_message} />
+      );
+    } else {
+      ActiveViewComponent = views.filter((f) => f.key == [props.activeView])[0]
+        .component;
+    }
   }
 
   return (

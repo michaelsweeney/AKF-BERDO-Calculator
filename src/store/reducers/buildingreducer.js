@@ -10,6 +10,7 @@ const initialState = {
     berdo_dataset_year: "2020_cal_2019", // cal 2019 used bc of covid
   },
   building_validation: {
+    has_input: false,
     is_above_35000_sf: false,
     is_above_20000_sf: false,
   },

@@ -1,7 +1,7 @@
 import { makeStyles } from "@material-ui/styles";
 
 const useStyles = makeStyles({
-  root: { padding: "20%" },
+  root: { padding: "10%" },
   copy: {
     verticalAlign: "middle",
     textAlign: "center",

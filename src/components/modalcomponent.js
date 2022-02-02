@@ -32,10 +32,9 @@ const ModalComponent = (props) => {
             sx={{
               padding: 1,
               minWidth: 0,
-              // textAlign: "left",
 
               position: "relative",
-              left: -20,
+              left: -15,
               top: -10,
               "&:hover": {
                 color: "red",

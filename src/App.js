@@ -12,7 +12,7 @@ import LoadBldgModal from "./components/modals/loadbldgmodal";
 import AboutModal from "./components/modals/aboutmodal";
 import LoadedSummaryModal from "./components/modals/loadedsummarymodal";
 
-const is_demo_mode = true;
+const is_demo_mode = false;
 
 const theme = createTheme({
   palette: {
