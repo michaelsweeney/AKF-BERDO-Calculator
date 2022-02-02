@@ -49,9 +49,9 @@ const ViewContainer = (props) => {
 
   const has_input = props.building_validation.has_input;
 
-  const no_input_message = `No building area has been entered. 
+  const no_input_message = `Building area and/or utilities have not been entered. 
   Either complete the sidebar to the left or search the BERDO Dataset 
-  for your building`;
+  for your building.`;
 
   const views = [
     {
