@@ -12,6 +12,8 @@ import LoadBldgModal from "./components/modals/loadbldgmodal";
 import AboutModal from "./components/modals/aboutmodal";
 import LoadedSummaryModal from "./components/modals/loadedsummarymodal";
 
+const is_demo_mode = true;
+
 const theme = createTheme({
   palette: {
     secondary: {
@@ -63,7 +65,10 @@ const App = (props) => {
         elec_pv: 800,
       },
     };
-    // props.actions.setAllBuildingInputs(test_building_data);
+
+    if (is_demo_mode) {
+      props.actions.setAllBuildingInputs(test_building_data);
+    }
     props.actions.compileBuildingOutputs();
   }, [props.actions]);
 

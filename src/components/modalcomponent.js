@@ -1,6 +1,7 @@
 import { Button } from "@mui/material";
 import { Modal } from "@mui/material";
 import { Box } from "@mui/system";
+import CloseIcon from "@mui/icons-material/Close";
 
 const style = {
   position: "absolute",
@@ -13,6 +14,7 @@ const style = {
   border: "1px solid gray",
   boxShadow: 24,
   p: 4,
+  padding: 5,
 };
 
 const ModalComponent = (props) => {
@@ -26,8 +28,25 @@ const ModalComponent = (props) => {
     <Modal className="modal" open={isOpen} onClose={hideModal}>
       <div className="modal-content">
         <Box sx={style}>
-          <Button color="primary" onClick={hideModal}>
-            x
+          <Button
+            sx={{
+              padding: 1,
+              minWidth: 0,
+              // textAlign: "left",
+
+              position: "relative",
+              left: -20,
+              top: -10,
+              "&:hover": {
+                color: "red",
+                backgroundColor: "white",
+              },
+            }}
+            size="small"
+            color="primary"
+            onClick={hideModal}
+          >
+            <CloseIcon />
           </Button>
           {props.children}
         </Box>

@@ -18,6 +18,12 @@ const useStyles = makeStyles({
     color: "rgba(0,0,0,0.6)",
     fontSize: 12,
   },
+  covidWarningFlag: {
+    marginBottom: 20,
+    marginTop: 0,
+    color: "red",
+    fontSize: "0.75em",
+  },
 });
 
 const BerdoApiInput = (props) => {
@@ -62,6 +68,9 @@ const BerdoApiInput = (props) => {
     },
   ];
 
+  const covidwarningflag =
+    props.berdoapi.berdo_dataset_year == "2021_cal_2020" ? true : false;
+
   return (
     <div>
       <div className={classes.yearselectContainer}>
@@ -79,6 +88,15 @@ const BerdoApiInput = (props) => {
           ))}
         </Select>
       </div>
+      {covidwarningflag ? (
+        <div className={classes.covidWarningFlag}>
+          <u>Note</u>: Early COVID-19 shutdowns may skew reported results for
+          calendar year 2020
+        </div>
+      ) : (
+        <div></div>
+      )}
+
       <div style={{ width: 500 }}>
         <TextInput
           label="search for your building..."

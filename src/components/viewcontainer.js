@@ -10,6 +10,8 @@ import LinePlot from "./charts/lineplot";
 import TabularPlot from "./charts/tabularplot";
 import { BuildingFeedbackMessage } from "./buildingfeedbackmessage";
 
+import { HoverButton } from "./hoverbutton";
+
 const useStyles = makeStyles({
   root: {
     height: "calc(100vh - 175px)",
@@ -51,13 +53,20 @@ const ViewContainer = (props) => {
       key: "lineplot_thresholds",
       label: <OfflineBoltIcon />,
       component: <LinePlot view="thresholds" />,
+      hovercontent: "Threshold Summary",
     },
     {
       key: "lineplot_payments",
       label: <AttachMoneyIcon />,
       component: <LinePlot view="payments" />,
+      hovercontent: "Cost Summary",
     },
-    { key: "tabular", label: <TableChartIcon />, component: <TabularPlot /> },
+    {
+      key: "tabular",
+      label: <TableChartIcon />,
+      component: <TabularPlot />,
+      hovercontent: "Tabular Data",
+    },
   ];
 
   if (!is_regulated) {
@@ -75,14 +84,15 @@ const ViewContainer = (props) => {
         {views.map((d, i) => {
           return (
             <div key={i} className={classes.viewSelectorBtn}>
-              <Button
-                size="small"
-                onClick={() => handleViewChange(d.key)}
+              <HoverButton
+                clickCallback={() => handleViewChange(d.key)}
                 variant={props.activeView == d.key ? "contained" : "outlined"}
                 color="primary"
+                hovercontent={d.hovercontent}
+                size="small"
               >
                 {d.label}
-              </Button>
+              </HoverButton>
             </div>
           );
         })}

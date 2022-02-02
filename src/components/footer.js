@@ -16,9 +16,7 @@ const Footer = (props) => {
   return (
     <Paper elevation={0}>
       <div className={classes.footer}>
-        <div className={classes.right}>copyright 2021 AKF Engineers</div>
-        {/* <img width="75" src="city_council_logo.png"></img> */}
-        {/* <img width="75" src="akf-logo.png"></img> */}
+        <div className={classes.right}> &copy; 2021 AKF Group</div>
       </div>
     </Paper>
   );

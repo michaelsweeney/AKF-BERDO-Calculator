@@ -6715,7 +6715,7 @@ ASSUMPTIONS IN DATASET CONVERSION:
               .data([0])
               .join("text")
               .attr("class", "today-es-text")
-              .text("es at present day")
+              .text("mission at present day")
               .attr("x", textAlignLeft)
               .attr("y", 5);
             let threshold_met_g = threshold_legend_g

@@ -178,7 +178,8 @@ const LinePlot = (props) => {
       .attr("transform", "rotate(270)")
       .attr("x", -(margins.t + chartdims.height / 2))
       .attr("y", margins.l / 2 - 15)
-      .attr("text-anchor", "middle");
+      .attr("text-anchor", "middle")
+      .attr("font-weight", "500");
 
     let y_title_right = title_g
       .selectAll(".y-axis-title-right")
@@ -198,7 +199,7 @@ const LinePlot = (props) => {
       .attr("x", margins.l + chartdims.width / 2)
       .attr("y", margins.t + chartdims.height + 40)
       .attr("text-anchor", "middle")
-      .style("font-size", "1em");
+      .attr("font-weight", "500");
 
     let acp_annotation = title_g
       .selectAll(".acp-annotation-text")
@@ -621,9 +622,10 @@ const LinePlot = (props) => {
       y_title_left.text("es above threshold (kgCO2e/sf/yr)");
       y_title_right.text("ACP ($)");
       x_title.text("Year");
-      acp_annotation.text("* (acp payments are $234 / metric ton)");
+      acp_annotation.text("* acp payments are $234 / metric ton");
       chart_title.text("Alternative Compliance Payment (ACP) Summary*");
     }
+
     return;
   };
 

@@ -41,7 +41,7 @@ const createThresholdLegend = (config) => {
     .join("text")
     .attr("class", "today-es-text")
     .attr("font-size", textSize)
-    .text("es at present day")
+    .text("present-day emissions")
     .attr("x", textAlignLeft)
     .attr("y", 5);
 
@@ -132,7 +132,7 @@ const createThresholdLegend = (config) => {
     .attr("class", "legend-emissions-line-text")
     .attr("font-size", textSize)
 
-    .text("es over time")
+    .text("emissions over time")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -162,7 +162,7 @@ const createThresholdLegend = (config) => {
     .join("text")
     .attr("class", "legend-area-unmet-text")
     .attr("font-size", textSize)
-    .text("es above threshold")
+    .text("emissions above threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 
@@ -193,7 +193,7 @@ const createThresholdLegend = (config) => {
     .join("text")
     .attr("class", "legend-area-met-text")
     .attr("font-size", textSize)
-    .text("es below threshold")
+    .text("emissions below threshold")
     .attr("x", textAlignLeftLong)
     .attr("y", 5);
 

@@ -5,6 +5,9 @@ import { makeStyles } from "@material-ui/styles";
 import { Paper } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
 import InfoIcon from "@mui/icons-material/Info";
+
+import { HoverButton } from "./hoverbutton";
+
 const useStyles = makeStyles({
   header: {
     height: 100,
@@ -87,10 +90,6 @@ const Header = (props) => {
     props.actions.setIsLoadedSummaryModalOpen(true);
   };
 
-  const handleFileSave = () => {
-    props.actions.saveCalculatorInstance();
-  };
-
   return (
     <Paper elevation={2}>
       <div className={classes.header}>
@@ -117,27 +116,25 @@ const Header = (props) => {
         <div className={classes.right}>
           <div className={classes.rightInner}>
             <div className={classes.findButton}>
-              <Button
-                // size="small"
+              <HoverButton
                 color="primary"
                 variant="contained"
-                onClick={() => props.actions.setIsLoadModalOpen(true)}
+                clickCallback={() => props.actions.setIsLoadModalOpen(true)}
+                hovercontent="Search BERDO Dataset"
               >
                 <SearchIcon />
-                {/* FIND YOUR BUILDING */}
-              </Button>
+              </HoverButton>
             </div>
 
             <div className={classes.aboutButton}>
-              <Button
-                // size="small"
+              <HoverButton
                 color="primary"
                 variant="contained"
-                onClick={() => props.actions.setIsAboutModalOpen(true)}
+                hovercontent="About"
+                clickCallback={() => props.actions.setIsAboutModalOpen(true)}
               >
-                {/* ABOUT */}
                 <InfoIcon />
-              </Button>
+              </HoverButton>
             </div>
           </div>
         </div>
