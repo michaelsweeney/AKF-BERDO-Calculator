@@ -10,14 +10,14 @@ import { HoverButton } from "./hoverbutton";
 
 const useStyles = makeStyles({
   header: {
-    height: 100,
+    height: 85,
     width: "100%",
     // padding: 20,
     borderBottom: "1px gray solid",
     overflow: "hidden",
     whiteSpace: "nowrap",
     boxSizing: "border-box",
-    padding: "20px",
+    padding: "15px",
   },
   left: {
     display: "inline-block",
@@ -44,7 +44,7 @@ const useStyles = makeStyles({
     display: "inline-block",
   },
   h1: {
-    fontSize: "1.25em",
+    fontSize: "1.35em",
     fontWeight: 600,
     letterSpacing: 1.5,
     marginBottom: 5,
@@ -64,6 +64,9 @@ const useStyles = makeStyles({
   },
   akfLogoContainer: {
     padding: 10,
+    marginLeft: 10,
+    position: "relative",
+    bottom: 5,
   },
   findButton: {
     paddingRight: 15,

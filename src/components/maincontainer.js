@@ -6,14 +6,14 @@ import ViewContainer from "./viewcontainer";
 
 const useStyles = makeStyles({
   root: {
-    height: "calc(100vh - 175px)",
+    height: "calc(100vh - 140px)",
     minHeight: 300,
     boxSizing: "border-box",
     overflow: "hidden",
   },
   main: {
     padding: 20,
-    width: "calc(100% - 350px)",
+    width: "calc(100% - 375px)",
     height: "100%",
     display: "inline-block",
     boxSizing: "border-box",
