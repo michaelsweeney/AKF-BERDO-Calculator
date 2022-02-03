@@ -3,7 +3,7 @@ import { Modal } from "@mui/material";
 import { Box } from "@mui/system";
 import CloseIcon from "@mui/icons-material/Close";
 
-const style = {
+const boxStyle = {
   position: "absolute",
   top: "50%",
   left: "50%",
@@ -15,6 +15,11 @@ const style = {
   boxShadow: 24,
   p: 4,
   padding: 5,
+  // paddingTop: "5px !important",
+};
+
+const modalStyle = {
+  paddingTop: 5,
 };
 
 const ModalComponent = (props) => {
@@ -25,28 +30,30 @@ const ModalComponent = (props) => {
   };
 
   return (
-    <Modal className="modal" open={isOpen} onClose={hideModal}>
+    <Modal cx={modalStyle} className="modal" open={isOpen} onClose={hideModal}>
       <div className="modal-content">
-        <Box sx={style}>
-          <Button
-            sx={{
-              padding: 1,
-              minWidth: 0,
-
-              position: "relative",
-              left: -15,
-              top: -10,
-              "&:hover": {
-                color: "red",
-                backgroundColor: "white",
-              },
-            }}
-            size="small"
-            color="primary"
-            onClick={hideModal}
-          >
-            <CloseIcon />
-          </Button>
+        <Box sx={boxStyle}>
+          <div style={{ height: 20 }}>
+            <Button
+              sx={{
+                padding: 1,
+                minWidth: 0,
+                float: "right",
+                position: "relative",
+                // left: -15,
+                top: -10,
+                "&:hover": {
+                  color: "red",
+                  backgroundColor: "white",
+                },
+              }}
+              size="small"
+              color="primary"
+              onClick={hideModal}
+            >
+              <CloseIcon />
+            </Button>
+          </div>
           {props.children}
         </Box>
       </div>
