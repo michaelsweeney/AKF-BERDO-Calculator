@@ -98,7 +98,7 @@ const Header = (props) => {
       <div className={classes.header}>
         <div className={classes.left}>
           <div className={classes.akfLogoContainer}>
-            <img alt="" width="95" src="akf-logo.png"></img>
+            <img alt="" width="100" src="akf-registered-logo.png"></img>
           </div>
         </div>
         <div className={classes.center}>

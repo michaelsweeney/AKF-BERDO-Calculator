@@ -7,6 +7,12 @@ const useStyles = makeStyles({
   li: {
     marginBottom: 10,
   },
+  logoContainer: {
+    textAlign: "center",
+  },
+  header: {
+    textAlign: "center",
+  },
 });
 const AboutModal = (props) => {
   const classes = useStyles();
@@ -16,7 +22,12 @@ const AboutModal = (props) => {
   return (
     <ModalComponent isOpen={isAboutModalOpen} exitCallback={exitCallback}>
       <div className={classes.root}>
-        <h3>About the BERDO 2.0 calculator beta version</h3>
+        <div className={classes.logoContainer}>
+          <img alt="" width="100" src="akf-registered-logo.png"></img>
+        </div>
+        <h3 className={classes.header}>
+          About the BERDO 2.0 calculator beta version
+        </h3>
         <ul>
           <li className={classes.li}>
             This is a work-in-progress demo version of AKF's BERDO 2.0

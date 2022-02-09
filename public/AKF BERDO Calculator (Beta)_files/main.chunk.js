@@ -8216,7 +8216,7 @@ ASSUMPTIONS IN DATASET CONVERSION:
                                 {
                                   alt: "",
                                   width: "95",
-                                  src: "akf-logo.png",
+                                  src: "AKF Registered Logo.png",
                                 },
                                 void 0,
                                 false,

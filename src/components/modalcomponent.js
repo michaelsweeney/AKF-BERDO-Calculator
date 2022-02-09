@@ -15,6 +15,7 @@ const boxStyle = {
   boxShadow: 24,
   p: 4,
   padding: 5,
+  overflowY: "auto",
   // paddingTop: "5px !important",
 };
 
@@ -22,8 +23,12 @@ const modalStyle = {
   paddingTop: 5,
 };
 
+const modalContentStyle = {
+  // overflowY: "scroll",
+};
+
 const ModalComponent = (props) => {
-  const { isOpen, exitCallback } = props;
+  const { isOpen, exitCallback, disableClose } = props;
 
   const hideModal = () => {
     exitCallback(false);
@@ -33,28 +38,32 @@ const ModalComponent = (props) => {
     <Modal cx={modalStyle} className="modal" open={isOpen} onClose={hideModal}>
       <div className="modal-content">
         <Box sx={boxStyle}>
-          <div style={{ height: 20 }}>
-            <Button
-              sx={{
-                padding: 1,
-                minWidth: 0,
-                float: "right",
-                position: "relative",
-                // left: -15,
-                top: -10,
-                "&:hover": {
-                  color: "red",
-                  backgroundColor: "white",
-                },
-              }}
-              size="small"
-              color="primary"
-              onClick={hideModal}
-            >
-              <CloseIcon />
-            </Button>
-          </div>
-          {props.children}
+          {disableClose ? (
+            ""
+          ) : (
+            <div style={{ height: 20 }}>
+              <Button
+                sx={{
+                  padding: 1,
+                  minWidth: 0,
+                  float: "right",
+                  position: "relative",
+                  // left: -15,
+                  top: -10,
+                  "&:hover": {
+                    color: "red",
+                    backgroundColor: "white",
+                  },
+                }}
+                size="small"
+                color="primary"
+                onClick={hideModal}
+              >
+                <CloseIcon />
+              </Button>
+            </div>
+          )}
+          <div style={modalContentStyle}>{props.children}</div>
         </Box>
       </div>
     </Modal>

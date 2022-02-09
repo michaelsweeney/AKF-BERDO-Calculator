@@ -4,10 +4,18 @@ const initialState = {
   isLoadedSummaryModalOpen: false,
   activeAccordionKey: "property_types",
   activeView: "lineplot_thresholds", // lineplot_thresholds, lineplot_payments, tabular
+  isScreenTooSmall: false,
 };
 
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
+    case "SET_WINDOW_DIMENSIONS": {
+      let { width } = action.payload;
+      return {
+        ...state,
+        isScreenTooSmall: width < 700 ? true : false,
+      };
+    }
     case "SET_IS_LOAD_MODAL_OPEN": {
       return {
         ...state,

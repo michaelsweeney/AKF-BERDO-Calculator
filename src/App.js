@@ -11,7 +11,7 @@ import MainContainer from "./components/maincontainer";
 import LoadBldgModal from "./components/modals/loadbldgmodal";
 import AboutModal from "./components/modals/aboutmodal";
 import LoadedSummaryModal from "./components/modals/loadedsummarymodal";
-
+import TooSmallModal from "./components/modals/toosmallmodal";
 const is_demo_mode = false;
 
 const theme = createTheme({
@@ -93,6 +93,7 @@ const App = (props) => {
         <LoadBldgModal />
         <AboutModal />
         <LoadedSummaryModal />
+        <TooSmallModal />
         <Footer />
       </div>
     </ThemeProvider>
