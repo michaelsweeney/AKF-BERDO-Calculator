@@ -16,7 +16,7 @@ const Footer = (props) => {
   return (
     <Paper elevation={0}>
       <div className={classes.footer}>
-        <div className={classes.right}> &copy; 2021 AKF Group</div>
+        <div className={classes.right}> &copy; 2022 AKF Group</div>
       </div>
     </Paper>
   );
