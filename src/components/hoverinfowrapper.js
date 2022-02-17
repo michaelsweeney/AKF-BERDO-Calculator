@@ -7,6 +7,7 @@ const useStyles = makeStyles({
   root: {},
   container: {
     padding: 15,
+    backgroundColor: "rgba(40,55,90,0.05)",
   },
 });
 

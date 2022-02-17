@@ -112,27 +112,27 @@ const Header = (props) => {
       <div className={classes.header}>
         <div className={classes.left}>
           <HoverInfoWrapper hovercontent="AKF Home">
-            <div className={classes.akfLogoContainer}>
-              <a href="https://akfgroup.com" target="_blank" rel="noreferrer">
+            <a href="https://akfgroup.com" target="_blank" rel="noreferrer">
+              <div className={classes.akfLogoContainer}>
                 <img alt="" width="100" src="AKF Registered Logo.png"></img>
-              </a>
-            </div>
+              </div>
+            </a>
           </HoverInfoWrapper>
         </div>
         <div className={classes.center}>
           <div className={classes.centerInner}>
             <HoverInfoWrapper hovercontent="Visit Boston's BERDO website">
-              <div className={classes.h1link}>
-                <a
-                  href="https://boston.gov/berdo"
-                  target="_blank"
-                  rel="noreferrer"
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
+              <a
+                href="https://boston.gov/berdo"
+                target="_blank"
+                rel="noreferrer"
+                style={{ textDecoration: "none", color: "inherit" }}
+              >
+                <div className={classes.h1link}>
                   BERDO 2.0 CALCULATOR{" "}
                   <span style={{ color: "red" }}>(beta)</span>
-                </a>
-              </div>
+                </div>
+              </a>
             </HoverInfoWrapper>
 
             <div className={classes.h2link} onClick={handleOpenAbout}>
