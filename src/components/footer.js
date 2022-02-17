@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     borderTop: "solid 1px gray",
     // backgroundColor: 'rgba(20,20,20,0.1)'
   },
-  left: {},
+  left: { float: "left", paddingTop: 18, paddingLeft: 25 },
   center: {},
   right: { float: "right", paddingTop: 18, paddingRight: 25 },
 });
@@ -16,6 +16,7 @@ const Footer = (props) => {
   return (
     <Paper elevation={0}>
       <div className={classes.footer}>
+        <div className={classes.left}></div>
         <div className={classes.right}> &copy; 2022 AKF Group</div>
       </div>
     </Paper>

@@ -30,10 +30,10 @@ const LinePlot = (props) => {
     */
 
     let margins = {
-      t: 50,
-      b: 175,
-      r: 200,
-      l: 100,
+      t: 40,
+      b: 140,
+      r: 150,
+      l: 75,
     };
 
     let containerdims = {

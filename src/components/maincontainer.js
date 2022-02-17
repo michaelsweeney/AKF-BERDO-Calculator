@@ -32,7 +32,7 @@ const useStyles = makeStyles({
     display: "inline-block",
   },
   viewSelectorContainer: {
-    marginBottom: 10,
+    marginBottom: 0,
   },
 });
 

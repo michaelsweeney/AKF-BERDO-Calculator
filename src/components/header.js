@@ -7,6 +7,9 @@ import SearchIcon from "@mui/icons-material/Search";
 import InfoIcon from "@mui/icons-material/Info";
 
 import { HoverButton } from "./hoverbutton";
+import { HoverInfoWrapper } from "./hoverinfowrapper";
+
+const hoverColor = "rgba(40,55,90,0.9)";
 
 const useStyles = makeStyles({
   header: {
@@ -49,6 +52,17 @@ const useStyles = makeStyles({
     letterSpacing: 1.5,
     marginBottom: 5,
   },
+
+  h1link: {
+    fontSize: "1.35em",
+    fontWeight: 600,
+    letterSpacing: 1.5,
+    marginBottom: 5,
+    "&:hover": {
+      color: hoverColor,
+    },
+    transition: "color 250ms",
+  },
   h2: {
     fontSize: "1.0em",
     letterSpacing: 1.25,
@@ -59,7 +73,7 @@ const useStyles = makeStyles({
     transition: "color 250ms",
     cursor: "pointer",
     "&:hover": {
-      color: "rgba(0,0,0,0.5)",
+      color: hoverColor,
     },
   },
   akfLogoContainer: {
@@ -97,22 +111,44 @@ const Header = (props) => {
     <Paper elevation={2}>
       <div className={classes.header}>
         <div className={classes.left}>
-          <div className={classes.akfLogoContainer}>
-            <img alt="" width="100" src="akf-registered-logo.png"></img>
-          </div>
+          <HoverInfoWrapper hovercontent="AKF Home">
+            <div className={classes.akfLogoContainer}>
+              <a href="https://akfgroup.com" target="_blank" rel="noreferrer">
+                <img alt="" width="100" src="AKF Registered Logo.png"></img>
+              </a>
+            </div>
+          </HoverInfoWrapper>
         </div>
         <div className={classes.center}>
           <div className={classes.centerInner}>
-            <div className={classes.h1}>
-              BERDO 2.0 CALCULATOR <span style={{ color: "red" }}>(beta)</span>
-            </div>
+            <HoverInfoWrapper hovercontent="Visit Boston's BERDO website">
+              <div className={classes.h1link}>
+                <a
+                  href="https://boston.gov/berdo"
+                  target="_blank"
+                  rel="noreferrer"
+                  style={{ textDecoration: "none", color: "inherit" }}
+                >
+                  BERDO 2.0 CALCULATOR{" "}
+                  <span style={{ color: "red" }}>(beta)</span>
+                </a>
+              </div>
+            </HoverInfoWrapper>
+
             <div className={classes.h2link} onClick={handleOpenAbout}>
-              {is_building_loaded
-                ? props.building_name +
-                  " (" +
-                  date_labels[props.berdoapi.berdo_dataset_year] +
-                  ")"
-                : ""}
+              {is_building_loaded ? (
+                <HoverInfoWrapper
+                  horizontalanchor="center"
+                  hovercontent="Examine Dataset Inputs"
+                >
+                  {props.building_name +
+                    " (" +
+                    date_labels[props.berdoapi.berdo_dataset_year] +
+                    ")"}
+                </HoverInfoWrapper>
+              ) : (
+                ""
+              )}
             </div>
           </div>
         </div>
