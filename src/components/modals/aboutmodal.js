@@ -23,7 +23,7 @@ const AboutModal = (props) => {
     <ModalComponent isOpen={isAboutModalOpen} exitCallback={exitCallback}>
       <div className={classes.root}>
         <div className={classes.logoContainer}>
-          <img alt="" width="100" src="akf-registered-logo.png"></img>
+          <img alt="" width="100" src="AKF Registered Logo.png"></img>
         </div>
         <h3 className={classes.header}>
           About the BERDO 2.0 calculator beta version
