@@ -1,9 +1,24 @@
 import { conn } from "../../store/connect";
-
+import { Button } from "@mui/material";
+import { makeStyles } from "@material-ui/styles";
 import { ModalComponent } from "../modalcomponent";
 import { building_types } from "../../calculations/buildingtypes";
 import * as d3 from "d3";
+
+const useStyles = makeStyles({
+  root: {},
+
+  closeButtonContainer: {
+    textAlign: "center",
+    marginTop: 30,
+  },
+  closeButton: {
+    width: 300,
+    padding: 75,
+  },
+});
 const LoadedSummaryModal = (props) => {
+  const classes = useStyles();
   const isLoadModalOpen = props.ui.isLoadedSummaryModalOpen;
   const exitCallback = props.actions.setIsLoadedSummaryModalOpen;
 
@@ -88,6 +103,16 @@ const LoadedSummaryModal = (props) => {
       >
         Data Source (data.boston.gov)
       </a>
+      <div className={classes.closeButtonContainer}>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.closeButton}
+          onClick={() => exitCallback(false)}
+        >
+          OK
+        </Button>
+      </div>
     </ModalComponent>
   );
 };

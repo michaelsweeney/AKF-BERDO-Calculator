@@ -1,4 +1,6 @@
 import { conn } from "../../store/connect";
+import { Button } from "@mui/material";
+
 import { ModalComponent } from "../modalcomponent";
 import { makeStyles } from "@material-ui/styles";
 const useStyles = makeStyles({
@@ -12,6 +14,14 @@ const useStyles = makeStyles({
   },
   header: {
     textAlign: "center",
+  },
+  closeButtonContainer: {
+    textAlign: "center",
+    marginTop: 30,
+  },
+  closeButton: {
+    width: 300,
+    padding: 75,
   },
 });
 const AboutModal = (props) => {
@@ -88,6 +98,16 @@ const AboutModal = (props) => {
             site is conditioned upon agreeing to these terms.
           </li>
         </ul>
+      </div>
+      <div className={classes.closeButtonContainer}>
+        <Button
+          variant="outlined"
+          color="primary"
+          className={classes.closeButton}
+          onClick={() => exitCallback(false)}
+        >
+          OK
+        </Button>
       </div>
     </ModalComponent>
   );
