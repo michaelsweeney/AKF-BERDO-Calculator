@@ -1,5 +1,7 @@
 import { conn } from "../../store/connect";
 import { Paper } from "@mui/material";
+import { makeStyles } from "@material-ui/styles";
+
 import Table from "@mui/material/Table";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
@@ -7,7 +9,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { queryBuildingDataFromCsv } from "./csvqueries";
 
+const useStyles = makeStyles({
+  root: {},
+  select: {
+    cursor: "pointer",
+  },
+});
 const BerdoApiResultsTable = (props) => {
+  const classes = useStyles();
   const handleSelectBuilding = (e) => {
     let callbackFunction = (p) => {
       props.actions.setLoadedBuildingQueryInfo(p);
@@ -38,7 +47,12 @@ const BerdoApiResultsTable = (props) => {
         <TableBody>
           {inputQueryResults.map((e, i) => {
             return (
-              <TableRow hover onClick={() => handleSelectBuilding(e)} key={i}>
+              <TableRow
+                className={classes.select}
+                hover
+                onClick={() => handleSelectBuilding(e)}
+                key={i}
+              >
                 <TableCell>{e["Property Name"]}</TableCell>
                 <TableCell>{e["Address"]}</TableCell>
                 <TableCell>{e["Tax Parcel"]}</TableCell>

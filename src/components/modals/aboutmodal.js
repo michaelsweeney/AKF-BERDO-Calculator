@@ -101,7 +101,7 @@ const AboutModal = (props) => {
       </div>
       <div className={classes.closeButtonContainer}>
         <Button
-          variant="outlined"
+          variant="contained"
           color="primary"
           className={classes.closeButton}
           onClick={() => exitCallback(false)}
