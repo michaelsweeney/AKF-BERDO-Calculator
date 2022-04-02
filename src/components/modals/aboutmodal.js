@@ -40,7 +40,13 @@ const AboutModal = (props) => {
         </h3>
         <ul>
           <li className={classes.li}>
-            This is a work-in-progress demo version of AKF's BERDO 2.0
+            Boston’s updated "Building Emissions Reduction and Disclosure
+            Ordinance (BERDO 2.0)" sets requirements for large buildings to
+            reduce their energy and water use data. The goal is to reduce their
+            emissions gradually to net zero by 2050.
+          </li>
+          <li className={classes.li}>
+            This is a work-in-progress beta version of AKF's BERDO 2.0
             calculator, and as such should not be used to predict any actual
             BERDO thresholds or future building performance.
           </li>
