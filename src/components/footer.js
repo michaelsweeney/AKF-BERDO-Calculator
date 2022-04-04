@@ -23,7 +23,7 @@ const Footer = (props) => {
 
   const handleContactClick = (e) => {
     let mailto =
-      "mailto:cmarino@akfgroup.com,rosser@akfgroup.com,msweeney@akfgroup.com?subject=Question regarding the BERDO 2.0 Calculator";
+      "mailto:cmarino@akfgroup.com;rosser@akfgroup.com;msweeney@akfgroup.com?subject=Question regarding the BERDO 2.0 Calculator";
     window.location.href = mailto;
     e.preventDefault();
   };
@@ -37,7 +37,7 @@ const Footer = (props) => {
               color="primary"
               variant="contained"
               clickCallback={handleContactClick}
-              hovercontent="Get in touch with AKF's Energy + Performance to learn more about how BERDO impacts your project."
+              hovercontent="Get in touch with AKF's Energy + Performance to discuss BERDO 2.0 compliance strategies for your project."
             >
               Contact Us
             </HoverButton>
