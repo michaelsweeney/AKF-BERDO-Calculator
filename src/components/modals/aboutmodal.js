@@ -40,10 +40,13 @@ const AboutModal = (props) => {
         </h3>
         <ul>
           <li className={classes.li}>
-            Boston’s updated "Building Emissions Reduction and Disclosure
-            Ordinance (BERDO 2.0)" sets requirements for large buildings to
-            reduce their energy and water use data. The goal is to reduce their
-            emissions gradually to net zero by 2050.
+            Boston's BERDO 2.0 (Building Energy and Reporting Disclosure
+            Ordinance) sets increasingly stringent carbon emissions standards
+            over time, ramping down to net zero by 2050; please see
+            <a href="http://boston.gov/berdo" target="_blank">
+              http://boston.gov/berdo
+            </a>{" "}
+            for policy and implementation updates.
           </li>
           <li className={classes.li}>
             This is a work-in-progress beta version of AKF's BERDO 2.0
@@ -73,17 +76,12 @@ const AboutModal = (props) => {
           </li>
 
           <li className={classes.li}>
-            For the most up-to-date information on BERDO 2.0 policies and
-            implementation, please see{" "}
-            <a target="_blank" href="https://boston.gov/berdo">
-              https://boston.gov/berdo
-            </a>
-            . However, this calculator is based on "CBC Chapter VII, Section
-            7-2.2 Building Energy Reporting and Disclosure Ordinance (BERDO),"
-            as of December 2021, and provides only an approximation of the
-            impact of the carbon emissions thresholds and Alternative Compliance
-            Payments. As actual results will vary, the tool should not be relied
-            on as specific legal or risk mitigation guidance.
+            This calculator is based on "CBC Chapter VII, Section 7-2.2 Building
+            Energy Reporting and Disclosure Ordinance (BERDO)," as of December
+            2021, and provides only an approximation of the impact of the carbon
+            emissions thresholds and Alternative Compliance Payments. As actual
+            results will vary, the tool should not be relied on as specific
+            legal or risk mitigation guidance.
           </li>
 
           <li className={classes.li}>
