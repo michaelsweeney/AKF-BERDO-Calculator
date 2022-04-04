@@ -42,7 +42,7 @@ const AboutModal = (props) => {
           <li className={classes.li}>
             Boston's BERDO 2.0 (Building Energy and Reporting Disclosure
             Ordinance) sets increasingly stringent carbon emissions standards
-            over time, ramping down to net zero by 2050; please see
+            over time, ramping down to net zero by 2050; please see{" "}
             <a href="http://boston.gov/berdo" target="_blank">
               http://boston.gov/berdo
             </a>{" "}

@@ -37,7 +37,7 @@ const Footer = (props) => {
               color="primary"
               variant="contained"
               clickCallback={handleContactClick}
-              hovercontent="Get in touch with AKF's Energy + Performance to discuss BERDO 2.0 compliance strategies for your project."
+              hovercontent="Get in touch with AKF's Energy + Performance Team to discuss BERDO 2.0 compliance strategies for your project."
             >
               Contact Us
             </HoverButton>
