@@ -9,13 +9,6 @@ const initialState = {
 
 export default function uiReducer(state = initialState, action) {
   switch (action.type) {
-    case "SET_WINDOW_DIMENSIONS": {
-      let { width } = action.payload;
-      return {
-        ...state,
-        isScreenTooSmall: width < 700 ? true : false,
-      };
-    }
     case "SET_IS_LOAD_MODAL_OPEN": {
       return {
         ...state,
@@ -34,10 +27,13 @@ export default function uiReducer(state = initialState, action) {
         isLoadedSummaryModalOpen: action.payload,
       };
     }
+
     case "SET_WINDOW_DIMENSIONS": {
+      let { width } = action.payload;
       return {
         ...state,
-        dims: action.payload,
+        dims: width,
+        isScreenTooSmall: width < 700 ? true : false,
       };
     }
     case "TOGGLE_ACCORDION": {
