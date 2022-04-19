@@ -45,7 +45,7 @@ const Footer = (props) => {
       <div className={classes.footer}>
         <div className={classes.left}>
           <div className={classes.imageContainer}>
-            <img alt="" width="250" src="akf_berdo_logo_outline.png"></img>
+            <img alt="" width="250" src="BERDO Outline.png"></img>
           </div>
         </div>
         <div className={classes.right}>
