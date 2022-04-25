@@ -11,14 +11,14 @@ const useStyles = makeStyles({
   },
   headerLeft: {
     display: "inline-block",
-    width: 200,
+    width: 100,
     position: "relative",
     top: -50,
     // textAlign: "center",
   },
   headerMiddle: {
     display: "inline-block",
-    width: "calc(100% - 400px)",
+    width: "calc(100% - 200px)",
     textAlign: "center",
     position: "relative",
     top: 0,
@@ -26,7 +26,7 @@ const useStyles = makeStyles({
   },
   headerRight: {
     display: "inline-block",
-    width: 200,
+    width: 100,
   },
   title: {
     textAlign: "center",

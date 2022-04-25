@@ -98,9 +98,9 @@ const Header = (props) => {
   const is_building_loaded = props.building_name ? true : false;
 
   const date_labels = {
-    "2021_cal_2020": "2020 dataset",
-    "2020_cal_2019": "2019 dataset",
-    "2019_cal_2018": "2018 dataset",
+    "2021_cal_2020": "2021 dataset",
+    "2020_cal_2019": "2020 dataset",
+    "2019_cal_2018": "2019 dataset",
   };
 
   const handleOpenAbout = () => {
