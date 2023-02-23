@@ -49,7 +49,7 @@ const Footer = (props) => {
           </div>
         </div>
         <div className={classes.right}>
-          <div className={classes.copyright}>&copy; 2022 AKF Group</div>
+          <div className={classes.copyright}>&copy; 2023 AKF Group</div>
 
           <div className={classes.contactButton}>
             <HoverButton

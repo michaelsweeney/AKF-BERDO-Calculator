@@ -77,11 +77,6 @@ const AboutModal = (props) => {
               </a>{" "}
               for policy and implementation updates.
             </li>
-            <li className={classes.li}>
-              This is a work-in-progress beta version of AKF's BERDO 2.0
-              calculator, and as such should not be used to predict any actual
-              BERDO thresholds or future building performance.
-            </li>
 
             <li className={classes.li}>
               Emissions Factors for 2021 thru 2050 have been taken from the{" "}

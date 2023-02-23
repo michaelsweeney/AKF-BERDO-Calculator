@@ -130,7 +130,7 @@ const Header = (props) => {
               >
                 <div className={classes.h1link}>
                   BERDO 2.0 CALCULATOR{" "}
-                  <span style={{ color: "red" }}>(beta)</span>
+                  {/* <span style={{ color: "red" }}>(beta)</span> */}
                 </div>
               </a>
             </HoverInfoWrapper>
